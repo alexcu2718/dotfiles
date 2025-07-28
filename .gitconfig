@@ -1,0 +1,14 @@
+[user]
+	email = alexcu@tutanota.com
+[credential]
+	helper = get
+	helper = 
+	helper = /usr/bin/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[core]
+	    sshCommand = ssh -i ~/.ssh/id_ed25519  # Optional
+[safe]
+	directory = /home/alexc/Downloads/this_game_has_no_name
+	directory = /home/alexc/Downloads/this_game_has_no_name
+	directory = /home/alexc/Downloads/this_game_has_no_name

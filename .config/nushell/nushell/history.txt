@@ -1,0 +1,13 @@
+mkdir ($nu.data-dir | path join "vendor/autoload")<\n>starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+paru shellcheck
+zsh
+zsh
+help
+ps | where cpu >0
+ps | where cpu > 0
+paru tcsh
+tcsh
+ls ~ -a | grep tcsh
+touch ~/.tcshrc
+nano ~/.tcshrc
+parui reedline

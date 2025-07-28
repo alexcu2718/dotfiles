@@ -1,0 +1,34 @@
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+export ZSH="$HOME/.oh-my-zsh"
+
+autoload -U compinit
+compinit
+
+
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.cache/zsh
+zstyle ':completion:*' list-lines 10
+
+fpath+=/usr/share/zsh/vendor-completions
+fpath=(~/.zsh/completions $fpath)
+
+
+source "$ZSH/oh-my-zsh.sh"
+zstyle ':omz:update' mode auto      # update automatically without asking
+DISABLE_MAGIC_FUNCTIONS="true"
+DISABLE_LS_COLORS="false"
+DISABLE_AUTO_TITLE="true"
+ENABLE_CORRECTION="true"
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# COMPLETION_WAITING_DOTS="true"
+plugins=(gitfast direnv archlinux github hitchhiker  pip colorize 
+ gh fzf  systemd sudo eza  starship tldr  copyfile 
+ autoenv  uv  ufw vscode  z  rust python )  
+
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source ~/.shell_functions
+unset zle_bracketed_paste
+eval $(zoxide init zsh)
+source ~/.bindkeys
