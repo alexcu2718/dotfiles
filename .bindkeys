@@ -13,28 +13,10 @@ bindkey '^Z' open_zshrc
 
 
 
-# File-scope variable to track the last reload time
-# At the BOTTOM of your .zshrc file:
 
 # File-scope variable to track the last reload time
 typeset -g ZSHRC_LAST_REFRESH=0
 
-refresh_zshrc() {
-  local now=$(date +%s)
-  local epoch_diff=$(( now - ZSHRC_LAST_REFRESH ))
-
-  if (( epoch_diff >= 3 )); then
-    ZSHRC_LAST_REFRESH=$now
-    source ~/.zshrc &>/dev/null
-    zle reset-prompt
-    echo 'Refreshed .zshrc'
-    eval "$(starship init $(mysh))"
-  else
-    echo 'Refresh ignored (cooldown active)'
-  fi
-}
-
-# Only create the binding if we're in an interactive shell
 if [[ -o interactive ]]; then
   bindkey -r '^N' 2>/dev/null
   zle -N refresh_zshrc
