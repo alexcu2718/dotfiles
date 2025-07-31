@@ -85,7 +85,7 @@ eval "$(direnv hook $(mysh))"
 alias CLIPPY='cargo clippy --all -- -W clippy::all -W clippy::pedantic -W clippy::restriction -W clippy::nursery -D warnings'
 alias SHELLFUNCTIONS="$EDITOR ~/.shell_functions"
 alias ls='eza -g'
-
+alias KILL='pkill -9'
 #unalias ZIP >  /dev/null/
 
 ZIP () {
