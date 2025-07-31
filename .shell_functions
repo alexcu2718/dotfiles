@@ -109,3 +109,11 @@ alias RUNBSD='qemu-system-x86_64 \
   -nographic'
 alias RUNOSX='cd ~/OSX-KVM && ./OpenCore-Boot.sh'
 
+alias RUNBIGENDIAN=" qemu-system-ppc64 \
+  -cpu POWER9 \
+  -m 8G \
+  -smp 8 \
+  -drive file="$HOME/Downloads/debian-ppc64.img",format=raw,if=virtio \
+  -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+  -device virtio-net-pci,netdev=net0 \
+  -nographic"
