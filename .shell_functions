@@ -19,7 +19,7 @@ gg() {
 unalias lsgrep > /dev/null 2>&1
 
 lsgrep() {
-ls "$1" -a | grep "$2" -i
+ls -a  "$1"  | grep -Ei  "$2" 
 }
 
 
@@ -77,7 +77,7 @@ export VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-038080b684.sock
 
 eval "$(zoxide init $(mysh))"
 
-alias cat='bat --paging=never'
+alias cat='bat --paging=never --style=plain'
 alias CLIPBOARD='xclip -sel clip'
 alias cd='z'
 export PATH=$PATH:$HOME/.cargo/bin
