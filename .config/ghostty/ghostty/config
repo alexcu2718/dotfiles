@@ -41,7 +41,9 @@
 # # which is explained in the docs for that config option.
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
-
+custom-shader = shaders/cursor_blaze_no_trail.glsl
+custom-shader = shaders/cursor_smear.glsl
+font-family = "JetBrainsMono Nerd Font"
 shell-integration = zsh
 clipboard-read = allow
 clipboard-write = allow

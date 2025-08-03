@@ -54,7 +54,6 @@
 **/gtk-**
 .spacemacs*
 .vscode-R
-**/*arp-*
 .vmware/**
 **/*unknown*
 **/*Oorganisation*
