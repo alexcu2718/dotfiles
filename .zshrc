@@ -35,7 +35,7 @@ DISABLE_AUTO_TITLE="true"
 ENABLE_CORRECTION="true"
 # e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
 # COMPLETION_WAITING_DOTS="true"
-plugins=(gitfast direnv archlinux github hitchhiker  pip colorize 
+plugins=(gitfast direnv archlinux github   pip
  gh fzf  systemd sudo eza  starship tldr  copyfile 
  autoenv  uv  ufw vscode  z  rust python )  
 
@@ -44,5 +44,4 @@ source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.
 source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source ~/.shell_functions
 unset zle_bracketed_paste
-eval $(zoxide init zsh)
 source ~/.bindkeys
