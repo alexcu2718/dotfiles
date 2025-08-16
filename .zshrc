@@ -10,7 +10,7 @@ zstyle ':completion:*' cache-path ~/.cache/zsh
 zstyle ':completion:*' list-lines 10
 
 fpath+=/usr/share/zsh/vendor-completions
-fpath=(~/.zsh/completions $fpath)
+fpath+=~/.zsh/completions 
 
 
 function refresh_zshrc() {
