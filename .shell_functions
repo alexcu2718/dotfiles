@@ -142,4 +142,8 @@ alias RUNWINDOWS="qemu-system-x86_64 \
 -drive format=raw,file=${HOME}/.qemu/windows_10/windows_10.img"
 #i dont want to use the shitty js one, no npm!
 alias gitmoji="go-gitmoji-cli"
-alias GITRENEW='git fetch origin && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)'
+alias GITRENEW='git fetch origin && git merge --ff-only origin/$(git rev-parse --abbrev-ref HEAD)'
+alias sort='sort --parallel=$(nproc)'
+if command -v fdf >/dev/null 2>&1; then
+    eval "$(fdf --generate $(mysh))" >/dev/null 2>&1
+fi
