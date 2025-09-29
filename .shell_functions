@@ -110,15 +110,17 @@ alias RUNBSD='qemu-system-x86_64 \
   -nographic'
 alias RUNOSX='cd ~/OSX-KVM && ./OpenCore-Boot.sh'
 
-alias RUNBIGENDIAN=" qemu-system-ppc64 \
+
+alias RUNBIGENDIAN="qemu-system-ppc64 \
   -cpu POWER9 \
-  -m 8G \
+  -accel tcg,thread=multi \
+  -M pseries \
+  -m 12G \
   -smp 8 \
-  -drive file="$HOME/Downloads/debian-ppc64.img",format=raw,if=virtio \
+  -drive file=\"$HOME/Downloads/debian-ppc64.img\",format=raw,if=virtio,aio=threads \
   -netdev user,id=net0,hostfwd=tcp::2222-:22 \
   -device virtio-net-pci,netdev=net0 \
   -nographic"
-
 
 alias RUNWINDOWS="qemu-system-x86_64 \
 -machine type=q35,accel=kvm \
@@ -142,8 +144,11 @@ alias RUNWINDOWS="qemu-system-x86_64 \
 -drive format=raw,file=${HOME}/.qemu/windows_10/windows_10.img"
 #i dont want to use the shitty js one, no npm!
 alias gitmoji="go-gitmoji-cli"
-alias GITRENEW='git fetch origin && git merge --ff-only origin/$(git rev-parse --abbrev-ref HEAD)'
+alias GITRENEW='git fetch origin && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)'
+
+
 alias sort='sort --parallel=$(nproc)'
+
 if command -v fdf >/dev/null 2>&1; then
     eval "$(fdf --generate $(mysh))" >/dev/null 2>&1
 fi
