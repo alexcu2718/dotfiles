@@ -148,7 +148,10 @@ alias GITRENEW='git fetch origin && git reset --hard origin/$(git rev-parse --ab
 
 
 alias sort='sort --parallel=$(nproc)'
+alias grep='grep -n --color=auto'
+
 
 if command -v fdf >/dev/null 2>&1; then
     eval "$(fdf --generate $(mysh))" >/dev/null 2>&1
 fi
+
