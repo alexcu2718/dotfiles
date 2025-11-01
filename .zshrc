@@ -34,16 +34,27 @@ DISABLE_LS_COLORS="false"
 DISABLE_AUTO_TITLE="true"
 ENABLE_CORRECTION="true"
 # e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 plugins=(gitfast  archlinux github   pip
  gh fzf  systemd sudo eza  starship tldr  copyfile
    uv  ufw vscode  z  rust python
  )
 
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-source $ZSH/plugins/autoenv/autoenv.plugin.zsh
-source ~/.shell_functions
+source_if_exists() {
+    if [[ -f "$1" ]]; then
+        source "$1"
+        return 0
+    else
+        echo "File not found: $1" >&2
+        return 1
+    fi
+}
+
+source_if_exists /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+source_if_exists /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source_if_exists /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source_if_exists $ZSH/plugins/autoenv/autoenv.plugin.zsh
+source_if_exists ~/.shell_functions
 unset zle_bracketed_paste
 source ~/.bindkeys
+source_if_exists ~/.bindkeys
