@@ -31,9 +31,8 @@ source "$ZSH/oh-my-zsh.sh"
 zstyle ':omz:update' mode auto      # update automatically without asking
 DISABLE_MAGIC_FUNCTIONS="true"
 DISABLE_LS_COLORS="false"
-DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="false"
 ENABLE_CORRECTION="true"
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
 COMPLETION_WAITING_DOTS="true"
 plugins=(gitfast  archlinux github   pip
  gh fzf  systemd sudo eza  starship tldr  copyfile
@@ -49,6 +48,10 @@ source_if_exists() {
         return 1
     fi
 }
+
+setopt appendhistory
+setopt sharehistory
+setopt incappendhistory
 
 source_if_exists /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 source_if_exists /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
