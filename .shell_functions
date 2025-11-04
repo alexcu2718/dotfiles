@@ -127,6 +127,8 @@ alias RUNBSD_NOGRAPHIC='qemu-system-x86_64 \
   
 alias RUNOSX='cd ~/OSX-KVM && ./OpenCore-Boot.sh'
 
+alias RUNOSX_UI='cd ~/OSX-KVM && ./OpenCore-Boot-windowed.sh'
+
 
 alias RUNBIGENDIAN="qemu-system-ppc64 \
   -cpu POWER9 \
