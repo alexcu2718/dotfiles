@@ -7,10 +7,28 @@ compinit
 
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.cache/zsh
-zstyle ':completion:*' list-lines 10
+zstyle ':completion:*' list-lines 15
 
 fpath+=/usr/share/zsh/vendor-completions
 fpath+=~/.zsh/completions 
+
+unset zle_bracketed_paste
+
+
+setopt appendhistory
+setopt sharehistory
+setopt incappendhistory
+
+
+source_if_exists() {
+    if [[ -f "$1" ]]; then
+        source "$1"
+        return 0
+    else
+        echo "File not found: $1" >&2
+        return 1
+    fi
+}
 
 
 function refresh_zshrc() {
@@ -27,8 +45,8 @@ function refresh_zshrc() {
   zle reset-prompt
 }
 
-source "$ZSH/oh-my-zsh.sh"
-zstyle ':omz:update' mode auto      # update automatically without asking
+source_if_exists "$ZSH/oh-my-zsh.sh"
+zstyle ':omz:update' mode disabled # it's done by package manager
 DISABLE_MAGIC_FUNCTIONS="true"
 DISABLE_LS_COLORS="false"
 DISABLE_AUTO_TITLE="false"
@@ -39,25 +57,10 @@ plugins=(gitfast  archlinux github   pip
    uv  ufw vscode  z  rust python
  )
 
-source_if_exists() {
-    if [[ -f "$1" ]]; then
-        source "$1"
-        return 0
-    else
-        echo "File not found: $1" >&2
-        return 1
-    fi
-}
-
-setopt appendhistory
-setopt sharehistory
-setopt incappendhistory
 
 source_if_exists /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 source_if_exists /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source_if_exists /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source_if_exists $ZSH/plugins/autoenv/autoenv.plugin.zsh
 source_if_exists ~/.shell_functions
-unset zle_bracketed_paste
-source ~/.bindkeys
 source_if_exists ~/.bindkeys
