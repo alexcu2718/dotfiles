@@ -38,3 +38,6 @@ while IFS= read -r item; do
   # Copy recursively (works for both files and directories)
   cp -r "$item" "$relpath"
 done < total_dot_files.txt
+
+##copy osx kvm files for macos emulation
+command -v rsync && rsync -av --max-size=2m ~/OSX-KVM/ ./OSX-KVM
