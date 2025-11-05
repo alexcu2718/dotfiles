@@ -1,5 +1,5 @@
 mysh() {
-    ps -p $$ -o comm= | awk -F/ '{print $NF}'
+    ps -p $$ -o comm= | awk -F/ '{print $NF}' | sed 's/^-//'
 }
 
 CFG() {
@@ -164,7 +164,8 @@ alias RUNWINDOWS="qemu-system-x86_64 \
 alias gitmoji="go-gitmoji-cli"
 alias GITRENEW='git fetch origin && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)'
 
-
+alias INSTALLED_PACKAGES='paru -Qe'
+alias CLEAR_PACKAGE_CACHE='paru -Sc'
 alias sort='sort --parallel=$(nproc)'
 alias grep='grep  --color=auto'
 alias grepn='grep -n --color=auto'
