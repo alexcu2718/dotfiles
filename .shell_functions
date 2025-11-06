@@ -130,16 +130,23 @@ alias RUNOSX='cd ~/OSX-KVM && ./OpenCore-Boot.sh'
 alias RUNOSX_UI='cd ~/OSX-KVM && ./OpenCore-Boot-windowed.sh'
 
 
+
+
+
+
+
 alias RUNBIGENDIAN="qemu-system-ppc64 \
   -cpu POWER9 \
   -accel tcg,thread=multi \
-  -M pseries \
-  -m 12G \
-  -smp 8 \
-  -drive file=\"$HOME/Downloads/debian-ppc64.img\",format=raw,if=virtio,aio=threads \
+  -M pseries,cap-cfpc=broken,cap-sbbc=broken,cap-ibs=broken \
+  -m 12G,slots=4,maxmem=16G \
+  -smp 8,cores=4,threads=2 \
+  -drive file=\"$HOME/Downloads/debian-ppc64.img\",format=raw,if=virtio,aio=native,cache=directsync,discard=unmap \
   -netdev user,id=net0,hostfwd=tcp::2222-:22 \
-  -device virtio-net-pci,netdev=net0 "
-
+  -device virtio-net-pci,netdev=net0 \
+  -device virtio-balloon \
+  -nographic -serial mon:stdio -monitor none"
+  
 alias RUNWINDOWS="qemu-system-x86_64 \
 -machine type=q35,accel=kvm \
 -enable-kvm \
