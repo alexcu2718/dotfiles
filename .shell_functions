@@ -177,6 +177,8 @@ alias sort='sort --parallel=$(nproc)'
 alias grep='grep  --color=auto'
 alias grepn='grep -n --color=auto'
 
+alias SLEEPOFF_ONE_HOUR='systemd-inhibit --what=sleep --who="User" --why="Temporary disable" sleep 1h'
+
 if command -v fdf >/dev/null 2>&1; then
     eval "$(fdf --generate $(mysh))" >/dev/null 2>&1
 fi
