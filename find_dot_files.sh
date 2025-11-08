@@ -1,8 +1,7 @@
-
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Unwanted exact names or prefixes (no leading dot)
-exclude_names="jupyter|yarnrc|polars|tcsh|ipython|ipynb_checkpoints|omnissa|hyper|q3a|industry|godot|quarto|glib|vlc|racket|syncplay|kdedefaults"
+exclude_names="jupyter|yarnrc|polars|tcsh|ipython|ipynb_checkpoints|omnissa|hyper|q3a|industry|godot|quarto|glib|vlc|racket|syncplay|kdedefaults|password-store|aspnet|rnd|virtual_documents|gitconfig|streamlit|valkeycli_history|redhat|z|java"
 
 # Unwanted file extensions (without dot)
 exclude_ext="db|js|zwc|save"
@@ -34,10 +33,14 @@ while IFS= read -r item; do
 
   # Make sure target directory exists
   mkdir -p "$(dirname "$relpath")"
-  #making sure to quote properlyt cos of spaces...
+  #making sure to quote properly cos of spaces...
   # Copy recursively (works for both files and directories)
   cp -r "$item" "$relpath"
 done < total_dot_files.txt
 
-##copy osx kvm files for macos emulation
+rm total_dot_files.txt
+
+cp ~/.config/Code/User/settings.json ./vscode-settings.json
+
+# Copy OSX KVM files for macOS emulation
 command -v rsync && rsync -av --max-size=2m ~/OSX-KVM/ ./OSX-KVM

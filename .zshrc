@@ -52,9 +52,9 @@ DISABLE_LS_COLORS="false"
 DISABLE_AUTO_TITLE="false"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
-plugins=(gitfast  archlinux github   pip
- gh fzf  systemd sudo eza  starship tldr  copyfile
-   uv  ufw vscode  z  rust python
+plugins=(gitfast  archlinux github   pip docker docker-compose
+ gh fzf  systemd sudo eza  starship tldr  copyfile   zsh-interactive-cd
+   uv  ufw vscode   rust python
  )
 
 

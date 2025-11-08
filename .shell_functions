@@ -80,12 +80,12 @@ eval "$(zoxide init $(mysh))"
 
 alias cat='bat --paging=never --style=plain'
 alias CLIPBOARD='xclip -sel clip'
-#alias cd='z'
+alias cd='z'
 export PATH=$PATH:$HOME/.cargo/bin
 eval "$(direnv hook $(mysh) 2>/dev/null)"
 alias CLIPPY='cargo clippy --all -- -W clippy::all -W clippy::pedantic -W clippy::restriction -W clippy::nursery -D warnings'
 alias SHELLFUNCTIONS="$EDITOR ~/.shell_functions"
-alias ls='eza -g'
+#alias ls='eza -g'
 alias KILL='pkill -9'
 #unalias ZIP >  /dev/null/
 
