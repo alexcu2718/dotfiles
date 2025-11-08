@@ -31,7 +31,7 @@ gitclone() {
 
 unalias exportpath > /dev/null 2>&1
 
-
+alias SSH='ssh -p 2222 alexc@localhost'
 
 
 exportpath () {
