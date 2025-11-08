@@ -54,7 +54,7 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 plugins=(gitfast  archlinux github   pip docker docker-compose
  gh fzf  systemd sudo eza  starship tldr  copyfile   zsh-interactive-cd
-   uv  ufw vscode   rust python
+   uv  ufw vscode   rust python autoenv
  )
 
 
