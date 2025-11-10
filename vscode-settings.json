@@ -53,7 +53,6 @@
     "python.analysis.inlayHints.functionReturnTypes": true,
     "python.analysis.typeEvaluation.enableReachabilityAnalysis": true,
     "python.analysis.typeEvaluation.strictListInference": true,
-    //"rust.analyzer.inlayHunts."
     "[gdscript]": {
     "editor.formatOnSave": false,
     "editor.insertSpaces": false,
@@ -219,10 +218,6 @@
   "editor.accessibilitySupport": "off",
   "accessibility.hideAccessibleView": true,
   "inlineChat.accessibleDiffView": "off",
-  "github.copilot.chat.codesearch.enabled": true,
-  "github.copilot.chat.agent.thinkingTool": true,
-  "github.copilot.chat.search.keywordSuggestions": true,
-  "github.copilot.nextEditSuggestions.fixes": true,
   "editor.minimap.renderCharacters": false,
   "workbench.editor.enablePreview": false,
   "workbench.startupEditor": "terminal",
@@ -238,8 +233,6 @@
   "workbench.editor.empty.hint": "hidden",
   "rust-analyzer.procMacro.ignored": {
     "leptos_macro": [
-        // optional:
-        // "component",
         "server"
     ],
 },
@@ -302,21 +295,21 @@
 "C_Cpp.formatting": "clangFormat",
  
 "clang-tidy.compilerArgs": [
-        "-std=c++23",
-        "-stdlib=libc++", 
-        "-I${workspaceFolder}/include",
-        "-I${workspaceFolder}/src"
-    ],
-    
+    "-std=c++23",
+    "-stdlib=libc++", 
+    "-I${workspaceFolder}/include",
+    "-I${workspaceFolder}/src"
+],
 
-    "clang-tidy.checks": [
-        "clang-diagnostic-*",
-        "modernize-*",
-        "performance-*",
-        "readability-*",
-        "cppcoreguidelines-*"
-    ],
-
+"clang-tidy.checks": [
+    "clang-diagnostic-*",
+    "modernize-*",
+    "performance-*",
+    "readability-*",
+    "cppcoreguidelines-*",
+    "-readability-identifier-length",           
+    "-cppcoreguidelines-pro-bounds-pointer-arithmetic" 
+]
  
 }
 
