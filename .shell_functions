@@ -147,6 +147,7 @@ alias RUNBIGENDIAN="qemu-system-ppc64 \
   -device virtio-balloon \
   -nographic -serial mon:stdio -monitor none"
   
+
 alias RUNWINDOWS="qemu-system-x86_64 \
 -machine type=q35,accel=kvm \
 -enable-kvm \
@@ -154,6 +155,9 @@ alias RUNWINDOWS="qemu-system-x86_64 \
 -smp 2 \
 -m 8096 -mem-prealloc \
 -vga virtio \
+-device virtio-keyboard-pci \
+-device virtio-mouse-pci \
+-display spice-app,gl=on \
 -device ich9-intel-hda \
 -device hda-duplex,audiodev=hda \
 -audiodev pa,id=hda,server=unix:/run/user/1000/pulse/native,out.frequency=44100 \
@@ -161,12 +165,16 @@ alias RUNWINDOWS="qemu-system-x86_64 \
 -netdev user,id=vmnic,hostfwd=tcp::2222-:22 \
 -device qemu-xhci,id=xhci \
 -device usb-tablet,bus=xhci.0 \
--chardev socket,path=/tmp/qga.sock,server=on,wait=off,id=qga0 \
+-chardev spicevmc,id=vdagent,name=vdagent \
 -device virtio-serial \
+-device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
+-chardev socket,path=/tmp/qga.sock,server=on,wait=off,id=qga0 \
 -device virtserialport,chardev=qga0,name=org.qemu.guest_agent.0 \
 -object rng-random,id=rng0,filename=/dev/urandom \
 -device virtio-rng-pci,max-bytes=1024,period=1000 \
 -drive format=raw,file=${HOME}/.qemu/windows_10/windows_10.img"
+
+
 #i dont want to use the shitty js one, no npm!
 alias gitmoji="go-gitmoji-cli"
 alias GITRENEW='git fetch origin && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)'
@@ -176,6 +184,7 @@ alias CLEAR_PACKAGE_CACHE='paru -Sc'
 alias sort='sort --parallel=$(nproc)'
 alias grep='grep  --color=auto'
 alias grepn='grep -n --color=auto'
+alias hgrep='history |grep -Ei'
 
 alias SLEEPOFF_ONE_HOUR='systemd-inhibit --what=sleep --who="User" --why="Temporary disable" sleep 1h'
 
