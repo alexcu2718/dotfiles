@@ -18,7 +18,15 @@ unset zle_bracketed_paste
 setopt appendhistory
 setopt sharehistory
 setopt incappendhistory
-
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt SHARE_HISTORY
 
 source_if_exists() {
     if [[ -f "$1" ]]; then
