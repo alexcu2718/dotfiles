@@ -33,3 +33,9 @@ eval "$EDITOR ."
 zle -N open_neovim
 bindkey '^O' open_neovim
 
+
+restart_code(){
+  pkill -9 code && code .
+}
+zle -N restart_code
+bindkey '\ev' restart_code

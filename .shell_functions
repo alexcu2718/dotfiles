@@ -192,3 +192,4 @@ if command -v fdf >/dev/null 2>&1; then
     eval "$(fdf --generate $(mysh))" >/dev/null 2>&1
 fi
 
+alias RESTARTCODE="pkill -9 code && code ."
