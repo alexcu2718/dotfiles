@@ -117,6 +117,13 @@
         "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
     },
 
+    
+"C_Cpp.inlayHints.parameterNames.enabled": true,
+"C_Cpp.inlayHints.parameterNames.hideLeadingUnderscores": false,
+  "C_Cpp.inlayHints.autoDeclarationTypes.enabled": true,
+  "C_Cpp.inlayHints.autoDeclarationTypes.showOnLeft": false,
+
+
 "terminal.integrated.fontLigatures.fallbackLigatures": [
     
     "<--",
@@ -295,7 +302,7 @@
 "C_Cpp.formatting": "clangFormat",
  
 "clang-tidy.compilerArgs": [
-    "-std=c++23",
+    "-std=c++20",
     "-stdlib=libc++", 
     "-I${workspaceFolder}/include",
     "-I${workspaceFolder}/src"
@@ -309,7 +316,13 @@
     "cppcoreguidelines-*",
     "-readability-identifier-length",           
     "-cppcoreguidelines-pro-bounds-pointer-arithmetic" 
-]
+],
+
+"cppref.alternative.enabled": true,
+"cppref.searchEngine": "Google",
+"editor.acceptSuggestionOnCommitCharacter": false,
+"editor.acceptSuggestionOnEnter": "off",
+"editor.inlineSuggest.enabled": false
  
 }
 

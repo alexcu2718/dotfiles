@@ -1,0 +1,350 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+      "key": "alt+h", // key to press to activate command
+      "command": "settings.cycle", 
+      "when": "editorTextFocus", // this keybinding is only active when (editor is in focus)
+      "args": { // these are the arguments passed to `settings.cycle`
+        "id": "toggle-language-inlay-hints", // must be unique
+        "overrideWorkspaceSettings": true,
+        "values": [ // Note: use the same settings in each values object
+          {
+            "editor.inlayHints.enabled": false
+          },
+          {
+            "editor.inlayHints.enabled": true
+          }
+        ]
+      }
+    },
+    {
+      "key": "ctrl+k",
+      "command": "editor.action.deleteLines",
+      "when": "textInputFocus && !editorReadonly"
+    }, 
+
+      {
+    "key": "shift+r shift+a",
+    "command": "rust-analyzer.restartServer"
+  },
+
+
+
+      {
+    "key": "shift+up",
+    "command": "editorScroll",
+    "when": "textInputFocus",
+    "args": {
+      "to": "up",
+      "by": "line",
+      "value": 15,     
+      "revealCursor": false
+    }
+  },
+  // Scroll down by 10 lines when Shift + Down is pressed
+  {
+    "key": "shift+down",
+    "command": "editorScroll",
+    "when": "textInputFocus",
+    "args": {
+      "to": "down",
+      "by": "line",
+      "value": 10,
+      "revealCursor": false
+    }
+  },
+
+      {
+    "key": "ctrl+shift+a",
+    "command": "editor.action.selectAll",
+    "when": "editorTextFocus"
+  },
+
+
+ 
+
+     {
+    "key": "ctrl+a",
+    "command": "cursorHome",
+    "when": "textInputFocus"
+  },  
+     {
+    "key": "shift+left",
+    "command": "workbench.action.previousEditor",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+right",
+    "command": "workbench.action.nextEditor",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+e",
+    "command": "cursorEnd",
+    "when": "textInputFocus"
+  },
+
+  {
+    "key": "shift+tab",
+    "command": "outdent",
+    "when": "editorTextFocus && !editorReadonly"
+},
+
+  {
+    "key": "ctrl+=",
+    "command": "jupyter.insertCellBelow",
+    "when": "notebookEditorFocused"
+},
+
+   { "key": "ctrl+q",
+  "command": "cursorWordStartLeft",
+  "when": "textInputFocus"
+},
+
+{
+    "key": "ctrl+shift+a",
+    "command": "editor.action.selectAll",
+    "when": "editorTextFocus"
+},
+
+
+
+  {
+    "key": "ctrl+w",
+    "command": "cursorWordEndRight",
+    "when": "textInputFocus"
+  },
+
+    {
+      "key": "ctrl+shift+k",
+      "command": "-editor.action.deleteLines",
+      "when": "textInputFocus && !editorReadonly"
+    },
+    {
+      "key": "ctrl+j",
+      "command": "-workbench.action.togglePanel"
+    },
+    {
+      "key": "ctrl+k ctrl+t",
+      "command": "-workbench.action.selectTheme"
+    },
+    {
+      "key": "ctrl+t",
+      "command": "-workbench.action.showAllSymbols"
+    },
+    {
+      "key": "ctrl+e",
+      "command": "-workbench.action.quickOpen"
+    },
+    {
+      "key": "ctrl+w",
+      "command": "-workbench.action.terminal.killEditor",
+      "when": "terminalEditorFocus && terminalFocus && terminalHasBeenCreated || terminalEditorFocus && terminalFocus && terminalProcessSupported"
+    },
+    {
+      "key": "ctrl+w",
+      "command": "-workbench.action.closeGroup",
+      "when": "activeEditorGroupEmpty && multipleEditorGroups"
+    },
+    {
+      "key": "ctrl+w",
+      "command": "-workbench.action.closeActiveEditor"
+    },
+    {
+      "key": "ctrl+k ctrl+w",
+      "command": "-workbench.action.closeAllEditors"
+    },
+    {
+      "key": "ctrl+q",
+      "command": "-workbench.action.quit"
+    },
+    {
+      "key": "ctrl+shift+a",
+      "command": "-editor.action.blockComment",
+      "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+      "key": "ctrl+shift+t",
+      "command": "workbench.action.terminal.new",
+      "when": "terminalProcessSupported || terminalWebExtensionContributedProfile"
+    },
+    {
+      "key": "ctrl+shift+`",
+      "command": "-workbench.action.terminal.new",
+      "when": "terminalProcessSupported || terminalWebExtensionContributedProfile"
+    },
+    {
+      "key": "ctrl+shift+t",
+      "command": "-workbench.action.reopenClosedEditor"
+    },
+    {
+    "key": "ctrl+right",
+    "command": "workbench.action.terminal.focusNextPane",
+    "when": "terminalFocus"
+},
+{
+    "key": "ctrl+left",
+    "command": "workbench.action.terminal.focusPreviousPane",
+    "when": "terminalFocus"
+},
+
+
+    {
+      "key": "ctrl+-",
+      "command": "jupyter.insertCellAbove",
+      "when": "editorTextFocus && jupyter.hascodecells && !jupyter.webExtension && !notebookEditorFocused"
+    },
+    {
+      "key": "ctrl+; a",
+      "command": "-jupyter.insertCellAbove",
+      "when": "editorTextFocus && jupyter.hascodecells && !jupyter.webExtension && !notebookEditorFocused"
+    },
+    {
+      "key": "ctrl+shift+o",
+      "command": "workbench.action.terminal.split",
+      "when": "terminalFocus && terminalProcessSupported || terminalFocus && terminalWebExtensionContributedProfile"
+    },
+    {
+      "key": "ctrl+shift+5",
+      "command": "-workbench.action.terminal.split",
+      "when": "terminalFocus && terminalProcessSupported || terminalFocus && terminalWebExtensionContributedProfile"
+    },
+    {
+      "key": "ctrl+shift+o",
+      "command": "-workbench.action.terminal.openDetectedLink",
+      "when": "terminalFocus && terminalHasBeenCreated"
+    },
+    {
+      "key": "ctrl+shift+o",
+      "command": "-workbench.action.gotoSymbol",
+      "when": "!accessibilityHelpIsShown && !accessibleViewIsShown"
+    },
+    {
+      "key": "ctrl+shift+o",
+      "command": "-editor.action.accessibleViewGoToSymbol",
+      "when": "accessibilityHelpIsShown && accessibleViewGoToSymbolSupported || accessibleViewGoToSymbolSupported && accessibleViewIsShown"
+    },
+    {
+      "key": "ctrl+shift+c",
+      "command": "debug.copyWatchExpression",
+      "when": "watchExpressionsExist && !expressionSelected && focusedView == 'workbench.debug.watchExpressionsView'"
+    },
+    {
+      "key": "ctrl+alt+c",
+      "command": "-debug.copyWatchExpression",
+      "when": "watchExpressionsExist && !expressionSelected && focusedView == 'workbench.debug.watchExpressionsView'"
+    },
+    {
+      "key": "ctrl+shift+v",
+      "command": "-notebook.cell.pasteAbove",
+      "when": "notebookEditorFocused && !inputFocus"
+    },
+    {
+      "key": "ctrl+shift+v",
+      "command": "-r.rmarkdown.showPreview",
+      "when": "editorTextFocus && editorLangId == 'rmd'"
+    },
+    {
+      "key": "ctrl+; ctrl+shift+c",
+      "command": "-testing.coverageAtCursor",
+      "when": "editorTextFocus"
+    },
+
+
+     
+    {
+        "key": "alt+t",
+        "command": "workbench.action.terminal.focus",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "workbench.view.explorer",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "explorerViewletFocus"
+    },
+    {
+      "key": "shift+tab",
+      "command": "-acceptAlternativeSelectedSuggestion",
+      "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus"
+    },
+    {
+      "key": "shift+tab",
+      "command": "-insertPrevSuggestion",
+      "when": "hasOtherSuggestions && textInputFocus && !inSnippetMode && !suggestWidgetVisible && config.editor.tabCompletion == 'on'"
+    },
+    {
+      "key": "shift+tab",
+      "command": "-outdent",
+      "when": "editorTextFocus && !editorReadonly && !editorTabMovesFocus"
+    },
+    {
+      "key": "shift+tab",
+      "command": "-jumpToPrevSnippetPlaceholder",
+      "when": "hasPrevTabstop && inSnippetMode && textInputFocus"
+    },
+    {
+      "key": "tab",
+      "command": "-editor.emmet.action.expandAbbreviation",
+      "when": "config.emmet.triggerExpansionOnTab && editorTextFocus && !editorReadonly && !editorTabMovesFocus"
+    },
+    {
+      "key": "tab",
+      "command": "-editor.action.inlineSuggest.jump",
+      "when": "inlineEditIsVisible && tabShouldJumpToInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+    },
+    {
+      "key": "shift+tab",
+      "command": "acceptSelectedSuggestion",
+      "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus"
+    },
+    {
+      "key": "tab",
+      "command": "-acceptSelectedSuggestion",
+      "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus"
+    },
+    {
+      "key": "shift+tab",
+      "command": "insertBestCompletion",
+      "when": "atEndOfWord && textInputFocus && !hasOtherSuggestions && !inSnippetMode && !suggestWidgetVisible && config.editor.tabCompletion == 'on'"
+    },
+    {
+      "key": "tab",
+      "command": "-insertBestCompletion",
+      "when": "atEndOfWord && textInputFocus && !hasOtherSuggestions && !inSnippetMode && !suggestWidgetVisible && config.editor.tabCompletion == 'on'"
+    },
+    {
+      "key": "tab",
+      "command": "-insertNextSuggestion",
+      "when": "hasOtherSuggestions && textInputFocus && !inSnippetMode && !suggestWidgetVisible && config.editor.tabCompletion == 'on'"
+    },
+    {
+      "key": "tab",
+      "command": "-insertSnippet",
+      "when": "editorTextFocus && hasSnippetCompletions && !editorTabMovesFocus && !inSnippetMode"
+    },
+    {
+      "key": "tab",
+      "command": "-workbench.action.terminal.acceptSelectedSuggestion",
+      "when": "terminalFocus && terminalHasBeenCreated && terminalIsOpen && terminalSuggestWidgetVisible || terminalFocus && terminalIsOpen && terminalProcessSupported && terminalSuggestWidgetVisible"
+    },
+    {
+      "key": "tab",
+      "command": "-jumpToNextSnippetPlaceholder",
+      "when": "hasNextTabstop && inSnippetMode && textInputFocus"
+    },
+    {
+      "key": "shift+tab",
+      "command": "editor.action.inlineSuggest.commit",
+      "when": "inlineEditIsVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+    },
+    {
+      "key": "tab",
+      "command": "-editor.action.inlineSuggest.commit",
+      "when": "inlineEditIsVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible || inlineEditIsVisible && inlineSuggestionVisible && tabShouldAcceptInlineEdit && !editorHoverFocused && !editorTabMovesFocus && !suggestWidgetVisible"
+    }
+  ]

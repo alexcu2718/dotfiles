@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+cd "$(dirname "$0")"
+
+
+
 
 exclude_names="jupyter|yarnrc|polars|tcsh|ipython|ipynb_checkpoints|omnissa|hyper|q3a|industry|godot|quarto|glib|vlc|racket|syncplay|kdedefaults|password-store|aspnet|rnd|virtual_documents|gitconfig|streamlit|valkeycli_history|redhat|z|java"
 
@@ -41,5 +45,5 @@ rm total_dot_files.txt
 
 cp ~/.config/Code/User/settings.json ./vscode-settings.json
 
+cp ~/.config/Code/User/keybindings.json ./keybindings.json
 
-command -v rsync && rsync -av --max-size=2m ~/OSX-KVM/ ./OSX-KVM
