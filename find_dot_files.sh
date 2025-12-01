@@ -41,6 +41,8 @@ while IFS= read -r item; do
   cp -r "$item" "$relpath"
 done < total_dot_files.txt
 
+rm .zcompdump* -rf
+
 rm total_dot_files.txt
 
 cp ~/.config/Code/User/settings.json ./vscode-settings.json

@@ -4,7 +4,7 @@
 " URL: https://github.com/DioxusLabs/monokai-vibrant-rust
 " Author: DioxusLabs
 " License: MIT
-" Last Change: 2024
+" Last Change: 2025
 " ===============================================================
 
 set background=dark

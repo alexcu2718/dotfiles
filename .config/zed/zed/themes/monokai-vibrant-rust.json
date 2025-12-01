@@ -197,6 +197,91 @@
             "color": "#FF3F4F",
             "font_style": "italic"
           },
+          "keyword.gen": {
+            "color": "#FF3F4F",
+            "font_style": "italic"
+          },
+          "keyword.cast": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.static_cast": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.dynamic_cast": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.const_cast": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.reinterpret_cast": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.template": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.typename": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.constexpr": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.consteval": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.constinit": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.decltype": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.alignas": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.alignof": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.noexcept": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.override": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.final": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.virtual": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.explicit": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.friend": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+          "keyword.thread_local": {
+            "color": "#19D1E5",
+            "font_style": "italic"
+          },
+
           "label": {
             "color": "#00a0e4"
           },
