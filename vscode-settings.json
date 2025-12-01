@@ -15,7 +15,7 @@
     "typescript.suggest.paths": false ,
     "javascript.suggest.paths": false ,
     "ruff.lsp": true,
-    "editor.renderWhitespace": "all",
+    "editor.renderWhitespace": "selection",
     "files.encoding":"utf8",
     "files.trimTrailingWhitespace": true,
     "files.autoGuessEncoding": true,
@@ -326,7 +326,11 @@
 "cppref.searchEngine": "Google",
 "editor.acceptSuggestionOnCommitCharacter": false,
 "editor.acceptSuggestionOnEnter": "off",
-"editor.inlineSuggest.enabled": false
+"editor.inlineSuggest.enabled": false,
+"editor.mouseWheelZoom": true,
+"editor.trimWhitespaceOnDelete": true,
+"editor.cursorBlinking": "phase",
+"editor.cursorSmoothCaretAnimation": "on"
 
 }
 
