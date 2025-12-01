@@ -1,0 +1,107 @@
+[
+  // Toggle inlay hints
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-h": "editor::ToggleInlayHints"
+    }
+  },
+
+  // Delete current line
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-k": "editor::DeleteLine"
+    }
+  },
+
+  // Scroll up/down multiple lines
+
+  // Select all text
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-shift-a": "editor::SelectAll"
+    }
+  },
+
+  // Cursor movement
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-a": "editor::MoveToBeginningOfLine",
+      "ctrl-e": "editor::MoveToEndOfLine"
+    }
+  },
+
+  // Outdent with Shift+Tab
+  {
+    "context": "Editor",
+    "bindings": {
+      "shift-tab": "editor::Outdent"
+    }
+  },
+
+  // Word navigation
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-q": "editor::MoveToPreviousWordStart",
+      "ctrl-w": "editor::MoveToNextWordEnd"
+    }
+  },
+
+  // New terminal
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-shift-t": "terminal_panel::ToggleFocus"
+    }
+  },
+
+  // Focus switching between terminal and editor
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-t": "terminal_panel::ToggleFocus"
+    }
+  },
+
+  // Focus explorer/project panel
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-e": "project_panel::ToggleFocus"
+    }
+  },
+
+  // Custom autocomplete behavior with Shift+Tab
+  {
+    "context": "Editor && showing_completions",
+    "bindings": {
+      "shift-tab": "editor::ConfirmCompletion"
+    }
+  },
+
+  // Disable default bindings that conflict with custom ones
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-shift-k": null,
+      "ctrl-j": null,
+      "ctrl-t": null
+    }
+  },
+
+  // Additional workspace bindings
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-k ctrl-t": null,
+      "ctrl-w": null,
+      "ctrl-k ctrl-w": null,
+      "ctrl-q": null,
+      "ctrl-shift-`": null
+    }
+  }
+]
