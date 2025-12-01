@@ -1,9 +1,5 @@
 
 
-
-
-
-# Open ~/.zshrc in $EDITOR with Ctrl+Z
 open_zshrc() {
   $EDITOR ~/.zshrc
   #zle reset-prompt
@@ -14,7 +10,6 @@ bindkey '^Z' open_zshrc
 
 
 
-# File-scope variable to track the last reload time
 typeset -g ZSHRC_LAST_REFRESH=0
 
 if [[ -o interactive ]]; then

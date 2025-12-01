@@ -15,6 +15,10 @@
     "typescript.suggest.paths": false ,
     "javascript.suggest.paths": false ,
     "ruff.lsp": true,
+    "editor.renderWhitespace": "all",
+    "files.encoding":"utf8",
+    "files.trimTrailingWhitespace": true,
+    "files.autoGuessEncoding": true,
 
 
     "ruff.trace.server": "messages",
@@ -41,7 +45,7 @@
     "rust-analyzer.inlayHints.genericParameterHints.lifetime.enable": true,
     "rust-analyzer.inlayHints.maxLength": 5,
     "rust-analyzer.completion.callable.snippets": "none",
- 
+
     "rust-analyzer.inlayHints.lifetimeElisionHints.enable": "skip_trivial",
     "settings.cycle": [
 
@@ -103,8 +107,8 @@
         "--pch-storage=memory"
     ],
   "clangd.enable": true,
-   
-  "clangd.path": "/usr/bin/clangd", 
+
+  "clangd.path": "/usr/bin/clangd",
   "C_Cpp.autocomplete": "disabled",
   "C_Cpp.errorSquiggles": "disabled",
   "[c]": {
@@ -117,7 +121,7 @@
         "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
     },
 
-    
+
 "C_Cpp.inlayHints.parameterNames.enabled": true,
 "C_Cpp.inlayHints.parameterNames.hideLeadingUnderscores": false,
   "C_Cpp.inlayHints.autoDeclarationTypes.enabled": true,
@@ -125,7 +129,7 @@
 
 
 "terminal.integrated.fontLigatures.fallbackLigatures": [
-    
+
     "<--",
     "<---",
     "<<-",
@@ -300,10 +304,10 @@
 ],
 "latex-workshop.latex.clean.command": "",
 "C_Cpp.formatting": "clangFormat",
- 
+
 "clang-tidy.compilerArgs": [
     "-std=c++20",
-    "-stdlib=libc++", 
+    "-stdlib=libc++",
     "-I${workspaceFolder}/include",
     "-I${workspaceFolder}/src"
 ],
@@ -314,8 +318,8 @@
     "performance-*",
     "readability-*",
     "cppcoreguidelines-*",
-    "-readability-identifier-length",           
-    "-cppcoreguidelines-pro-bounds-pointer-arithmetic" 
+    "-readability-identifier-length",
+    "-cppcoreguidelines-pro-bounds-pointer-arithmetic"
 ],
 
 "cppref.alternative.enabled": true,
@@ -323,6 +327,6 @@
 "editor.acceptSuggestionOnCommitCharacter": false,
 "editor.acceptSuggestionOnEnter": "off",
 "editor.inlineSuggest.enabled": false
- 
+
 }
 
