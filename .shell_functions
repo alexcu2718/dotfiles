@@ -193,3 +193,5 @@ if command -v fdf >/dev/null 2>&1; then
 fi
 
 alias RESTARTCODE="pkill -9 code && code ."
+
+alias PERF="perf stat -e cache-misses,cache-references,L1-dcache-load-misses,L1-dcache-loads,LLC-load-misses,LLC-loads,branches,branch-misses"
