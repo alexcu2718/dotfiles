@@ -78,11 +78,16 @@
   "python.venvPath": "~/.venvs",
   "files.exclude": {
     "**/__*": true,
-    "**/.*": true,
+    "**/.clang-tidy": false,
+    "**/.clang-format": false,
+    "**/.gitignore": false,
+    "**/.rustfmt.toml": false,
     "**/*.d": true,
     "**/*.rlib*": true,
     "**/*.rmeta**": true,
-    "**/*.so*": true
+    "**/*.so*": true,
+    "**/.cache": true,
+    "**/compile*.json": true
   },
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer",
@@ -310,12 +315,22 @@
   ],
   "clang-tidy.checks": [
     "clang-diagnostic-*",
+    "bugprone-*",
+    "cert-*",
+    "concurrency-*",
+    "cppcoreguidelines-*",
+    "misc-*",
     "modernize-*",
     "performance-*",
     "readability-*",
-    "cppcoreguidelines-*",
     "-readability-identifier-length",
-    "-cppcoreguidelines-pro-bounds-pointer-arithmetic"
+    "-cppcoreguidelines-pro-bounds-pointer-arithmetic",
+    "-bugprone-easily-swappable-parameters",
+    "-readability-magic-numbers",
+    "-cppcoreguidelines-avoid-magic-numbers",
+    "-misc-non-private-member-variables-in-classes",
+    "-misc-use-anonymous-namespace",
+    "-bugprone-exception-escape"
   ],
   "cppref.alternative.enabled": true,
   "cppref.searchEngine": "Google",
