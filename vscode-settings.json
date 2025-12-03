@@ -1,135 +1,143 @@
 {
-    "r.rpath.linux": "/usr/bin/R",
-    "r.lsp.diagnostics": false,
-    "r.plot.useHttpgd": true,
-
-    "r.session.useWebServer": true,
-    "r.lsp.multiServer": false,
-    "ruff.interpreter": [
-        "/usr/bin/python"
-    ],
-    "ruff.nativeServer": true,
-    "ruff.path": [
-        "/usr/bin/ruff"
-    ],
-    "typescript.suggest.paths": false ,
-    "javascript.suggest.paths": false ,
-    "ruff.lsp": true,
-    "editor.renderWhitespace": "selection",
-    "files.encoding":"utf8",
-    "files.trimTrailingWhitespace": true,
-    "files.autoGuessEncoding": true,
-
-
-    "ruff.trace.server": "messages",
-    "files.autoSave": "afterDelay",
-    "r.lsp.use_stdio": true,
-    "python.languageServer": "Jedi",
-    "terminal.integrated.commandsToSkipShell": [
-        "language-julia.interrupt"
-    ],
-    "julia.symbolCacheDownload": true,
-    "julia.enableTelemetry": true,
-    "dotnetAcquisitionExtension.enablePreviewFeatures": true,
-    "python.analysis.typeEvaluation.enableExperimentalFeatures": true,
-    "python.terminal.activateEnvInCurrentTerminal": true,
-    "python.terminal.shellIntegration.enabled": true,
-    "python.analysis.generateWithTypeAnnotation": true,
-    "git.openRepositoryInParentFolders": "never",
-    "dotnet.dotnetPath": "~/.dotnet",
-    "python.analysis.languageServerMode": "full",
-    "python.analysis.typeCheckingMode": "strict",
-    "security.workspace.trust.untrustedFiles": "open",
-    "notebook.lineNumbers": "on",
-    "go.inferGopath": true,
-    "rust-analyzer.inlayHints.genericParameterHints.lifetime.enable": true,
-    "rust-analyzer.inlayHints.maxLength": 5,
-    "rust-analyzer.completion.callable.snippets": "none",
-
-    "rust-analyzer.inlayHints.lifetimeElisionHints.enable": "skip_trivial",
-    "settings.cycle": [
-
-    ],
-    "editor.inlayHints.enabled": "offUnlessPressed",
-    "zig.zls.enabled": "on",
-      "editor.fontFamily": "Fira Code",
-    "editor.fontLigatures": true,
-    "python.analysis.inlayHints.functionReturnTypes": true,
-    "python.analysis.typeEvaluation.enableReachabilityAnalysis": true,
-    "python.analysis.typeEvaluation.strictListInference": true,
-    "[gdscript]": {
+  "r.rpath.linux": "/usr/bin/R",
+  "r.lsp.diagnostics": false,
+  "r.plot.useHttpgd": true,
+  "r.session.useWebServer": true,
+  "r.lsp.multiServer": false,
+  "ruff.interpreter": [
+    "/usr/bin/python"
+  ],
+  "ruff.nativeServer": true,
+  "ruff.path": [
+    "/usr/bin/ruff"
+  ],
+  "typescript.suggest.paths": false,
+  "javascript.suggest.paths": false,
+  "ruff.lsp": true,
+  "editor.renderWhitespace": "selection",
+  "files.encoding": "utf8",
+  "files.trimTrailingWhitespace": true,
+  "files.autoGuessEncoding": true,
+  "ruff.trace.server": "messages",
+  "files.autoSave": "afterDelay",
+  "r.lsp.use_stdio": true,
+  "python.languageServer": "Jedi",
+  "terminal.integrated.commandsToSkipShell": [
+    "language-julia.interrupt"
+  ],
+  "julia.symbolCacheDownload": true,
+  "julia.enableTelemetry": true,
+  "dotnetAcquisitionExtension.enablePreviewFeatures": true,
+  "python.analysis.typeEvaluation.enableExperimentalFeatures": true,
+  "python.terminal.activateEnvInCurrentTerminal": true,
+  "python.terminal.shellIntegration.enabled": true,
+  "python.analysis.generateWithTypeAnnotation": true,
+  "git.openRepositoryInParentFolders": "never",
+  "dotnet.dotnetPath": "~/.dotnet",
+  "python.analysis.languageServerMode": "full",
+  "python.analysis.typeCheckingMode": "strict",
+  "security.workspace.trust.untrustedFiles": "open",
+  "notebook.lineNumbers": "on",
+  "go.inferGopath": true,
+  "rust-analyzer.inlayHints.genericParameterHints.lifetime.enable": true,
+  "rust-analyzer.inlayHints.maxLength": 5,
+  "rust-analyzer.completion.callable.snippets": "none",
+  "rust-analyzer.inlayHints.lifetimeElisionHints.enable": "skip_trivial",
+  "settings.cycle": [],
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "zig.zls.enabled": "on",
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.typeEvaluation.enableReachabilityAnalysis": true,
+  "python.analysis.typeEvaluation.strictListInference": true,
+  "[gdscript]": {
     "editor.formatOnSave": false,
     "editor.insertSpaces": false,
     "editor.detectIndentation": false
-},
-"rust-analyzer.completion.addSemicolonToUnit": false,
-"jupyter.enableExtendedPythonKernelCompletions": true,
-"jupyter.kernels.excludePythonEnvironments": [
-  "/bin/python",
-  "/sbin/python",
-  "/usr/bin/python",
-  "/usr/sbin/python",
-  "~/.venvs/pyradian",
-  "/bin/python2",
-  "/sbin/python2",
-  "/usr/bin/python2",
-  "/usr/sbin/python2"
-],
-"python.venvPath": "~/.venvs",
-"files.exclude": {
-  "**/__*": true,
-  "**/.*": true,
-  "**/*.d": true,
-  "**/*.rlib*": true,
-  "**/*.rmeta**": true,
-  "**/*.so*": true
-},
-"window.openFilesInNewWindow": "on",
-"window.openFoldersInNewWindow": "on",
-"ty.experimental.completions.enable": true,
-"ty.trace.server": "messages",
-"workbench.colorTheme": "Monokai Vibrant (Rust)",
-"workbench.iconTheme": "vs-seti-hacknerdfontmono",
-"terminal.external.linuxExec": "",
-"terminal.integrated.accessibleViewPreserveCursorPosition": true,
-"terminal.integrated.allowChords": false,
-"terminal.integrated.copyOnSelection": true,
-"terminal.integrated.cursorBlinking": true,
-"terminal.integrated.enableImages": true,
-"terminal.integrated.ignoreBracketedPasteMode": true,
-"jupyter.notebookRunGroups.runIconsOnCell": true,
-"terminal.integrated.gpuAcceleration": "on",
-"clangd.arguments": [
-        "--compile-commands-dir=${workspaceFolder}",
-        "--background-index",
-        "--completion-style=detailed",
-        "--header-insertion=never",
-        "--pch-storage=memory"
-    ],
+  },
+  "rust-analyzer.completion.addSemicolonToUnit": false,
+  "jupyter.enableExtendedPythonKernelCompletions": true,
+  "jupyter.kernels.excludePythonEnvironments": [
+    "/bin/python",
+    "/sbin/python",
+    "/sbin/python2.7",
+    "/sbin/python3",
+    "/usr/sbin/python3.13",
+    "/usr/sbin/python2.7",
+    "/usr/sbin/python3",
+    "/sbin/python3.13",
+    "/usr/bin/python",
+    "/usr/sbin/python",
+    "~/.venvs/pyradian",
+    "/bin/python2",
+    "/sbin/python2",
+    "/usr/bin/python2",
+    "/usr/sbin/python2"
+  ],
+  "python.venvPath": "~/.venvs",
+  "files.exclude": {
+    "**/__*": true,
+    "**/.*": true,
+    "**/*.d": true,
+    "**/*.rlib*": true,
+    "**/*.rmeta**": true,
+    "**/*.so*": true
+  },
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.formatOnSave": true
+  },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true
+  },
+  "[jupyter]": {
+    "editor.formatOnSave": true
+  },
+  "notebook.formatOnSave.enabled": true,
+  "notebook.formatOnCellExecution": true,
+  "window.openFilesInNewWindow": "on",
+  "window.openFoldersInNewWindow": "on",
+  "ty.experimental.completions.enable": true,
+  "ty.trace.server": "messages",
+  "workbench.colorTheme": "Monokai Vibrant (Rust)",
+  "workbench.iconTheme": "vs-seti-hacknerdfontmono",
+  "terminal.external.linuxExec": "",
+  "terminal.integrated.accessibleViewPreserveCursorPosition": true,
+  "terminal.integrated.allowChords": false,
+  "terminal.integrated.copyOnSelection": true,
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.enableImages": true,
+  "terminal.integrated.ignoreBracketedPasteMode": true,
+  "jupyter.notebookRunGroups.runIconsOnCell": true,
+  "terminal.integrated.gpuAcceleration": "on",
+  "clangd.arguments": [
+    "--compile-commands-dir=${workspaceFolder}",
+    "--background-index",
+    "--completion-style=detailed",
+    "--header-insertion=never",
+    "--pch-storage=memory"
+  ],
   "clangd.enable": true,
-
   "clangd.path": "/usr/bin/clangd",
-  "C_Cpp.autocomplete": "disabled",
+  "C_Cpp.autocomplete": "default",
   "C_Cpp.errorSquiggles": "disabled",
   "[c]": {
-        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
-    },
-    "[cpp]": {
-        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
-    },
-    "[c++]": {
-        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
-    },
-
-
-"C_Cpp.inlayHints.parameterNames.enabled": true,
-"C_Cpp.inlayHints.parameterNames.hideLeadingUnderscores": false,
+    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+  },
+  "[cpp]": {
+    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+  },
+  "[c++]": {
+    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+  },
+  "editor.formatOnSave": true,
+  "C_Cpp.inlayHints.parameterNames.enabled": true,
+  "C_Cpp.inlayHints.parameterNames.hideLeadingUnderscores": false,
   "C_Cpp.inlayHints.autoDeclarationTypes.enabled": true,
   "C_Cpp.inlayHints.autoDeclarationTypes.showOnLeft": false,
-
-
-"terminal.integrated.fontLigatures.fallbackLigatures": [
-
+  "terminal.integrated.fontLigatures.fallbackLigatures": [
     "<--",
     "<---",
     "<<-",
@@ -190,20 +198,17 @@
     "+++",
     "<!--",
     "<!---"
-],
-"workbench.panel.showLabels": false,
-"terminal.integrated.enableMultiLinePasteWarning": "never",
-"terminal.integrated.defaultProfile.linux": "zsh",
-"terminal.integrated.mouseWheelScrollSensitivity": 4,
-"workbench.editorAssociations": {
+  ],
+  "workbench.panel.showLabels": false,
+  "terminal.integrated.enableMultiLinePasteWarning": "never",
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.mouseWheelScrollSensitivity": 4,
+  "workbench.editorAssociations": {
     "*.copilotmd": "vscode.markdown.preview.editor",
     "file:/**/*.csv": "jupyter-data-wrangler"
-},
-"notebook.cellExecutionTimeVerbosity": "verbose",
-
-
- "multiCommand.commands": [
-
+  },
+  "notebook.cellExecutionTimeVerbosity": "verbose",
+  "multiCommand.commands": [
     {
       "command": "extension.copyToEndOfLine",
       "sequence": [
@@ -211,9 +216,6 @@
         "editor.action.clipboardCopyAction"
       ]
     },
-
-
-
   ],
   "workbench.commandPalette.experimental.suggestCommands": true,
   "r.removeLeadingComments": true,
@@ -223,7 +225,6 @@
     "-q"
   ],
   "r.alwaysUseActiveTerminal": true,
-
   "terminal.integrated.fontLigatures.enabled": true,
   "accessibility.verbosity.terminal": false,
   "editor.accessibilitySupport": "off",
@@ -232,9 +233,7 @@
   "editor.minimap.renderCharacters": false,
   "workbench.editor.enablePreview": false,
   "workbench.startupEditor": "terminal",
-
   "python.analysis.aiCodeActions": {
-
     "implementAbstractClasses": true
   },
   "python.analysis.addHoverSummaries": true,
@@ -244,75 +243,72 @@
   "workbench.editor.empty.hint": "hidden",
   "rust-analyzer.procMacro.ignored": {
     "leptos_macro": [
-        "server"
+      "server"
     ],
-},
-"explorer.confirmDelete": false,
-"terminal.external.windowsExec": "/usr/bin/bash",
-"makefile.configureOnOpen": true,
-"vim.highlightedyank.enable": true,
-"python.defaultInterpreterPath": "/home/alexc/.venvs/py313",
-"C_Cpp.intelliSenseEngine": "disabled",
-"clangd.checkUpdates": true,
-"clangd.inactiveRegions.useBackgroundHighlight": true,
-"C_Cpp.codeAnalysis.clangTidy.enabled": true,
-
-"latex-workshop.latex.tools": [
- {
-  "name": "xelatex",
-  "command": "xelatex",
-  "args": [
-   "-synctex=1",
-   "-interaction=nonstopmode",
-   "-file-line-error",
-   "-pdf",
-   "-outdir=%OUTDIR%",
-   "%DOC%"
+  },
+  "explorer.confirmDelete": false,
+  "terminal.external.windowsExec": "/usr/bin/bash",
+  "makefile.configureOnOpen": true,
+  "vim.highlightedyank.enable": true,
+  "python.defaultInterpreterPath": "/home/alexc/.venvs/py313",
+  "C_Cpp.intelliSenseEngine": "disabled",
+  "clangd.checkUpdates": true,
+  "clangd.inactiveRegions.useBackgroundHighlight": true,
+  "C_Cpp.codeAnalysis.clangTidy.enabled": true,
+  "latex-workshop.latex.tools": [
+    {
+      "name": "xelatex",
+      "command": "xelatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-pdf",
+        "-outdir=%OUTDIR%",
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "xelatex",
+      "command": "xelatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "xelatex",
+      "command": "xelatex",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+      ],
+      "env": {}
+    },
+    {
+      "name": "bibtex",
+      "command": "bibtex",
+      "args": [
+        "%DOCFILE%"
+      ],
+      "env": {}
+    }
   ],
-  "env": {}
- },
- {
-  "name": "xelatex",
-  "command": "xelatex",
-  "args": [
-   "-synctex=1",
-   "-interaction=nonstopmode",
-   "-file-line-error",
-   "%DOC%"
-  ],
-  "env": {}
- },
- {
-  "name": "xelatex",
-  "command": "xelatex",
-  "args": [
-   "-synctex=1",
-   "-interaction=nonstopmode",
-   "-file-line-error",
-   "%DOC%"
-  ],
-  "env": {}
- },
- {
-  "name": "bibtex",
-  "command": "bibtex",
-  "args": [
-   "%DOCFILE%"
-  ],
-  "env": {}
- }
-],
-"latex-workshop.latex.clean.command": "",
-"C_Cpp.formatting": "clangFormat",
-
-"clang-tidy.compilerArgs": [
+  "latex-workshop.latex.clean.command": "",
+  "C_Cpp.formatting": "clangFormat",
+  "clang-tidy.compilerArgs": [
     "-std=c++20",
     "-stdlib=libc++",
     "-I${workspaceFolder}/include",
     "-I${workspaceFolder}/src"
-],
-
-"clang-tidy.checks": [
+  ],
+  "clang-tidy.checks": [
     "clang-diagnostic-*",
     "modernize-*",
     "performance-*",
@@ -320,17 +316,14 @@
     "cppcoreguidelines-*",
     "-readability-identifier-length",
     "-cppcoreguidelines-pro-bounds-pointer-arithmetic"
-],
-
-"cppref.alternative.enabled": true,
-"cppref.searchEngine": "Google",
-"editor.acceptSuggestionOnCommitCharacter": false,
-"editor.acceptSuggestionOnEnter": "off",
-"editor.inlineSuggest.enabled": false,
-"editor.mouseWheelZoom": true,
-"editor.trimWhitespaceOnDelete": true,
-"editor.cursorBlinking": "phase",
-"editor.cursorSmoothCaretAnimation": "on"
-
+  ],
+  "cppref.alternative.enabled": true,
+  "cppref.searchEngine": "Google",
+  "editor.acceptSuggestionOnCommitCharacter": false,
+  "editor.acceptSuggestionOnEnter": "off",
+  "editor.inlineSuggest.enabled": false,
+  "editor.mouseWheelZoom": true,
+  "editor.trimWhitespaceOnDelete": true,
+  "editor.cursorBlinking": "phase",
+  "editor.cursorSmoothCaretAnimation": "on"
 }
-

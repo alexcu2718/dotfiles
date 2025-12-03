@@ -7,11 +7,12 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "colorize_brackets": true,
   "search": {
     "regex": true
   },
   "agent": {
-    "always_allow_tool_actions": true,
+    "always_allow_tool_actions": false,
     "model_parameters": []
   },
   "ssh_connections": [
