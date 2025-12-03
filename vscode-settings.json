@@ -1,9 +1,4 @@
 {
-  "r.rpath.linux": "/usr/bin/R",
-  "r.lsp.diagnostics": false,
-  "r.plot.useHttpgd": true,
-  "r.session.useWebServer": true,
-  "r.lsp.multiServer": false,
   "ruff.interpreter": [
     "/usr/bin/python"
   ],
@@ -20,25 +15,19 @@
   "files.autoGuessEncoding": true,
   "ruff.trace.server": "messages",
   "files.autoSave": "afterDelay",
-  "r.lsp.use_stdio": true,
   "python.languageServer": "Jedi",
   "terminal.integrated.commandsToSkipShell": [
     "language-julia.interrupt"
   ],
-  "julia.symbolCacheDownload": true,
-  "julia.enableTelemetry": true,
-  "dotnetAcquisitionExtension.enablePreviewFeatures": true,
   "python.analysis.typeEvaluation.enableExperimentalFeatures": true,
   "python.terminal.activateEnvInCurrentTerminal": true,
   "python.terminal.shellIntegration.enabled": true,
   "python.analysis.generateWithTypeAnnotation": true,
   "git.openRepositoryInParentFolders": "never",
-  "dotnet.dotnetPath": "~/.dotnet",
   "python.analysis.languageServerMode": "full",
   "python.analysis.typeCheckingMode": "strict",
   "security.workspace.trust.untrustedFiles": "open",
   "notebook.lineNumbers": "on",
-  "go.inferGopath": true,
   "rust-analyzer.inlayHints.genericParameterHints.lifetime.enable": true,
   "rust-analyzer.inlayHints.maxLength": 5,
   "rust-analyzer.completion.callable.snippets": "none",
@@ -78,6 +67,8 @@
   "python.venvPath": "~/.venvs",
   "files.exclude": {
     "**/__*": true,
+    ".cargo": true,
+    ".devcontainer": true,
     "**/.clang-tidy": false,
     "**/.clang-format": false,
     "**/.gitignore": false,
@@ -209,7 +200,6 @@
   "terminal.integrated.defaultProfile.linux": "zsh",
   "terminal.integrated.mouseWheelScrollSensitivity": 4,
   "workbench.editorAssociations": {
-    "*.copilotmd": "vscode.markdown.preview.editor",
     "file:/**/*.csv": "jupyter-data-wrangler"
   },
   "notebook.cellExecutionTimeVerbosity": "verbose",
@@ -223,13 +213,6 @@
     },
   ],
   "workbench.commandPalette.experimental.suggestCommands": true,
-  "r.removeLeadingComments": true,
-  "r.rterm.option": [
-    "--no-save",
-    "--no-restore",
-    "-q"
-  ],
-  "r.alwaysUseActiveTerminal": true,
   "terminal.integrated.fontLigatures.enabled": true,
   "accessibility.verbosity.terminal": false,
   "editor.accessibilitySupport": "off",
@@ -241,7 +224,6 @@
   "python.analysis.aiCodeActions": {
     "implementAbstractClasses": true
   },
-  "python.analysis.addHoverSummaries": true,
   "python.analysis.enableAsyncProgram": true,
   "redhat.telemetry.enabled": true,
   "python.analysis.extraPaths": [],

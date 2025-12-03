@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd "$(dirname "$0")"
+cd "$(dirname "$0")" || exit
 
 
 
@@ -31,7 +31,7 @@ HOME_PREFIX="$HOME/"
 
 while IFS= read -r item; do
 
-  relpath="${item#$HOME_PREFIX}"
+  relpath="${item#"$HOME_PREFIX"}"
 
   echo "Copying $item to ./$relpath"
 
@@ -41,7 +41,11 @@ while IFS= read -r item; do
   cp -r "$item" "$relpath"
 done < total_dot_files.txt
 
-rm .zcompdump* -rf
+#i got lazy here sue me
+
+if [ "$(whoami)" = "alexc" ]; then
+rm -rf .bash_profile .config/go  .config/fish .fontlist .tcshrc .xonsh* .masterpdf* .vmware .var .pki  .*backup .conda .hyper* .*quake* .python_* .fltk .bash_history .gnupg .elvish .dotnet .conan2 .azure .zcompdump*  .spacemacs* .bash_* .histfile .osh-up* .radian* .wget-* .r .ssh .quake .profile .zsh_history .python-history .steam .parall* .hyper .tex* .w3m .subversion
+fi
 
 rm total_dot_files.txt
 
