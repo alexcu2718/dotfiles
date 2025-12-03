@@ -84,4 +84,3 @@ keybind = shift+right=goto_split:next
 
 #keybind = ctrl+alt+right=goto_split:next
 #keybind = ctrl+shift+left=goto_split:previous
-keybind = shift+enter=text:\n
