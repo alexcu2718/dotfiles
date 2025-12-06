@@ -19,7 +19,7 @@ gg() {
 unalias lsgrep > /dev/null 2>&1
 
 lsgrep() {
-ls -a  "$1"  | grep -Ei  "$2" 
+ls -a  "$1"  | grep -Ei  "$2"
 }
 
 
@@ -97,7 +97,7 @@ export  GCM_CREDENTIAL_STORE=secretservice
 alias ssh='TERM=xterm ssh'
 alias GITBRANCH='echo "$(git branch -r)"'
 alias GITLINK='git -C "$(git rev-parse --show-toplevel)" remote get-url origin'
- 
+
 alias RUNBSD='qemu-system-x86_64 \
   -enable-kvm \
   -cpu host \
@@ -111,7 +111,7 @@ alias RUNBSD='qemu-system-x86_64 \
 
 '
 
-   
+
 alias RUNBSD_NOGRAPHIC='qemu-system-x86_64 \
   -enable-kvm \
   -cpu host \
@@ -124,7 +124,7 @@ alias RUNBSD_NOGRAPHIC='qemu-system-x86_64 \
    -nographic'
 
 
-  
+
 alias RUNOSX='cd ~/OSX-KVM && ./OpenCore-Boot.sh'
 
 alias RUNOSX_UI='cd ~/OSX-KVM && ./OpenCore-Boot-windowed.sh'
@@ -146,7 +146,7 @@ alias RUNBIGENDIAN="qemu-system-ppc64 \
   -device virtio-net-pci,netdev=net0 \
   -device virtio-balloon \
   -nographic -serial mon:stdio -monitor none"
-  
+
 
 alias RUNWINDOWS="qemu-system-x86_64 \
 -machine type=q35,accel=kvm \
@@ -191,6 +191,18 @@ alias SLEEPOFF_ONE_HOUR='systemd-inhibit --what=sleep --who="User" --why="Tempor
 if command -v fdf >/dev/null 2>&1; then
     eval "$(fdf --generate $(mysh))" >/dev/null 2>&1
 fi
+
+dolphin() {
+    command dolphin "$@" &> /dev/null &
+    disown
+}
+
+
+thunar() {
+    command thunar "$@" &> /dev/null &
+    disown
+}
+alias zed='zeditor'
 
 alias RESTARTCODE="pkill -9 code && code ."
 

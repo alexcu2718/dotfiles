@@ -7,11 +7,4 @@
         key: "s",
         description: Some("screenshot"),
     ): Spawn("flameshot gui"),
-    (
-        modifiers: [
-            Ctrl,
-            Shift,
-        ],
-        key: "t",
-    ): System(Terminal),
 }
