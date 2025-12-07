@@ -81,10 +81,7 @@
         "line_numbers": true,
         "folds": true
     },
-    "wrap_guides": [
-        80,
-        120
-    ],
+    "wrap_guides": [80, 120],
     "soft_wrap": "none",
     "preferred_line_length": 80,
     "hard_tabs": false,
@@ -107,17 +104,9 @@
         "git": true
     },
     "file_types": {
-        "Dockerfile": [
-            "Dockerfile*"
-        ],
-        "JSON": [
-            "*.json",
-            "*.jsonc"
-        ],
-        "YAML": [
-            "*.yaml",
-            "*.yml"
-        ]
+        "Dockerfile": ["Dockerfile*"],
+        "JSON": ["*.json", "*.jsonc"],
+        "YAML": ["*.yaml", "*.yml"]
     },
     "file_scan_exclusions": [
         "**/.git",
@@ -158,10 +147,7 @@
         },
         "rust-analyzer": {
             "initialization_options": {
-                "checkOnSave": {
-                    "command": "check",
-                    "allFeatures": true
-                },
+                "checkOnSave": true,
                 "completion": {
                     "callable": {
                         "snippets": "none"
