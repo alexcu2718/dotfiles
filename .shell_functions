@@ -206,6 +206,6 @@ alias zed='zeditor'
 
 alias RESTARTCODE="pkill -9 code && code ."
 
-alias code="\code . --ozone-platform=wayland"
+alias code="\code --ozone-platform=wayland"
 
 alias PERF="perf stat -e cache-misses,cache-references,L1-dcache-load-misses,L1-dcache-loads,LLC-load-misses,LLC-loads,branches,branch-misses"
