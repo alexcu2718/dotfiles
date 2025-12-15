@@ -234,9 +234,15 @@ dolphin() {
 
 alias zed='zeditor'
 
+# simple git clone alias
+unalias gc > /dev/null 2>&1
+gc() {
+    git clone "https://github.com/$1" "$2"
+}
+
 
 alias code="\code --ozone-platform=wayland"
-
+alias yay="\yay --noconfirm"
 
 alias RESTARTCODE="pkill -9 code && \code . --ozone-platform=wayland "
 

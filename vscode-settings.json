@@ -312,7 +312,8 @@
     "-cppcoreguidelines-avoid-magic-numbers",
     "-misc-non-private-member-variables-in-classes",
     "-misc-use-anonymous-namespace",
-    "-bugprone-exception-escape"
+    "-bugprone-exception-escape",
+    "-modernze-use-trailing-return-type"
   ],
   "cppref.alternative.enabled": true,
   "cppref.searchEngine": "Google",
