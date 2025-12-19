@@ -15,10 +15,19 @@
   "files.autoGuessEncoding": true,
   "ruff.trace.server": "messages",
   "files.autoSave": "afterDelay",
-  "python.languageServer": "Jedi",
   "terminal.integrated.commandsToSkipShell": [
     "language-julia.interrupt"
   ],
+  "python.analysis.completeFunctionParens": true,
+  "codeLens.enableCodeLens": true,
+  "codeLens.filterImports": false,
+  "codeLens.filterDefinitions": true,
+  "python.analysis.inlayHints.variableTypes": true,
+  "python.analysis.useLibraryCodeForTypes": true,
+  "python.analysis.autoSearchPaths": true,
+  "python.languageServer": "Pylance",
+  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.indexing": true,
   "python.analysis.typeEvaluation.enableExperimentalFeatures": true,
   "python.terminal.activateEnvInCurrentTerminal": true,
   "python.terminal.shellIntegration.enabled": true,
@@ -313,7 +322,7 @@
     "-misc-non-private-member-variables-in-classes",
     "-misc-use-anonymous-namespace",
     "-bugprone-exception-escape",
-    "-modernze-use-trailing-return-type"
+    "-modernize-use-trailing-return-type"
   ],
   "cppref.alternative.enabled": true,
   "cppref.searchEngine": "Google",
@@ -323,5 +332,6 @@
   "editor.mouseWheelZoom": true,
   "editor.trimWhitespaceOnDelete": true,
   "editor.cursorBlinking": "phase",
-  "editor.cursorSmoothCaretAnimation": "on"
+  "editor.cursorSmoothCaretAnimation": "on",
+  "python.analysis.autoImportCompletions": true
 }

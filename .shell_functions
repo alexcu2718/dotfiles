@@ -35,6 +35,16 @@ unalias exportpath > /dev/null 2>&1
 
 alias SSH='ssh -p 2222 alexc@localhost'
 
+unalias SSHCOPY > /dev/null 2>&1
+SSHCOPY(){
+  #scp -r -P 2222 /tmp/fdf_test alexc@localhost:/tmp/fdf_test
+  scp -r -P 2222 "$1" alexc@localhost:"$2"
+}
+
+unalias RSYNC > /dev/null 2>&1
+RSYNC(){
+  rsync -avz -e 'ssh -p 2222' "$1" alexc@localhost:"$2"
+}
 
 exportpath () {
   echo "export PATH=\$PATH:$1" >> ~/.shell_functions
@@ -249,3 +259,5 @@ alias RESTARTCODE="pkill -9 code && \code . --ozone-platform=wayland "
 alias PERF="perf stat -e cache-misses,cache-references,L1-dcache-load-misses,L1-dcache-loads,LLC-load-misses,LLC-loads,branches,branch-misses"
 
 alias GITRESETFILE="git checkout HEAD --"
+
+alias REFRESHKEYS='sudo pacman-key --refresh-keys'
