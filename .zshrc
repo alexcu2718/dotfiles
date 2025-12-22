@@ -75,10 +75,6 @@ DISABLE_LS_COLORS="false"
 DISABLE_AUTO_TITLE="false"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
-plugins=(gitfast  archlinux github   pip docker docker-compose
- gh fzf  systemd sudo eza  starship tldr  copyfile   zsh-interactive-cd
-   uv  ufw vscode   rust python
- )
 
 
 AUTO_SUGGESTIONS="$ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
@@ -99,6 +95,12 @@ clone_if_not_exist "$AUTO_SUGGESTIONS" "https://github.com/zsh-users/zsh-autosug
 clone_if_not_exist "$FAST_SYNTAX" "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
 clone_if_not_exist "$AUTO_COMPLETE" "https://github.com/marlonrichert/zsh-autocomplete.git"
 clone_if_not_exist "$AUTO_ENV" "https://github.com/hyperupcall/autoenv"
+
+plugins=(gitfast  archlinux github   pip docker docker-compose
+ gh fzf  systemd sudo eza  starship tldr  copyfile   zsh-interactive-cd
+   uv  ufw vscode   rust python
+ )
+
 
 
 source_if_exists "$AUTO_SUGGESTIONS"
