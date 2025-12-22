@@ -88,9 +88,10 @@ AUTO_ENV="$ZSH/plugins/autoenv/autoenv.plugin.zsh"
 ##i got fedup of recreating this everytime i wanted a shell to work on a new pc and too lazy for nix.
 
 clone_if_not_exist() {
-  local dir="$1" repo="$2"
-  if [ ! -d $(dirname "$dir") ]; then
-    git clone --depth 1 "$repo" "$dir" || echo "Clone failed: $repo" >&2
+  local filepath="$1" repo="$2"
+  DIRNAME="$(dirname "$filepath")"
+  if [ ! -d "$DIRNAME" ]; then
+    git clone --depth 1 "$repo" "$DIRNAME" || echo "Clone failed: $repo" >&2
   fi
 }
 
