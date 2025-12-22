@@ -66,10 +66,10 @@ plugins=(gitfast  archlinux github   pip docker docker-compose
  )
 
 
-source_if_exists /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-source_if_exists /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-source_if_exists /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source_if_exists "$ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
+source_if_exists "$ZSH/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+source_if_exists "$ZSH/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 source_if_exists ~/.shell_functions
-source_if_exists $ZSH/plugins/autoenv/autoenv.plugin.zsh
+source_if_exists "$ZSH/plugins/autoenv/autoenv.plugin.zsh"
 source_if_exists ~/.bindkeys
 
