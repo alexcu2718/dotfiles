@@ -3,19 +3,8 @@ export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 export ZSH="$HOME/.oh-my-zsh"
 
-ORIGINAL_DIR="$PWD"
 
-if [ ! -d "$ZSH" ]; then
-    TMP_DIR="${TMP:-/tmp}"
-    TMP_DOT="$TMP_DIR/dotfiles"
-    git clone --depth 1 https://github.com/alexcu2718/dotfiles "$TMP_DOT"
-    cp -r "$TMP_DIR/dotfiles/.oh-my-zsh" "$ZSH"
-    cd "$ZSH"
-    git submodule update --init --recursive
-    rm -rf "$TMP_DOT"
-    echo -e "Oh my zsh installed\n"
-    cd "$ORIGINAL_DIR"
-fi
+
 
 
 
