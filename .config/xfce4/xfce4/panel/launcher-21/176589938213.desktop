@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Ghostty
+Comment=A terminal emulator
+Exec=/usr/bin/ghostty --gtk-single-instance=true
+Icon=com.mitchellh.ghostty
+Path=
+Terminal=false
+StartupNotify=true
+X-XFCE-Source=file:///home/alexc/Desktop/Ghostty.desktop

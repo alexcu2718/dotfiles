@@ -10,7 +10,7 @@ if [ ! -d "$ZSH" ]; then
     TMP_DOT="$TMP_DIR/dotfiles"
     git clone --depth 1 https://github.com/alexcu2718/dotfiles "$TMP_DOT"
     cp -r "$TMP_DIR/dotfiles/.oh-my-zsh" "$ZSH"
-    cd "ZSH"
+    cd "$ZSH"
     git submodule update --init --recursive
     rm -rf "$TMP_DOT"
     echo -e "Oh my zsh installed\n"
