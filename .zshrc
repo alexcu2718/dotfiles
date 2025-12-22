@@ -1,5 +1,18 @@
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+
+
 export ZSH="$HOME/.oh-my-zsh"
+
+if [ ! -d "$ZSH" ]; then
+    TMP_DIR="${TMP:-/tmp}"
+    TMP_DOT="$TMP_DIR/dotfiles"
+    git clone --depth 1 https://github.com/alexcu2718/dotfiles "$TMP_DOT"
+    cp -r "$TMP_DIR/dotfiles/.oh-my-zsh" "$ZSH"
+    rm -rf "$TMP_DOT"
+    echo -e "Oh my zsh installed\n"
+fi
+
+
 
 autoload -U compinit
 compinit
@@ -8,9 +21,11 @@ compinit
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.cache/zsh
 zstyle ':completion:*' list-lines 15
-
+zstyle ':completion:*' completer _complete _match _approximate
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*:approximate:*' max-errors 1 numeric
 fpath+=/usr/share/zsh/vendor-completions
-fpath+=~/.zsh/completions 
+fpath+=~/.zsh/completions
 
 unset zle_bracketed_paste
 
@@ -54,7 +69,8 @@ function refresh_zshrc() {
 }
 
 source_if_exists "$ZSH/oh-my-zsh.sh"
-zstyle ':omz:update' mode disabled # it's done by package manager
+zstyle ':omz:update' mode auto
+zstyle ':omz:update' frequency 7    # Check every 14 days
 DISABLE_MAGIC_FUNCTIONS="true"
 DISABLE_LS_COLORS="false"
 DISABLE_AUTO_TITLE="false"
@@ -62,7 +78,7 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 plugins=(gitfast  archlinux github   pip docker docker-compose
  gh fzf  systemd sudo eza  starship tldr  copyfile   zsh-interactive-cd
-   uv  ufw vscode   rust python 
+   uv  ufw vscode   rust python
  )
 
 
