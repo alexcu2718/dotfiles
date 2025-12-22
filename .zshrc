@@ -1,9 +1,14 @@
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 
+
+
 export ZSH="$HOME/.oh-my-zsh"
 
 
+if [ ! -d "$ZSH" ]; then
+    git clone --depth 1 "https://github.com/ohmyzsh/ohmyzsh" "$ZSH"
+fi
 
 
 
@@ -76,11 +81,30 @@ plugins=(gitfast  archlinux github   pip docker docker-compose
  )
 
 
-source_if_exists "$ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
-source_if_exists "$ZSH/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-source_if_exists "$ZSH/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+AUTO_SUGGESTIONS="$ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
+FAST_SYNTAX="$ZSH/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+AUTO_COMPLETE="$ZSH/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+AUTO_ENV="$ZSH/plugins/autoenv/autoenv.plugin.zsh"
+##i got fedup of recreating this everytime i wanted a shell to work on a new pc and too lazy for nix.
+
+clone_if_not_exist() {
+  local dir="$1" repo="$2"
+  if [ ! -d $(dirname "$dir") ]; then
+    git clone --depth 1 "$repo" "$dir" || echo "Clone failed: $repo" >&2
+  fi
+}
+
+clone_if_not_exist "$AUTO_SUGGESTIONS" "https://github.com/zsh-users/zsh-autosuggestions.git"
+clone_if_not_exist "$FAST_SYNTAX" "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
+clone_if_not_exist "$AUTO_COMPLETE" "https://github.com/marlonrichert/zsh-autocomplete.git"
+clone_if_not_exist "$AUTO_ENV" "https://github.com/hyperupcall/autoenv"
+
+
+source_if_exists "$AUTO_SUGGESTIONS"
+source_if_exists  "$FAST_SYNTAX"
+source_if_exists "$AUTO_COMPLETE"
 source_if_exists ~/.shell_functions
-source_if_exists "$ZSH/plugins/autoenv/autoenv.plugin.zsh"
+source_if_exists "$AUTO_ENV"
 source_if_exists ~/.bindkeys
 
 
