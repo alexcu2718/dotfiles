@@ -89,7 +89,6 @@ export VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-038080b684.sock
 
 
 
-eval "$(zoxide init "$(mysh)")"
 
 alias cat='bat --paging=never --style=plain'
 alias CLIPBOARD='xclip -sel clip'

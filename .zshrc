@@ -12,13 +12,6 @@ fi
 
 
 
-if ! command -v cargo >/dev/null && [[ "$OSTYPE" == darwin* ]]; then
-    brew install rust
-fi
-
-if ! command -v starship >/dev/null;then
-cargo install starship
-fi
 
 STARSHIP_LOCATION="$HOME/.config/starship.toml"
 if [ ! -f "$STARSHIP_LOCATION" ]; then
@@ -109,16 +102,30 @@ cp -r "$AUTO_ENV_DIR" "$AUTO_ENV_HOME"
 fi
 
 
+
+if [ ! -f "$HOME/.shell_functions" ] && [[ "$OSTYPE" == linux* ]] && command -v starship >/dev/null ; then
+eval "$(starship init zsh)"
+fi
+
+
+
+
 plugins=(gitfast  archlinux github   pip docker docker-compose
  gh fzf  systemd sudo eza  starship tldr  copyfile   zsh-interactive-cd
    uv  ufw vscode   rust python
  )
 
 
-if [ ! -f "$HOME/.shell_functions" ] && [[ "$OSTYPE" == linux* ]]; then
-eval "$(starship init zsh)"
+
+if [ "$(whoami)" = "alexc" ] && [[ "$OSTYPE" == linux* ]]; then
+
+source_if_exists ~/.shell_functions
 fi
 
+AUTOENV_ENABLE_LEAVE=yes
+AUTOENV_VIEWER=cat
+
+source_if_exists "$AUTO_ENV_HOME/activate.sh"
 source_if_exists "$AUTO_SUGGESTIONS"
 source_if_exists  "$FAST_SYNTAX"
 source_if_exists "$AUTO_COMPLETE"
@@ -126,7 +133,9 @@ source_if_exists "$AUTO_ENV"
 source_if_exists "$HOME/.bindkeys"
 
 
-if [ "$(whoami)" = "alexc" ] && [[ "$OSTYPE" == linux* ]]; then
-source_if_exists ~/.shell_functions
-fi
 
+
+plugins=(gitfast  archlinux github   pip docker docker-compose
+ gh fzf  systemd sudo eza  starship tldr  copyfile   zsh-interactive-cd
+   uv  ufw vscode   rust python
+ )
