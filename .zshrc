@@ -11,6 +11,13 @@ if [ ! -d "$ZSH" ]; then
 fi
 
 
+if [[ "$OSTYPE" == darwin* ]]; then
+    if [ ! -f /usr/local/opt/powerlevel10k/share/powerlevel10k/powerlevel10k.zsh-theme ]; then
+        brew install powerlevel10k
+    fi
+    source /usr/local/opt/powerlevel10k/share/powerlevel10k/powerlevel10k.zsh-theme
+fi
+
 
 
 STARSHIP_LOCATION="$HOME/.config/starship.toml"
