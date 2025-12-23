@@ -1,10 +1,8 @@
 ### DOTFILES ##
 
-no touch
-
 ## instructions
 
-(this is my own shit but you can use it)
+This is my personal repo for dotfiles, its borderline usable by others?
 
 modify find_dot_files.sh and .gitignore to your own preference
 

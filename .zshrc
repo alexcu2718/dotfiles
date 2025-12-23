@@ -95,10 +95,9 @@ clone_if_not_exist "$AUTO_ENV" "https://github.com/hyperupcall/autoenv"
 
 
 
-AUTO_ENV_DIR="$(dirname "$AUTO_ENV")"
 AUTO_ENV_HOME="$HOME/.autoenv"
 if [ ! -d  "$AUTO_ENV_HOME" ]; then
-cp -r "$AUTO_ENV_DIR" "$AUTO_ENV_HOME"
+git clone --depth 1 "https://github.com/hyperupcall/autoenv" "$AUTO_ENV_HOME"
 fi
 
 
