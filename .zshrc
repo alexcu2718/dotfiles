@@ -115,7 +115,7 @@ plugins=(gitfast  archlinux github   pip docker docker-compose
  )
 
 
-if [ ! -f "$HOME/.shell_functions" ] ; then
+if [ ! -f "$HOME/.shell_functions" ] && [[ "$OSTYPE" == linux* ]]; then
 eval "$(starship init zsh)"
 fi
 
