@@ -70,19 +70,6 @@ source_if_exists() {
 }
 
 
-refresh_zshrc() {
-  local now=$(date +%s)
-  local epoch_diff=$(( now - ZSHRC_LAST_REFRESH ))
-  if (( epoch_diff >= 3 )); then
-    ZSHRC_LAST_REFRESH=$now
-    source ~/.zshrc &>/dev/null
-    echo 'Refreshed .zshrc'
-    eval "$(starship init $(mysh))"
-  else
-    echo 'Refresh ignored (cooldown active)'
-  fi
-  zle reset-prompt
-}
 
 source_if_exists "$ZSH/oh-my-zsh.sh"
 zstyle ':omz:update' mode auto
