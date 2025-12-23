@@ -10,6 +10,8 @@ if [ ! -d "$ZSH" ]; then
     git clone --depth 1 "https://github.com/ohmyzsh/ohmyzsh" "$ZSH"
 fi
 
+
+
 if ! command -v cargo >/dev/null && [[ "$OSTYPE" == darwin* ]]; then
     brew install rust
 fi
@@ -21,6 +23,11 @@ fi
 STARSHIP_LOCATION="$HOME/.config/starship.toml"
 if [ ! -f "$STARSHIP_LOCATION" ]; then
 curl -o "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
+fi
+
+BINDKEYS="$HOME/.bindkeys"
+if [ ! -f "$BINDKEYS" ]; then
+curl -o "$BINDKEYS" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.bindkeys
 fi
 
 autoload -U compinit
@@ -129,9 +136,10 @@ source_if_exists "$AUTO_SUGGESTIONS"
 source_if_exists  "$FAST_SYNTAX"
 source_if_exists "$AUTO_COMPLETE"
 source_if_exists "$AUTO_ENV"
+source_if_exists "$HOME/.bindkeys"
 
-if [ "$(whoami)" = "alexc" ]; then
+
+if [ "$(whoami)" = "alexc" ] && [[ "$OSTYPE" == linux* ]]; then
 source_if_exists ~/.shell_functions
-source_if_exists ~/.bindkeys
 fi
 
