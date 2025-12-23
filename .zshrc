@@ -121,6 +121,9 @@ plugins=(gitfast  archlinux github   pip docker docker-compose
  )
 
 
+if [ ! -f "$HOME/.shell_functions" ] ; then
+eval "$(starship init zsh)"
+fi
 
 source_if_exists "$AUTO_SUGGESTIONS"
 source_if_exists  "$FAST_SYNTAX"
