@@ -10,8 +10,18 @@ if [ ! -d "$ZSH" ]; then
     git clone --depth 1 "https://github.com/ohmyzsh/ohmyzsh" "$ZSH"
 fi
 
+if ! command -v cargo >/dev/null && [[ "$OSTYPE" == darwin* ]]; then
+    brew install rust
+fi
 
+if ! command -v starship >/dev/null;then
+cargo install starship
+fi
 
+STARSHIP_LOCATION="$HOME/.config/starship.toml"
+if [ ! -f "$STARSHIP_LOCATION" ]; then
+curl -o "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
+fi
 
 autoload -U compinit
 compinit
@@ -53,7 +63,7 @@ source_if_exists() {
 }
 
 
-function refresh_zshrc() {
+refresh_zshrc() {
   local now=$(date +%s)
   local epoch_diff=$(( now - ZSHRC_LAST_REFRESH ))
   if (( epoch_diff >= 3 )); then
@@ -96,6 +106,15 @@ clone_if_not_exist "$FAST_SYNTAX" "https://github.com/zdharma-continuum/fast-syn
 clone_if_not_exist "$AUTO_COMPLETE" "https://github.com/marlonrichert/zsh-autocomplete.git"
 clone_if_not_exist "$AUTO_ENV" "https://github.com/hyperupcall/autoenv"
 
+
+
+AUTO_ENV_DIR="$(dirname "$AUTO_ENV")"
+AUTO_ENV_HOME="$HOME/.autoenv"
+if [ ! -d  "$AUTO_ENV_HOME" ]; then
+cp -r "$AUTO_ENV_DIR" "$AUTO_ENV_HOME"
+fi
+
+
 plugins=(gitfast  archlinux github   pip docker docker-compose
  gh fzf  systemd sudo eza  starship tldr  copyfile   zsh-interactive-cd
    uv  ufw vscode   rust python
@@ -106,8 +125,10 @@ plugins=(gitfast  archlinux github   pip docker docker-compose
 source_if_exists "$AUTO_SUGGESTIONS"
 source_if_exists  "$FAST_SYNTAX"
 source_if_exists "$AUTO_COMPLETE"
-source_if_exists ~/.shell_functions
 source_if_exists "$AUTO_ENV"
-source_if_exists ~/.bindkeys
 
+if [ "$(whoami)" = "alexc" ]; then
+source_if_exists ~/.shell_functions
+source_if_exists ~/.bindkeys
+fi
 

@@ -1,5 +1,6 @@
 .wifi_password.txt
 .ark
+.autoenv
 .zshrc.bak
 .zshrc.bak.bak
 .gnupg
