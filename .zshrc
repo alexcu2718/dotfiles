@@ -11,6 +11,7 @@ if [ ! -d "$ZSH" ]; then
 fi
 
 
+##this is for a friends config, i dont use macos except on vms(this is handy tho.)
 if [[ "$OSTYPE" == darwin* ]]; then
     if [ ! -f /usr/local/opt/powerlevel10k/share/powerlevel10k/powerlevel10k.zsh-theme ]; then
         brew install powerlevel10k
@@ -19,6 +20,13 @@ if [[ "$OSTYPE" == darwin* ]]; then
 fi
 
 
+if command -v ruff &> /dev/null; then
+    local RUFF_COMPLETIONS="$HOME/.zfunc/_ruff"
+    if [ ! -f "$RUFF_COMPLETIONS" ]; then
+        mkdir -p "$HOME/.zfunc"
+        ruff generate-shell-completion zsh > "$RUFF_COMPLETIONS"
+    fi
+fi
 
 STARSHIP_LOCATION="$HOME/.config/starship.toml"
 if [ ! -f "$STARSHIP_LOCATION" ]; then
@@ -42,6 +50,7 @@ zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
 fpath+=/usr/share/zsh/vendor-completions
 fpath+=~/.zsh/completions
+fpath+=~/.zfunc
 
 unset zle_bracketed_paste
 
@@ -116,12 +125,6 @@ fi
 
 
 
-plugins=(gitfast  archlinux github   pip docker docker-compose
- gh fzf  systemd sudo eza  starship tldr  copyfile   zsh-interactive-cd
-   uv  ufw vscode   rust python
- )
-
-
 
 if [ "$(whoami)" = "alexc" ] && [[ "$OSTYPE" == linux* ]]; then
 
@@ -145,3 +148,16 @@ plugins=(gitfast  archlinux github   pip docker docker-compose
  gh fzf  systemd sudo eza  starship tldr  copyfile   zsh-interactive-cd
    uv  ufw vscode   rust python
  )
+
+unalias open > /dev/null 2>&1
+
+
+open() {
+  ## this just allows you to open eg discord/firefox etc via terminal without cluttering it with lots of crap. fairly handy.
+    if ! command -v "$1" &> /dev/null; then
+        echo "Error: '$1' is not a valid command" >&2
+        return 1
+    fi
+    command "$1" "${@:2}" &> /dev/null &
+    disown
+}

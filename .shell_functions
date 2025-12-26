@@ -220,6 +220,7 @@ alias RUNNIX='qemu-system-x86_64 \
 
 
 
+unalias open > /dev/null 2>&1
 open() {
   ## this just allows you to open eg discord/firefox etc via terminal without cluttering it with lots of crap. fairly handy.
     if ! command -v "$1" &> /dev/null; then
