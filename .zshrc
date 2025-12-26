@@ -13,10 +13,11 @@ fi
 
 ##this is for a friends config, i dont use macos except on vms(this is handy tho.)
 if [[ "$OSTYPE" == darwin* ]]; then
-    if [ ! -f /usr/local/opt/powerlevel10k/share/powerlevel10k/powerlevel10k.zsh-theme ]; then
+    local P10K="/usr/local/opt/powerlevel10k/share/powerlevel10k/powerlevel10k.zsh-theme"
+    if [ ! -f "$P10K" ]; then
         brew install powerlevel10k
     fi
-    source /usr/local/opt/powerlevel10k/share/powerlevel10k/powerlevel10k.zsh-theme
+    source "$P10K"
 fi
 
 
@@ -98,7 +99,7 @@ AUTO_ENV="$ZSH/plugins/autoenv/autoenv.plugin.zsh"
 
 clone_if_not_exist() {
   local filepath="$1" repo="$2"
-  DIRNAME="$(dirname "$filepath")"
+  local DIRNAME="$(dirname "$filepath")"
   if [ ! -d "$DIRNAME" ]; then
     git clone --depth 1 "$repo" "$DIRNAME" || echo "Clone failed: $repo" >&2
   fi
