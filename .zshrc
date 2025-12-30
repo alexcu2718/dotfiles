@@ -1,8 +1,7 @@
+#!/usr/bin/env zsh
+
+
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-
-
-
-
 export ZSH="$HOME/.oh-my-zsh"
 
 
@@ -28,6 +27,18 @@ if command -v ruff &> /dev/null; then
         ruff generate-shell-completion zsh > "$RUFF_COMPLETIONS"
     fi
 fi
+
+
+if command -v cargo-asm &> /dev/null; then
+    local CARGO_ASM_COMPLETIONS="$HOME/.zfunc/_cargoasm"
+    if [ ! -f "$CARGO_ASM_COMPLETIONS" ]; then
+        mkdir -p "$HOME/.zfunc"
+        cargo-asm --bpaf-complete-style-zsh > "$CARGO_ASM_COMPLETIONS"
+    fi
+fi
+
+
+
 
 STARSHIP_LOCATION="$HOME/.config/starship.toml"
 if [ ! -f "$STARSHIP_LOCATION" ]; then
