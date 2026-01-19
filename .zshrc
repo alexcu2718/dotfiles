@@ -5,6 +5,9 @@ export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export ZSH="$HOME/.oh-my-zsh"
 
 
+
+
+
 if [ ! -d "$ZSH" ]; then
     git clone --depth 1 "https://github.com/ohmyzsh/ohmyzsh" "$ZSH"
 fi

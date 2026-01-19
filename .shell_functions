@@ -99,7 +99,7 @@ alias CLIPPY='cargo clippy --all -- -W clippy::all -W clippy::pedantic -W clippy
 # shellcheck disable=SC2139
 alias SHELLFUNCTIONS="$EDITOR ~/.shell_functions"
 #alias ls='eza -g'
-alias KILL='pkill -9'
+KILL() { [ $# -eq 0 ] && { echo "Usage: KILL <process_name>"; return 1; }; pgrep "$1" >/dev/null || { echo "No process: $1"; return 1; }; pkill -9 "$1"; }
 #unalias ZIP >  /dev/null/
 
 ZIP () {
@@ -143,8 +143,9 @@ alias RUNOSX='cd ~/OSX-KVM && ./OpenCore-Boot.sh'
 alias RUNOSX_UI='cd ~/OSX-KVM && ./OpenCore-Boot-windowed.sh'
 
 
-
-
+alias TEST_INTERNET="timeout 10 ping google.com"
+alias RESTART_INTERNET=" sudo systemctl restart NetworkManager.service"
+# I have a shoddy router that is increasingly annoying..................
 
 
 # shellcheck disable=SC2139
@@ -257,6 +258,8 @@ alias yay="\yay --noconfirm"
 alias RESTARTCODE="pkill -9 code && \code . --ozone-platform=wayland "
 
 alias PERF="perf stat -e cache-misses,cache-references,L1-dcache-load-misses,L1-dcache-loads,LLC-load-misses,LLC-loads,branches,branch-misses"
+
+alias GITHELP="echo 'git checkout HEAD~2 -- EXAMPLE.FILENAME'"
 
 alias GITRESETFILE="git checkout HEAD --"
 
