@@ -43,6 +43,8 @@ echo -e "\n copied all items from dotfiles"
 #i got lazy here sue me
 
 
+rm ./nano -rf && cp  -r ~/.nano ./nano
+
 
 if [ "$(whoami)" = "alexc" ]; then
 

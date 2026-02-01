@@ -1,9 +1,10 @@
 #!/usr/bin/env zsh
 
+## This shell is just a fast setup method for going on other shells
+## I make no apology for its very tasteful design.
 
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin
 export ZSH="$HOME/.oh-my-zsh"
-
 
 
 
@@ -23,6 +24,15 @@ if [[ "$OSTYPE" == darwin* ]]; then
 fi
 
 
+if command -v uv >/dev/null 2>&1; then
+    for pkg in pre-commit ruff ty; do
+        if ! command -v "$pkg" >/dev/null 2>&1; then
+            uv tool install "$pkg"
+        fi
+    done
+fi
+
+
 if command -v ruff &> /dev/null; then
     local RUFF_COMPLETIONS="$HOME/.zfunc/_ruff"
     if [ ! -f "$RUFF_COMPLETIONS" ]; then
@@ -32,11 +42,22 @@ if command -v ruff &> /dev/null; then
 fi
 
 
-if command -v cargo-asm &> /dev/null; then
-    local CARGO_ASM_COMPLETIONS="$HOME/.zfunc/_cargoasm"
-    if [ ! -f "$CARGO_ASM_COMPLETIONS" ]; then
-        mkdir -p "$HOME/.zfunc"
-        cargo-asm --bpaf-complete-style-zsh > "$CARGO_ASM_COMPLETIONS"
+
+
+
+
+if command -v cargo >/dev/null 2>&1; then
+    if ! command -v cargo-asm >/dev/null 2>&1; then
+        echo "Installing cargo-asm via cargo..." >&2
+        cargo install cargo-asm
+    fi
+
+    if command -v cargo-asm >/dev/null 2>&1; then
+        local CARGO_ASM_COMPLETIONS="$HOME/.zfunc/_cargoasm"
+        if [ ! -f "$CARGO_ASM_COMPLETIONS" ]; then
+            mkdir -p "$HOME/.zfunc"
+            cargo-asm --bpaf-complete-style-zsh > "$CARGO_ASM_COMPLETIONS"
+        fi
     fi
 fi
 
@@ -44,7 +65,9 @@ fi
 
 
 STARSHIP_LOCATION="$HOME/.config/starship.toml"
+
 if [ ! -f "$STARSHIP_LOCATION" ]; then
+mkdir -p "$HOME/.config"
 curl -o "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
 fi
 
@@ -133,17 +156,16 @@ fi
 
 
 
-if [ ! -f "$HOME/.shell_functions" ] && [[ "$OSTYPE" == linux* ]] && command -v starship >/dev/null ; then
-eval "$(starship init zsh)"
-fi
-
-
-
 
 
 if [ "$(whoami)" = "alexc" ] && [[ "$OSTYPE" == linux* ]]; then
 
 source_if_exists ~/.shell_functions
+fi
+
+
+if [  -f "$HOME/.shell_functions" ] && command -v starship >/dev/null &&  [[ "$OSTYPE" == linux* ]] ; then
+eval "$(starship init zsh)"
 fi
 
 AUTOENV_ENABLE_LEAVE=yes
@@ -175,4 +197,32 @@ open() {
     fi
     command "$1" "${@:2}" &> /dev/null &
     disown
+}
+
+backup() {
+
+
+    local file="$1"
+
+
+    if [[ ! -e "$file" ]]; then
+        echo "Error: File '$file' does not exist"
+        return 1
+    fi
+
+    # If no .bak exists, create it
+    if [[ ! -e "${file}.bak" ]]; then
+        cp "$file" "${file}.bak"
+        echo "Created backup: ${file}.bak"
+        return 0
+    fi
+
+
+    local counter=2
+    while [[ -e "${file}.bak${counter}" ]]; do
+        ((counter++))
+    done
+
+    cp "$file" "${file}.bak${counter}"
+    echo "Created backup: ${file}.bak${counter}"
 }
