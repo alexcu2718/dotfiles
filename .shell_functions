@@ -17,24 +17,17 @@ REFRESH() {
 
 alias pacman='pacman --noconfirm'
 alias paru='paru --noconfirm'
-unalias lsgrep > /dev/null 2>&1
 
 
-
-unalias gitclone > /dev/null 2>&1
-
-gitclone() {
-  git clone "git@github.com:$1.git"
-}
 
 unalias exportpath > /dev/null 2>&1
-
-alias SSH='ssh -p 2222 alexc@localhost'
+ # shellcheck disable=SC2139
+alias SSH="ssh -p 2222 $USER@localhost"
 
 unalias SSHCOPY > /dev/null 2>&1
 SSHCOPY(){
-  #scp -r -P 2222 /tmp/fdf_test alexc@localhost:/tmp/fdf_test
-  scp -r -P 2222 "$1" alexc@localhost:"$2"
+
+  scp -r -P 2222 "$1" "$USER" @localhost:"$2"
 }
 
 unalias RSYNC > /dev/null 2>&1
@@ -54,42 +47,21 @@ fi
 # shellcheck disable=SC2139
 alias SWITCH_KEYBOARD="$HOME/.toggle_keyboard_layout.sh"
 alias R='R -q --interactive --no-restore --no-save'
-export MANPATH="/usr/local/man:$MANPATH"
-export LANG=en_US.UTF-8
-export LC_CTYPE="en_US.UTF-8"
-export PATH=$PATH:~/.local/bin
 
-# shellcheck disable=SC2155
-if command -v sccache >/dev/null 2>&1; then
-export RUSTC_WRAPPER="$(which sccache)"
-fi
 
 alias radian='radian -q'
 
-if command -v uv  >/dev/null 2>&1; then
-eval "$(uv generate-shell-completion "$(mysh)")"
-eval "$(uvx --generate-shell-completion "$(mysh)")"
-fi
-
-
-if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='nvim'
- fi
 
 # Compilation flags
 # shellcheck disable=SC2155
-export ARCHFLAGS="-arch $(uname -m)"
 
 alias rg='rg --no-messages'
 
-export GIT_ASKPASS=/opt/visual-studio-code/resources/app/extensions/git/dist/askpass.sh
-export VSCODE_GIT_ASKPASS_NODE=/opt/visual-studio-code/code
-export VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
-export VSCODE_GIT_ASKPASS_MAIN=/opt/visual-studio-code/resources/app/extensions/git/dist/askpass-main.js
-export VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-038080b684.sock
-#export TERM=xterm-kitty
+# export VSCODE_GIT_ASKPASS_NODE=/opt/visual-studio-code/code
+# export VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
+# export VSCODE_GIT_ASKPASS_MAIN=/opt/visual-studio-code/resources/app/extensions/git/dist/askpass-main.js
+# export VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-038080b684.sock
+
 
 
 
@@ -97,7 +69,6 @@ export VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-038080b684.sock
 alias cat='bat --paging=never --style=plain'
 alias CLIPBOARD='xclip -sel clip'
 alias cd='z'
-export PATH=$PATH:$HOME/.cargo/bin
 
 alias CLIPPY='cargo clippy --all -- -W clippy::all -W clippy::pedantic -W clippy::restriction -W clippy::nursery -D warnings'
 # shellcheck disable=SC2139
@@ -109,7 +80,6 @@ ZIP () {
 	zip -r "$1.zip" "$1"
 }
 
-export  GCM_CREDENTIAL_STORE=secretservice
 alias ssh='TERM=xterm ssh'
 alias GITBRANCH='echo "$(git branch -r)"'
 alias GITLINK='git -C "$(git rev-parse --show-toplevel)" remote get-url origin'
@@ -203,25 +173,13 @@ alias grep='grep  --color=auto'
 alias grepn='grep -n --color=auto'
 alias hgrep='history |grep -Ei'
 
-alias SLEEPOFF_ONE_HOUR='caffeinate sleep 3600 & disown && echo "sleep is disabled for  1 hour"'
+alias SLEEPOFF_ONE_HOUR='systemd-inhibit --what=sleep:idle --mode=block sleep "3600"'
 
 if command -v fdf >/dev/null 2>&1; then
     eval "$(fdf --generate "$(mysh)")" >/dev/null 2>&1
 fi
 
 
-
-
-unalias open > /dev/null 2>&1
-open() {
-  ## this just allows you to open eg discord/firefox etc via terminal without cluttering it with lots of crap. fairly handy.
-    if ! command -v "$1" &> /dev/null; then
-        echo "Error: '$1' is not a valid command" >&2
-        return 1
-    fi
-    command "$1" "${@:2}" &> /dev/null &
-    disown
-}
 
 thunar() {
     command thunar "$@" &> /dev/null &
@@ -236,11 +194,7 @@ dolphin() {
 
 alias zed='zeditor'
 
-# simple git clone alias
-unalias gc > /dev/null 2>&1
-gc() {
-    git clone "https://github.com/$1" "$2"
-}
+
 
 
 alias code="\code --ozone-platform=wayland"

@@ -5,8 +5,18 @@
 
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin
 export ZSH="$HOME/.oh-my-zsh"
+export  GCM_CREDENTIAL_STORE=secretservice
+export GIT_ASKPASS=/opt/visual-studio-code/resources/app/extensions/git/dist/askpass.sh
+export MANPATH="/usr/local/man:$MANPATH"
+export LANG=en_US.UTF-8
+export LC_CTYPE="en_US.UTF-8"
+export ARCHFLAGS="-arch $(uname -m)"
 
-
+if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='vim'
+ else
+   export EDITOR='nvim'
+ fi
 
 
 if [ ! -d "$ZSH" ]; then
@@ -32,6 +42,10 @@ if command -v uv >/dev/null 2>&1; then
     done
 fi
 
+
+if command -v sccache >/dev/null 2>&1; then
+export RUSTC_WRAPPER="$(which sccache)"
+fi
 
 if command -v ruff &> /dev/null; then
     local RUFF_COMPLETIONS="$HOME/.zfunc/_ruff"
@@ -198,6 +212,14 @@ open() {
     command "$1" "${@:2}" &> /dev/null &
     disown
 }
+
+
+
+if command -v uv  >/dev/null 2>&1; then
+eval "$(uv generate-shell-completion "$(mysh)")"
+eval "$(uvx --generate-shell-completion "$(mysh)")"
+fi
+
 
 backup() {
 
