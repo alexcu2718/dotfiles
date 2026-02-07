@@ -12,11 +12,14 @@ export LC_CTYPE="en_US.UTF-8"
 export ARCHFLAGS="-arch $(uname -m)"
 
 if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='nvim'
- fi
-
+  export EDITOR='vim'
+else
+  if command -v nvim >/dev/null 2>&1; then
+    export EDITOR='nvim'
+  else
+    export EDITOR='vim'
+  fi
+fi
 
 if [ ! -d "$ZSH" ]; then
     git clone --depth 1 "https://github.com/ohmyzsh/ohmyzsh" "$ZSH"
@@ -33,26 +36,12 @@ fi
 # fi
 
 
-if command -v uv >/dev/null 2>&1; then
-    for pkg in pre-commit ruff ty ; do
-        if ! command -v "$pkg" >/dev/null 2>&1; then
-            uv tool install "$pkg"
-        fi
-    done
-fi
-
-
 if command -v sccache >/dev/null 2>&1; then
 export RUSTC_WRAPPER="$(which sccache)"
 fi
 
-if command -v ruff &> /dev/null; then
-    local RUFF_COMPLETIONS="$HOME/.zfunc/_ruff"
-    if [ ! -f "$RUFF_COMPLETIONS" ]; then
-        mkdir -p "$HOME/.zfunc"
-        ruff generate-shell-completion zsh > "$RUFF_COMPLETIONS"
-    fi
-fi
+
+
 
 
 
@@ -65,9 +54,6 @@ if command -v cargo >/dev/null 2>&1; then
         cargo install cargo-show-asm
     fi
 
-    if ! command -v tldr >/dev/null 2>&1;then
-    cargo install tldr
-    fi
 
 
     if command -v cargo-asm >/dev/null 2>&1; then
@@ -149,6 +135,8 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
 
+
+
 AUTO_SUGGESTIONS="$ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 FAST_SYNTAX="$ZSH/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 AUTO_COMPLETE="$ZSH/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
@@ -203,15 +191,8 @@ source_if_exists "$HOME/.bindkeys"
 
 
 
-
-plugins=(gitfast  archlinux github   pip docker docker-compose
- gh fzf  systemd sudo   starship tldr  copyfile   zsh-interactive-cd
-   uv  ufw vscode   rust python
- )
-
+if [[ "$OSTYPE" == linux* ]] then ;
 unalias open > /dev/null 2>&1
-
-
 open() {
   ## this just allows you to open eg discord/firefox etc via terminal without cluttering it with lots of crap. fairly handy.
     if ! command -v "$1" &> /dev/null; then
@@ -221,13 +202,60 @@ open() {
     command "$1" "${@:2}" &> /dev/null &
     disown
 }
+fi
 
 
 
 if command -v uv  >/dev/null 2>&1; then
+
+if ! command -v pipx >/dev/null 2>&1; then
+uv tool install pipx
+fi
+
+
+if ! command -v register-python-argcomplete  >/dev/null 2>&1 ; then
+pipx install argcomplete
+fi
+
+
+if ! command -v tldr >/dev/null 2>&1 ; then
+pipx install tldr
+fi
+
+
+eval $(tldr --print-completion zsh)
+
+eval "$(register-python-argcomplete pipx)"
+
+for pkg in pre-commit ruff ty ; do
+        if ! command -v "$pkg" >/dev/null 2>&1; then
+            uv tool install "$pkg"
+        fi
+done
+
+
 eval "$(uv generate-shell-completion zsh)"
 eval "$(uvx --generate-shell-completion zsh)"
 fi
+
+
+
+if command -v ruff &> /dev/null; then
+    local RUFF_COMPLETIONS="$HOME/.zfunc/_ruff"
+    if [ ! -f "$RUFF_COMPLETIONS" ]; then
+        mkdir -p "$HOME/.zfunc"
+        ruff generate-shell-completion zsh > "$RUFF_COMPLETIONS"
+    fi
+fi
+
+
+
+plugins=(gitfast  archlinux github   pip docker docker-compose
+ gh fzf  systemd sudo   starship tldr  copyfile   zsh-interactive-cd
+   uv  ufw vscode   rust python
+ )
+
+
 
 
 backup() {
