@@ -6,7 +6,6 @@
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin
 export ZSH="$HOME/.oh-my-zsh"
 export  GCM_CREDENTIAL_STORE=secretservice
-export GIT_ASKPASS=/opt/visual-studio-code/resources/app/extensions/git/dist/askpass.sh
 export MANPATH="/usr/local/man:$MANPATH"
 export LANG=en_US.UTF-8
 export LC_CTYPE="en_US.UTF-8"
@@ -35,7 +34,7 @@ fi
 
 
 if command -v uv >/dev/null 2>&1; then
-    for pkg in pre-commit ruff ty; do
+    for pkg in pre-commit ruff ty ; do
         if ! command -v "$pkg" >/dev/null 2>&1; then
             uv tool install "$pkg"
         fi
@@ -62,9 +61,14 @@ fi
 
 if command -v cargo >/dev/null 2>&1; then
     if ! command -v cargo-asm >/dev/null 2>&1; then
-        echo "Installing cargo-asm via cargo..." >&2
-        cargo install cargo-asm
+
+        cargo install cargo-show-asm
     fi
+
+    if ! command -v tldr >/dev/null 2>&1;then
+    cargo install tldr
+    fi
+
 
     if command -v cargo-asm >/dev/null 2>&1; then
         local CARGO_ASM_COMPLETIONS="$HOME/.zfunc/_cargoasm"
@@ -89,6 +93,9 @@ BINDKEYS="$HOME/.bindkeys"
 if [ ! -f "$BINDKEYS" ]; then
 curl -o "$BINDKEYS" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.bindkeys
 fi
+
+
+
 
 autoload -U compinit
 compinit
@@ -198,7 +205,7 @@ source_if_exists "$HOME/.bindkeys"
 
 
 plugins=(gitfast  archlinux github   pip docker docker-compose
- gh fzf  systemd sudo eza  starship tldr  copyfile   zsh-interactive-cd
+ gh fzf  systemd sudo   starship tldr  copyfile   zsh-interactive-cd
    uv  ufw vscode   rust python
  )
 
