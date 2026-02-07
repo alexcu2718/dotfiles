@@ -25,13 +25,13 @@ fi
 
 
 ##this is for a friends config, i dont use macos except on vms(this is handy tho.)
-if [[ "$OSTYPE" == darwin* ]]; then
-    local P10K="/usr/local/opt/powerlevel10k/share/powerlevel10k/powerlevel10k.zsh-theme"
-    if [ ! -f "$P10K" ]; then
-        brew install powerlevel10k
-    fi
-    source "$P10K"
-fi
+# if [[ "$OSTYPE" == darwin* ]]; then
+#     local P10K="/usr/local/opt/powerlevel10k/share/powerlevel10k/powerlevel10k.zsh-theme"
+#     if [ ! -f "$P10K" ]; then
+#         brew install powerlevel10k
+#     fi
+#     source "$P10K"
+# fi
 
 
 if command -v uv >/dev/null 2>&1; then
@@ -175,6 +175,8 @@ fi
 if [ "$(whoami)" = "alexc" ] && [[ "$OSTYPE" == linux* ]]; then
 
 source_if_exists ~/.shell_functions
+#https://www.google.com/url?sa=t&source=web&rct=j&url=https%3A%2F%2Fwww.threads.com%2F%40beatrizmarianophotography%2Fpost%2FDE8IVn4iPW3&ved=0CBYQjRxqFwoTCLCb2q3ux5IDFQAAAAAdAAAAABA6&opi=89978449
+alias xdg-open="xdg-open 2&>/dev/null"
 fi
 
 
@@ -216,8 +218,8 @@ open() {
 
 
 if command -v uv  >/dev/null 2>&1; then
-eval "$(uv generate-shell-completion "$(mysh)")"
-eval "$(uvx --generate-shell-completion "$(mysh)")"
+eval "$(uv generate-shell-completion zsh)"
+eval "$(uvx --generate-shell-completion zsh)"
 fi
 
 
