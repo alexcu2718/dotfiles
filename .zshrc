@@ -274,6 +274,13 @@ source <(fzf --zsh)
 fi
 
 
+if command -v go-gitmoji-cli &> /dev/null; then
+eval "$(go-gitmoji-cli completion zsh)"
+alias gitmoji="go-gitmoji-cli"
+fi
+
+
+
 plugins=(gitfast   github   pip docker docker-compose
  gh  systemd sudo       zsh-interactive-cd
    uv  ufw vscode   rust python
