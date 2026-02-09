@@ -29,7 +29,7 @@ fi
 
 
 
-if ! command -v git-credential-manager >/dev/null 2>&1 && [[ "$OSTYPE" == linux* ]]; then
+if ! command -v git-credential-manager >/dev/null 2>&1 && [ "$OSTYPE" == linux* ]; then
     curl -L https://aka.ms/gcm/linux-install-source.sh | sh
     git-credential-manager configure
 fi
@@ -246,6 +246,14 @@ for pkg in pre-commit ruff ty ; do
         if ! command -v "$pkg" >/dev/null 2>&1; then
             uv tool install "$pkg"
         fi
+
+
+local RUFF_COMPLETIONS="$HOME/.zfunc/_ruff"
+if [ ! -f "$RUFF_COMPLETIONS" ]; then
+    mkdir -p "$HOME/.zfunc"
+    ruff generate-shell-completion zsh > "$RUFF_COMPLETIONS"
+fi
+
 done
 
 
@@ -254,14 +262,6 @@ eval "$(uvx --generate-shell-completion zsh)"
 fi
 
 
-
-if command -v ruff &> /dev/null; then
-    local RUFF_COMPLETIONS="$HOME/.zfunc/_ruff"
-    if [ ! -f "$RUFF_COMPLETIONS" ]; then
-        mkdir -p "$HOME/.zfunc"
-        ruff generate-shell-completion zsh > "$RUFF_COMPLETIONS"
-    fi
-fi
 
 
 
