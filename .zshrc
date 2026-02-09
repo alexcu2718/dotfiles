@@ -2,6 +2,8 @@
 
 ## This shell is just a fast setup method for going on other shells
 ## I make no apology for its very tasteful design.
+### Install nerd fonts
+## bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
 
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin
 export ZSH="$HOME/.oh-my-zsh"
@@ -26,6 +28,12 @@ if [ ! -d "$ZSH" ]; then
 fi
 
 
+
+if ! command -v git-credential-manager >/dev/null 2>&1 && [[ "$OSTYPE" == linux* ]]; then
+    curl -L https://aka.ms/gcm/linux-install-source.sh | sh
+    git-credential-manager configure
+fi
+
 ##this is for a friends config, i dont use macos except on vms(this is handy tho.)
 # if [[ "$OSTYPE" == darwin* ]]; then
 #     local P10K="/usr/local/opt/powerlevel10k/share/powerlevel10k/powerlevel10k.zsh-theme"
@@ -34,6 +42,7 @@ fi
 #     fi
 #     source "$P10K"
 # fi
+### Actually this is a terrible plugin, its so slow...
 
 
 if command -v sccache >/dev/null 2>&1; then
@@ -68,17 +77,23 @@ fi
 
 
 
-STARSHIP_LOCATION="$HOME/.config/starship.toml"
+local STARSHIP_LOCATION="$HOME/.config/starship.toml"
 
 if [ ! -f "$STARSHIP_LOCATION" ]; then
 mkdir -p "$HOME/.config"
 curl -o "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
 fi
 
-BINDKEYS="$HOME/.bindkeys"
+local BINDKEYS="$HOME/.bindkeys"
 if [ ! -f "$BINDKEYS" ]; then
 curl -o "$BINDKEYS" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.bindkeys
 fi
+
+local SHELL_FUNCTIONS="$HOME/.shell_functions"
+if [ ! -f "$SHELL_FUNCTIONS" ]; then
+curl -o "$SHELL_FUNCTIONS" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.shell_functions
+fi
+
 
 
 
@@ -137,10 +152,10 @@ COMPLETION_WAITING_DOTS="true"
 
 
 
-AUTO_SUGGESTIONS="$ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
-FAST_SYNTAX="$ZSH/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-AUTO_COMPLETE="$ZSH/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
-AUTO_ENV="$ZSH/plugins/autoenv/autoenv.plugin.zsh"
+local AUTO_SUGGESTIONS="$ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
+local FAST_SYNTAX="$ZSH/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+local AUTO_COMPLETE="$ZSH/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+local AUTO_ENV="$ZSH/plugins/autoenv/autoenv.plugin.zsh"
 ##i got fedup of recreating this everytime i wanted a shell to work on a new pc and too lazy for nix.
 
 clone_if_not_exist() {
@@ -158,7 +173,7 @@ clone_if_not_exist "$AUTO_ENV" "https://github.com/hyperupcall/autoenv"
 
 
 
-AUTO_ENV_HOME="$HOME/.autoenv"
+local AUTO_ENV_HOME="$HOME/.autoenv"
 if [ ! -d  "$AUTO_ENV_HOME" ]; then
 git clone --depth 1 "https://github.com/hyperupcall/autoenv" "$AUTO_ENV_HOME"
 fi
@@ -223,7 +238,7 @@ pipx install tldr
 fi
 
 
-eval $(tldr --print-completion zsh)
+eval "$(tldr --print-completion zsh)"
 
 eval "$(register-python-argcomplete pipx)"
 
@@ -250,38 +265,61 @@ fi
 
 
 
-plugins=(gitfast  archlinux github   pip docker docker-compose
- gh fzf  systemd sudo   starship tldr  copyfile   zsh-interactive-cd
+
+
+if command -v fzf  &> /dev/null; then
+
+source <(fzf --zsh)
+
+fi
+
+
+plugins=(gitfast   github   pip docker docker-compose
+ gh  systemd sudo       zsh-interactive-cd
    uv  ufw vscode   rust python
  )
 
 
-
+if command -v starship &> /dev/null ; then
+plugins+=starship
+fi
 
 backup() {
+    local target="$1"
 
-
-    local file="$1"
-
-
-    if [[ ! -e "$file" ]]; then
-        echo "Error: File '$file' does not exist"
+    if [[ ! -e "$target" ]]; then
+        echo "Error: '$target' does not exist"
         return 1
     fi
 
-    # If no .bak exists, create it
-    if [[ ! -e "${file}.bak" ]]; then
-        cp "$file" "${file}.bak"
-        echo "Created backup: ${file}.bak"
-        return 0
+
+    if [[ -d "$target" ]]; then
+        if [[ ! -e "${target}.bak" ]]; then
+            cp -r "$target" "${target}.bak"
+            echo "Created directory backup: ${target}.bak"
+            return 0
+        fi
+
+        local counter=2
+        while [[ -d "${target}.bak${counter}" ]]; do
+            ((counter++))
+        done
+
+        cp -r "$target" "${target}.bak${counter}"
+        echo "Created directory backup: ${target}.bak${counter}"
+    else
+        if [[ ! -e "${target}.bak" ]]; then
+            cp "$target" "${target}.bak"
+            echo "Created backup: ${target}.bak"
+            return 0
+        fi
+
+        local counter=2
+        while [[ -e "${target}.bak${counter}" ]]; do
+            ((counter++))
+        done
+
+        cp "$target" "${target}.bak${counter}"
+        echo "Created backup: ${target}.bak${counter}"
     fi
-
-
-    local counter=2
-    while [[ -e "${file}.bak${counter}" ]]; do
-        ((counter++))
-    done
-
-    cp "$file" "${file}.bak${counter}"
-    echo "Created backup: ${file}.bak${counter}"
 }
