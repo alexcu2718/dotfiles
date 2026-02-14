@@ -15,6 +15,7 @@ export ARCHFLAGS="-arch $(uname -m)"
 
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
+  export TERM=xterm
 else
   if command -v nvim >/dev/null 2>&1; then
     export EDITOR='nvim'
