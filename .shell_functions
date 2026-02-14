@@ -15,8 +15,6 @@ REFRESH() {
   source "$HOME/.$(mysh)rc"
 }
 
-alias pacman='pacman --noconfirm'
-alias paru='paru --noconfirm'
 
 
 
@@ -88,7 +86,7 @@ alias RUNFREEBSD='qemu-system-x86_64 \
   -enable-kvm \
   -cpu host \
   -smp 4 \
-  -m 4096 \
+  -m 8192 \
   -drive file="$HOME/Downloads/FreeBSD-15.0-RELEASE-amd64-zfs.qcow2",format=qcow2,if=virtio \
   -netdev user,id=mynet0,hostfwd=tcp::2222-:22 \
   -device virtio-net,netdev=mynet0 \

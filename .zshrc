@@ -29,7 +29,7 @@ fi
 
 
 
-if ! command -v git-credential-manager >/dev/null 2>&1 && [ "$OSTYPE" == linux* ]; then
+if ! command -v git-credential-manager >/dev/null 2>&1 && [[ "$OSTYPE" == linux* ]]; then
     curl -L https://aka.ms/gcm/linux-install-source.sh | sh
     git-credential-manager configure
 fi
