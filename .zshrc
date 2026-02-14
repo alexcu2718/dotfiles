@@ -53,7 +53,9 @@ fi
 
 
 
-
+if command -v bat >/dev/null 2>&1; then
+alias cat="bat --paging=never"
+fi
 
 
 
@@ -329,4 +331,8 @@ backup() {
         cp "$target" "${target}.bak${counter}"
         echo "Created backup: ${target}.bak${counter}"
     fi
+}
+
+strip_slashes() {
+    sed 's:/*$::'
 }
