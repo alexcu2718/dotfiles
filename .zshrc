@@ -12,10 +12,12 @@ export MANPATH="/usr/local/man:$MANPATH"
 export LANG=en_US.UTF-8
 export LC_CTYPE="en_US.UTF-8"
 export ARCHFLAGS="-arch $(uname -m)"
+ export TERM=xterm
+
+
 
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
-  export TERM=xterm
 else
   if command -v nvim >/dev/null 2>&1; then
     export EDITOR='nvim'
@@ -60,10 +62,10 @@ fi
 
 
 
-if command -v cargo >/dev/null 2>&1; then
+if  [[ "$OSTYPE" == linux* ]]  && command -v cargo >/dev/null 2>&1; then
     if ! command -v cargo-asm >/dev/null 2>&1; then
 
-        cargo install cargo-show-asm
+        cargo install cargo-show-asm ###the most recent version
     fi
 
 
