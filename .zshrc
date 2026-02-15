@@ -12,7 +12,12 @@ export MANPATH="/usr/local/man:$MANPATH"
 export LANG=en_US.UTF-8
 export LC_CTYPE="en_US.UTF-8"
 export ARCHFLAGS="-arch $(uname -m)"
- export TERM=xterm
+
+if ! [[ "$OSTYPE" == linux* ]]; then
+
+export TERM=xterm
+fi
+
 
 
 
