@@ -23,9 +23,9 @@ unalias exportpath > /dev/null 2>&1
 alias SSH="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 2222 $USER@localhost"
 
 unalias SSHCOPY > /dev/null 2>&1
-SSHCOPY(){
 
-  scp -r -P 2222 "$1" "$USER" @localhost:"$2"
+SSHCOPY() {
+ scp -r -P 2222 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$1" alexc@localhost:"$2"
 }
 
 unalias RSYNC > /dev/null 2>&1

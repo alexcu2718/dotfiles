@@ -5,14 +5,13 @@
 ### Install nerd fonts
 ## bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
 
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/.deno/bin
 export ZSH="$HOME/.oh-my-zsh"
 export  GCM_CREDENTIAL_STORE=secretservice
 export MANPATH="/usr/local/man:$MANPATH"
 export LANG=en_US.UTF-8
 export LC_CTYPE="en_US.UTF-8"
 export ARCHFLAGS="-arch $(uname -m)"
-
 if ! [[ "$OSTYPE" == linux* ]]; then
 
 export TERM=xterm
@@ -301,6 +300,8 @@ if command -v starship &> /dev/null ; then
 plugins+=starship
 fi
 
+
+
 backup() {
     local target="$1"
 
@@ -344,3 +345,4 @@ backup() {
 strip_slashes() {
     sed 's:/*$::'
 }
+alias hx='helix'
