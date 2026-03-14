@@ -5,6 +5,24 @@
 ### Install nerd fonts
 ## bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
 
+
+#curl -L https://aka.ms/gcm/linux-install-source.sh | sh
+ #   git-credential-manager configure
+
+
+source_if_exists() {
+    if [[ -f "$1" ]]; then
+        source "$1"
+        return 0
+    else
+        echo "File not found: $1" >&2
+        return 1
+    fi
+}
+
+
+
+
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/.deno/bin
 export ZSH="$HOME/.oh-my-zsh"
 export  GCM_CREDENTIAL_STORE=secretservice
@@ -16,6 +34,7 @@ if ! [[ "$OSTYPE" == linux* ]]; then
 
 export TERM=xterm
 fi
+
 
 
 
@@ -35,11 +54,13 @@ if [ ! -d "$ZSH" ]; then
 fi
 
 
-
-if ! command -v git-credential-manager >/dev/null 2>&1 && [[ "$OSTYPE" == linux* ]]; then
-    curl -L https://aka.ms/gcm/linux-install-source.sh | sh
-    git-credential-manager configure
+ZSH_COMPLETIONS="${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions"
+if [ ! -d  "$ZSH_COMPLETIONS" ] ; then
+git clone --depth 1 https://github.com/zsh-users/zsh-completions.git "$ZSH_COMPLETIONS"
 fi
+
+
+
 
 ##this is for a friends config, i dont use macos except on vms(this is handy tho.)
 # if [[ "$OSTYPE" == darwin* ]]; then
@@ -107,8 +128,11 @@ fi
 
 
 
-autoload -U compinit
-compinit
+
+fpath+=/usr/share/zsh/vendor-completions
+fpath+=~/.zsh/completions
+fpath+=~/.zfunc
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 
 
 zstyle ':completion:*' use-cache on
@@ -117,11 +141,6 @@ zstyle ':completion:*' list-lines 15
 zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
-fpath+=/usr/share/zsh/vendor-completions
-fpath+=~/.zsh/completions
-fpath+=~/.zfunc
-
-unset zle_bracketed_paste
 
 
 setopt appendhistory
@@ -136,19 +155,9 @@ setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt SHARE_HISTORY
+unset zle_bracketed_paste
 
-source_if_exists() {
-    if [[ -f "$1" ]]; then
-        source "$1"
-        return 0
-    else
-        echo "File not found: $1" >&2
-        return 1
-    fi
-}
-
-
-
+autoload -U compinit && compinit
 source_if_exists "$ZSH/oh-my-zsh.sh"
 zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 14    # Check every 14 days
@@ -199,7 +208,7 @@ alias xdg-open="xdg-open 2&>/dev/null"
 fi
 
 
-if [  -f "$HOME/.shell_functions" ] && command -v starship >/dev/null &&  [[ "$OSTYPE" == linux* ]] ; then
+if  command -v starship >/dev/null &&  [[ "$OSTYPE" == linux* ]] ; then
 eval "$(starship init zsh)"
 fi
 
@@ -346,3 +355,5 @@ strip_slashes() {
     sed 's:/*$::'
 }
 alias hx='helix'
+
+#eval "$(starship init zsh)"
