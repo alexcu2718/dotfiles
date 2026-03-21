@@ -146,30 +146,23 @@ alias RUNBIGENDIAN="qemu-system-ppc64 \
 
 # shellcheck disable=SC2139
 alias RUNWINDOWS="qemu-system-x86_64 \
--machine type=q35,accel=kvm \
--enable-kvm \
--cpu Skylake-Client-v4,hv_relaxed,hv_vpindex,hv_time,hv_vapic,hv_runtime,hv_synic,hv_stimer,hv_tlbflush,hv_ipi,hv_frequencies \
--smp 2 \
--m 8096 -mem-prealloc \
--vga virtio \
--device virtio-keyboard-pci \
--device virtio-mouse-pci \
--display spice-app,gl=on \
--device ich9-intel-hda \
--device hda-duplex,audiodev=hda \
--audiodev pa,id=hda,server=unix:/run/user/1000/pulse/native,out.frequency=44100 \
--device virtio-net,netdev=vmnic \
--netdev user,id=vmnic,hostfwd=tcp::2222-:22 \
--device qemu-xhci,id=xhci \
--device usb-tablet,bus=xhci.0 \
--chardev spicevmc,id=vdagent,name=vdagent \
--device virtio-serial \
--device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
--chardev socket,path=/tmp/qga.sock,server=on,wait=off,id=qga0 \
--device virtserialport,chardev=qga0,name=org.qemu.guest_agent.0 \
--object rng-random,id=rng0,filename=/dev/urandom \
--device virtio-rng-pci,max-bytes=1024,period=1000 \
--drive format=raw,file=${HOME}/.qemu/windows_10/windows_10.img"
+  -machine type=q35,accel=kvm -enable-kvm \
+  -cpu Skylake-Client-v4,hv_relaxed,hv_vpindex,hv_time,hv_vapic,hv_runtime,hv_synic,hv_stimer,hv_tlbflush,hv_ipi,hv_frequencies \
+  -smp 4 -m 16392 -mem-prealloc \
+  -vga virtio -device virtio-keyboard-pci -device virtio-mouse-pci \
+  -display spice-app,gl=on \
+  -device ich9-intel-hda -device hda-duplex,audiodev=hda \
+  -audiodev pa,id=hda,server=unix:/run/user/1000/pulse/native,out.frequency=44100 \
+  -device virtio-net,netdev=vmnic \
+  -netdev user,id=vmnic,hostfwd=tcp::2222-:22 \
+  -device qemu-xhci,id=xhci -device usb-tablet,bus=xhci.0 \
+  -chardev spicevmc,id=vdagent,name=vdagent -device virtio-serial \
+  -device virtserialport,chardev=vdagent,name=com.redhat.spice.0 \
+  -chardev socket,path=/tmp/qga_w11.sock,server=on,wait=off,id=qga0 \
+  -device virtserialport,chardev=qga0,name=org.qemu.guest_agent.0 \
+  -object rng-random,id=rng0,filename=/dev/urandom -device virtio-rng-pci,max-bytes=1024,period=1000 \
+  -drive format=raw,file=$HOME/.qemu/windows_11/windows_11_new.img \
+  -boot menu=on"
 
 
 #i dont want to use the shitty js one, no npm!

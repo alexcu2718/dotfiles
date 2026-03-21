@@ -129,12 +129,6 @@ fi
 
 
 
-fpath+=/usr/share/zsh/vendor-completions
-fpath+=~/.zsh/completions
-fpath+=~/.zfunc
-fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
-
-
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.cache/zsh
 zstyle ':completion:*' list-lines 15
@@ -216,11 +210,17 @@ AUTOENV_ENABLE_LEAVE=yes
 AUTOENV_VIEWER=cat
 
 source_if_exists "$AUTO_ENV_HOME/activate.sh"
-source_if_exists "$AUTO_SUGGESTIONS"
-source_if_exists  "$FAST_SYNTAX"
-source_if_exists "$AUTO_COMPLETE"
+#source_if_exists "$AUTO_SUGGESTIONS"
 source_if_exists "$AUTO_ENV"
 source_if_exists "$HOME/.bindkeys"
+source_if_exists  "$FAST_SYNTAX"
+source_if_exists "$AUTO_COMPLETE"
+
+fpath+=/usr/share/zsh/vendor-completions
+fpath+=~/.zsh/completions
+fpath+=~/.zfunc
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+source_if_exists "$AUTO_SUGGESTIONS"
 
 
 

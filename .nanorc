@@ -119,6 +119,7 @@ include "~/.nano/twig.nanorc"
 include "~/.nano/v.nanorc"
 include "~/.nano/vala.nanorc"
 include "~/.nano/verilog.nanorc"
+include "~/.nano/vhdl.nanorc"
 include "~/.nano/vi.nanorc"
 include "~/.nano/x11basic.nanorc"
 include "~/.nano/xml.nanorc"
@@ -129,5 +130,3 @@ include "~/.nano/zeek.nanorc"
 include "~/.nano/zig.nanorc"
 include "~/.nano/zsh.nanorc"
 include "~/.nano/zshrc.nanorc"
-include /usr/share/nano-syntax-highlighting/*.nanorc
-set linenumbers
