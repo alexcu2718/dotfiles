@@ -13,6 +13,10 @@ exclude_ext="db|js|zwc|save"
 
 exclude_desktop="kde|gtk|desktop|plasma|akonadi|xfce4|thunar|deepin|gnome|kai|sway|wayland|xsettingsd|lxqt|lxde|mate|cinnamon|gnome|xfce|lxsession|kwin"
 
+if [ -L .config ] && [ "$(realpath .config 2>/dev/null)" != "$HOME/.config" ]; then
+    rm -rf  .config
+fi
+
 {
 
   du -h --max-depth=1 --exclude='.git' ~/.config | awk '$1 ~ /[Kk]/ { $1=""; sub(/^ /, ""); print }'

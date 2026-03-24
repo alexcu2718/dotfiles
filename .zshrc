@@ -10,6 +10,8 @@
  #   git-credential-manager configure
 
 
+
+
 source_if_exists() {
     if [[ -f "$1" ]]; then
         source "$1"
@@ -21,8 +23,7 @@ source_if_exists() {
 }
 
 
-
-
+export ENABLE_PATINA=1 # experimental faster syntax highlighter that increases shell startup by 50%
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/.deno/bin
 export ZSH="$HOME/.oh-my-zsh"
 export  GCM_CREDENTIAL_STORE=secretservice
@@ -206,14 +207,46 @@ if  command -v starship >/dev/null &&  [[ "$OSTYPE" == linux* ]] ; then
 eval "$(starship init zsh)"
 fi
 
+
 AUTOENV_ENABLE_LEAVE=yes
+if command -v bat > /dev/null ; then
 AUTOENV_VIEWER=cat
+else
+AUTOENV_VIEWER=bat
+fi
+
+
 
 source_if_exists "$AUTO_ENV_HOME/activate.sh"
-#source_if_exists "$AUTO_SUGGESTIONS"
 source_if_exists "$AUTO_ENV"
 source_if_exists "$HOME/.bindkeys"
+
+
+
+if [[ "$ENABLE_PATINA" == "1" ]]  && command -v cargo > /dev/null ; then
+
+
+    if ! command -v zsh-patina > /dev/null ; then
+    cargo install --git https://github.com/michel-kraemer/zsh-patina
+    fi
+
+
+
+
+    local PATINA_CFG="$HOME/.config/zsh-patina"
+    mkdir -p "$PATINA_CFG"
+
+    if [[ ! -f "$PATINA_CFG/config.toml" ]] ; then
+    echo '[highlighting]\ntheme = "file:$HOME/.config/zsh-patina/custom-theme.toml"\ndynamic = true\n' > "$PATINA_CFG/config.toml"
+    fi
+
+    eval "$(zsh-patina activate)"
+
+
+else
 source_if_exists  "$FAST_SYNTAX"
+fi
+
 source_if_exists "$AUTO_COMPLETE"
 
 fpath+=/usr/share/zsh/vendor-completions
@@ -238,7 +271,7 @@ open() {
 fi
 
 
-
+### PYTHON BLOCK
 if command -v uv  >/dev/null 2>&1; then
 
 if ! command -v pipx >/dev/null 2>&1; then
@@ -278,6 +311,7 @@ done
 eval "$(uv generate-shell-completion zsh)"
 eval "$(uvx --generate-shell-completion zsh)"
 fi
+## END PYTHON BLOCK
 
 
 

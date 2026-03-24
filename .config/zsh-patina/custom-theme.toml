@@ -1,0 +1,23 @@
+# Gruvbox Vibrant Theme (executables green, existing files purple, missing red)
+"comment" = "#928374"
+"string" = "#b8bb26"
+"constant.character.escape" = "#fe8019"
+"constant.numeric" = "#d3869b"
+"constant.language" = "#83a598"
+"keyword" = "#fe8019"
+"keyword.control" = "#fe8019"
+"keyword.operator" = "#8ec07c"
+"storage.modifier" = "#fabd2f"
+"storage.type" = "#fabd2f"
+"entity.name.function" = "#b8bb26"
+"entity.name.type" = "#83a598"
+"support.function" = "#b8bb26"
+"support.type" = "#83a598"
+"variable.other" = "#fabd2f"
+"punctuation.definition.variable" = "#fabd2f"
+"dynamic.callable" = { foreground = "#b8bb26" }
+"dynamic.callable.missing" = { foreground = "#fb4934", bold = true }
+"dynamic.path" = { foreground = "#d3869b", underline = true }
+"dynamic.callable.missing.executable" = { foreground = "#fb4934", underline = true }
+[metadata]
+extends = "classic"

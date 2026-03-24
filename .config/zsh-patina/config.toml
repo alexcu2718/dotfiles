@@ -1,0 +1,4 @@
+[highlighting]
+theme = "file:$HOME/.config/zsh-patina/custom-theme.toml"
+dynamic = true
+
