@@ -6,11 +6,14 @@
   "ruff.path": [
     "/usr/bin/ruff"
   ],
+  "remote.SSH.useLocalServer": false,
   "typescript.suggest.paths": false,
   "javascript.suggest.paths": false,
   "ruff.lsp": true,
+  "python.terminal.activateEnvironment": false,
   "editor.renderWhitespace": "selection",
   "files.encoding": "utf8",
+  "terminal.integrated.fontFamily": "'FiraCode Nerd Font Mono'",
   "files.trimTrailingWhitespace": true,
   "files.autoGuessEncoding": true,
   "ruff.trace.server": "messages",
@@ -19,9 +22,6 @@
     "language-julia.interrupt"
   ],
   "python.analysis.completeFunctionParens": true,
-  "codeLens.enableCodeLens": true,
-  "codeLens.filterImports": false,
-  "codeLens.filterDefinitions": true,
   "python.analysis.inlayHints.variableTypes": true,
   "python.analysis.useLibraryCodeForTypes": true,
   "python.analysis.autoSearchPaths": true,
@@ -97,10 +97,6 @@
     "**/target/.rustc_info.json": true,
     "**/target/flycheck*": true
   },
-  "[rust]": {
-    "editor.defaultFormatter": "rust-lang.rust-analyzer",
-    "editor.formatOnSave": true
-  },
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnSave": true
@@ -115,7 +111,6 @@
   "ty.experimental.completions.enable": true,
   "ty.trace.server": "messages",
   "workbench.colorTheme": "Monokai Vibrant (Rust)",
-  "workbench.iconTheme": "vs-seti-hacknerdfontmono",
   "terminal.external.linuxExec": "",
   "terminal.integrated.accessibleViewPreserveCursorPosition": true,
   "terminal.integrated.allowChords": false,
@@ -133,7 +128,7 @@
     "--pch-storage=memory"
   ],
   "clangd.enable": true,
-  "clangd.path": "/usr/bin/clangd",
+  //"clangd.path": "/home/alexc/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/21.1.8/clangd_21.1.8/bin/clangd",
   "C_Cpp.autocomplete": "default",
   "C_Cpp.errorSquiggles": "disabled",
   "[c]": {
@@ -216,9 +211,9 @@
   "terminal.integrated.enableMultiLinePasteWarning": "never",
   "terminal.integrated.defaultProfile.linux": "zsh",
   "terminal.integrated.mouseWheelScrollSensitivity": 4,
-  "workbench.editorAssociations": {
-    "file:/**/*.csv": "jupyter-data-wrangler"
-  },
+  // "workbench.editorAssociations": {
+  //   "file:/**/*.csv": "jupyter-data-wrangler"
+  // },
   "notebook.cellExecutionTimeVerbosity": "verbose",
   "multiCommand.commands": [
     {
@@ -339,5 +334,11 @@
   "editor.cursorBlinking": "phase",
   "editor.cursorSmoothCaretAnimation": "on",
   "python.analysis.autoImportCompletions": true,
-  "latex-workshop.formatting.latex": "latexindent"
+  "latex-workshop.formatting.latex": "latexindent",
+  "rust-analyzer.diagnostics.experimental.enable": true,
+  "dataWrangler.experiments.autoDetectCsvDelimiter": true,
+  "clangd.path": "/home/alexc/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/21.1.8/clangd_21.1.8/bin/clangd",
+  "remote.SSH.remotePlatform": {
+    "localhost": "windows"
+  }
 }

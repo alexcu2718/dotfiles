@@ -2,7 +2,7 @@
 [
     {
       "key": "alt+h", // key to press to activate command
-      "command": "settings.cycle", 
+      "command": "settings.cycle", // `settings.cycle` is the command that's actually being run, from the extension `hoovercj.vscode-settings-cycler`
       "when": "editorTextFocus", // this keybinding is only active when (editor is in focus)
       "args": { // these are the arguments passed to `settings.cycle`
         "id": "toggle-language-inlay-hints", // must be unique
@@ -23,12 +23,6 @@
       "when": "textInputFocus && !editorReadonly"
     }, 
 
-      {
-    "key": "shift+r shift+a",
-    "command": "rust-analyzer.restartServer"
-  },
-
-
 
       {
     "key": "shift+up",
@@ -37,7 +31,7 @@
     "args": {
       "to": "up",
       "by": "line",
-      "value": 15,     
+      "value": 10,     // adjust this number for speed
       "revealCursor": false
     }
   },
@@ -83,12 +77,6 @@
     "command": "cursorEnd",
     "when": "textInputFocus"
   },
-
-  {
-    "key": "shift+tab",
-    "command": "outdent",
-    "when": "editorTextFocus && !editorReadonly"
-},
 
   {
     "key": "ctrl+=",
@@ -188,7 +176,11 @@
     "when": "terminalFocus"
 },
 
-
+// Focus Explorer
+//{"key": "ctrl+e","command": "workbench.view.explorer","when": "editorFocus"},
+// Return to Editor
+//{"key": "ctrl+e","command": "workbench.action.focusActiveEditorGroup","when": "explorerViewletFocus"},
+//{"key": "ctrl+e","command": "workbench.action.focusActiveEditorGroup","when": "terminalFocus"},
     {
       "key": "ctrl+-",
       "command": "jupyter.insertCellAbove",

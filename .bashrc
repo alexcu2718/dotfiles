@@ -1,158 +1,80 @@
-# Enable the subsequent settings only in interactive sessions
-case $- in
-*i*) ;;
-*) return ;;
-esac
+#!/usr/bin/env bash
 
-[[ $- == *i* ]] && source /usr/share/blesh/ble.sh --noattach
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
 
 
 
-#source ~/.shell_functions
-# Path to your oh-my-bash installation.
-export OSH='/home/alexc/.oh-my-bash'
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+PS1='[\u@\h \W]\$ '
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-bash is loaded.
-#OSH_THEME="powerbash10k"
-#eval "$(starship init bash)"
-# If you set OSH_THEME to "random", you can ignore themes you don't like.
-# OMB_THEME_RANDOM_IGNORED=("powerbash10k" "wanelo")
-# You can also specify the list from which a theme is randomly selected:
-# OMB_THEME_RANDOM_CANDIDATES=("font" "powerline-light" "minimal")
 
-# Uncomment the following line to use case-sensitive completion.
-# OMB_CASE_SENSITIVE="true"
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
-# OMB_HYPHEN_SENSITIVE="false"
+BLESH_LOCATION="$HOME/.local/share/blesh/ble.sh"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
 
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_OSH_DAYS=13
 
-# Uncomment the following line to disable colors in ls.
-DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you don't want the repository to be considered dirty
-# if there are untracked files.
-SCM_GIT_DISABLE_UNTRACKED_DIRTY="true"
-SCM_GIT_IGNORE_UNTRACKED="true"
-# If not set, the default value is 'yyyy-mm-dd'.
-# HIST_STAMPS='yyyy-mm-dd'
-
-# this variable.  The default behavior for the empty value is "true".
-OMB_USE_SUDO=true
-
-# To enable/disable display of Python virtualenv and condaenv
-OMB_PROMPT_SHOW_PYTHON_VENV=false # enable
-# OMB_PROMPT_SHOW_PYTHON_VENV=false # disable
-
-# To enable/disable Spack environment information
-# OMB_PROMPT_SHOW_SPACK_ENV=true  # enable
-# OMB_PROMPT_SHOW_SPACK_ENV=false # disable
-
-# Which completions would you like to load? (completions can be found in ~/.oh-my-bash/completions/*)
-# Custom completions may be added to ~/.oh-my-bash/custom/completions/
-# Example format: completions=(ssh git bundler gem pip pip3)
-# Add wisely, as too many completions slow down shell startup.
-completions=(
-  git
-  composer
-  ssh
-  uv
-  pip3
-  pip
-  gh
-  packer
-)
-
-# Which aliases would you like to load? (aliases can be found in ~/.oh-my-bash/aliases/*)
-# Custom aliases may be added to ~/.oh-my-bash/custom/aliases/
-# Example format: aliases=(vagrant composer git-avh)
-# Add wisely, as too many aliases slow down shell startup.
-aliases=(
-  general
-)
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-bash/plugins/*)
-# Custom plugins may be added to ~/.oh-my-bash/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  git
-  bashmarks
-)
-
-# Which plugins would you like to conditionally load? (plugins can be found in ~/.oh-my-bash/plugins/*)
-# Custom plugins may be added to ~/.oh-my-bash/custom/plugins/
-# Example format:
-#  if [ "$DISPLAY" ] || [ "$SSH" ]; then
-#      plugins+=(tmux-autoattach)
-#  fi
-
-# If you want to reduce the initialization cost of the "tput" command to
-# initialize color escape sequences, you can uncomment the following setting.
-# This disables the use of the "tput" command, and the escape sequences are
-# initialized to be the ANSI version:
-#
-#OMB_TERM_USE_TPUT=no
-
-source "$OSH"/oh-my-bash.sh
-
-# User configuration
-export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nano'
-else
-  export EDITOR='nvim'
+if [ ! -f "$BLESH_LOCATION" ]; then
+    TMP_DIR=$(mktemp -d)
+    cd "$TMP_DIR" || exit
+    git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
+    make -C ble.sh install PREFIX=~/.local
+    cd - || exit
+    rm -rf "$TMP_DIR"
 fi
 
-# Compilation flags
-export ARCHFLAGS="-arch x86_64"
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
+if  command -v starship >/dev/null &&  [[ "$OSTYPE" == linux* ]] ; then
+eval "$(starship init bash)"
+fi
 
-# Set personal aliases, overriding those provided by oh-my-bash libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-bash
-# users are encouraged to define aliases within the OSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias bashconfig="mate ~/.bashrc"
-# alias ohmybash="mate ~/.oh-my-bash"
-#source ~/.oh-my-bash/completions/gh.completion.sh
+backup() {
+    local target="$1"
+
+    if [[ ! -e "$target" ]]; then
+        echo "Error: '$target' does not exist"
+        return 1
+    fi
 
 
-[[ $- == *i* ]] && source /usr/share/blesh/ble.sh
+    if [[ -d "$target" ]]; then
+        if [[ ! -e "${target}.bak" ]]; then
+            cp -r "$target" "${target}.bak"
+            echo "Created directory backup: ${target}.bak"
+            return 0
+        fi
 
-source ~/.shell_functions
-[[ ${BLE_VERSION-} ]] && ble-attach
-bind 'set enable-bracketed-paste off'
-#eval "$(starship init bash)"
-[[ -f /usr/share/bash-preexec/bash-preexec.sh ]] && source /usr/share/bash-preexec/bash-preexec.sh
+        local counter=2
+        while [[ -d "${target}.bak${counter}" ]]; do
+            ((counter++))
+        done
 
-source /home/alexc/.config/broot/launcher/bash/br
+        cp -r "$target" "${target}.bak${counter}"
+        echo "Created directory backup: ${target}.bak${counter}"
+    else
+        if [[ ! -e "${target}.bak" ]]; then
+            cp "$target" "${target}.bak"
+            echo "Created backup: ${target}.bak"
+            return 0
+        fi
+
+        local counter=2
+        while [[ -e "${target}.bak${counter}" ]]; do
+            ((counter++))
+        done
+
+        cp "$target" "${target}.bak${counter}"
+        echo "Created backup: ${target}.bak${counter}"
+    fi
+}
+
+strip_slashes() {
+    sed 's:/*$::'
+}
+alias hx='helix'
+
+
+source "$HOME/.local/share/blesh/ble.sh"
+
