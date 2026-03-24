@@ -41,7 +41,8 @@ while IFS= read -r item; do
 
   mkdir -p "$(dirname "$relpath")"
 
-  cp -r "$item" "$relpath"
+  rm -rf "$relpath"
+  cp -a "$item" "$relpath"
 done < total_dot_files.txt
 echo -e "\n copied all items from dotfiles"
 #i got lazy here sue me

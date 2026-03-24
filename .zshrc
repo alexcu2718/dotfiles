@@ -24,6 +24,7 @@ source_if_exists() {
 
 
 export ENABLE_PATINA=1 # experimental faster syntax highlighter that increases shell startup by 50%
+export ENABLE_STARSHIP=1
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/.deno/bin
 export ZSH="$HOME/.oh-my-zsh"
 export  GCM_CREDENTIAL_STORE=secretservice
@@ -108,12 +109,6 @@ fi
 
 
 
-local STARSHIP_LOCATION="$HOME/.config/starship.toml"
-
-if [ ! -f "$STARSHIP_LOCATION" ]; then
-mkdir -p "$HOME/.config"
-curl -o "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
-fi
 
 local BINDKEYS="$HOME/.bindkeys"
 if [ ! -f "$BINDKEYS" ]; then
@@ -203,10 +198,6 @@ alias xdg-open="xdg-open 2&>/dev/null"
 fi
 
 
-if  command -v starship >/dev/null &&  [[ "$OSTYPE" == linux* ]] ; then
-eval "$(starship init zsh)"
-fi
-
 
 AUTOENV_ENABLE_LEAVE=yes
 if command -v bat > /dev/null ; then
@@ -237,8 +228,16 @@ if [[ "$ENABLE_PATINA" == "1" ]]  && command -v cargo > /dev/null ; then
     mkdir -p "$PATINA_CFG"
 
     if [[ ! -f "$PATINA_CFG/config.toml" ]] ; then
-    echo '[highlighting]\ntheme = "file:$HOME/.config/zsh-patina/custom-theme.toml"\ndynamic = true\n' > "$PATINA_CFG/config.toml"
+    curl -o "$PATINA_CFG/config.toml" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/zsh-patina/config.toml
     fi
+
+    if [[ ! -f "$PATINA_CFG/custom-theme.toml" ]] ; then
+    curl -o "$PATINA_CFG/custom-theme.toml" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/zsh-patina/custom-theme.toml
+    fi
+
+
+
+
 
     eval "$(zsh-patina activate)"
 
@@ -339,9 +338,11 @@ plugins=(gitfast   github   pip docker docker-compose
  )
 
 
-if command -v starship &> /dev/null ; then
-plugins+=starship
-fi
+
+
+
+
+
 
 
 
@@ -390,4 +391,47 @@ strip_slashes() {
 }
 alias hx='helix'
 
-#eval "$(starship init zsh)"
+
+
+
+if [[ "$ENABLE_STARSHIP" == "1" ]] && command -v starship >/dev/null  ; then
+eval "$(starship init zsh)"
+
+local STARSHIP_LOCATION="$HOME/.config/starship.toml"
+
+if [ ! -f "$STARSHIP_LOCATION" ]; then
+mkdir -p "$HOME/.config"
+curl -o "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
+ fi
+
+eval "$(starship init zsh)"
+fi
+
+# if [[ "$ENABLE_STARSHIP" == "1" ]] && command -v starship >/dev/null  ; then
+# eval "$(starship init zsh)"
+
+# local STARSHIP_LOCATION="$HOME/.config/starship.toml"
+
+# if [ ! -f "$STARSHIP_LOCATION" ]; then
+# mkdir -p "$HOME/.config"
+# curl -o "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
+#  fi
+
+# eval "$(starship init zsh)"
+
+
+# else
+
+# P10K_HOME="$HOME/powerlevel10k"
+
+# if [ ! -f "$P10K_HOME" ] ; then
+# git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_HOME"
+#     fi
+
+# source "$P10K_HOME/powerlevel10k.zsh-theme"
+
+
+# # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# fi
+
