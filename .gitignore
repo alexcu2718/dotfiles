@@ -1,7 +1,11 @@
 .wifi_password.txt
 .nv
+.config/kate
+.config/cosmic
+.config/xfce4
 .ark
 .pulse-cookie
+.config/broot
 .autoenv
 .zshrc.bak
 .zshrc.bak.bak

@@ -64,15 +64,6 @@ fi
 
 
 
-##this is for a friends config, i dont use macos except on vms(this is handy tho.)
-# if [[ "$OSTYPE" == darwin* ]]; then
-#     local P10K="/usr/local/opt/powerlevel10k/share/powerlevel10k/powerlevel10k.zsh-theme"
-#     if [ ! -f "$P10K" ]; then
-#         brew install powerlevel10k
-#     fi
-#     source "$P10K"
-# fi
-### Actually this is a terrible plugin, its so slow...
 
 
 if command -v sccache >/dev/null 2>&1; then
@@ -395,7 +386,6 @@ alias hx='helix'
 
 
 if [[ "$ENABLE_STARSHIP" == "1" ]] && command -v starship >/dev/null  ; then
-eval "$(starship init zsh)"
 
 local STARSHIP_LOCATION="$HOME/.config/starship.toml"
 
@@ -407,31 +397,4 @@ curl -o "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfil
 eval "$(starship init zsh)"
 fi
 
-# if [[ "$ENABLE_STARSHIP" == "1" ]] && command -v starship >/dev/null  ; then
-# eval "$(starship init zsh)"
-
-# local STARSHIP_LOCATION="$HOME/.config/starship.toml"
-
-# if [ ! -f "$STARSHIP_LOCATION" ]; then
-# mkdir -p "$HOME/.config"
-# curl -o "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
-#  fi
-
-# eval "$(starship init zsh)"
-
-
-# else
-
-# P10K_HOME="$HOME/powerlevel10k"
-
-# if [ ! -f "$P10K_HOME" ] ; then
-# git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_HOME"
-#     fi
-
-# source "$P10K_HOME/powerlevel10k.zsh-theme"
-
-
-# # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-# fi
 

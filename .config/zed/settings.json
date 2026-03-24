@@ -7,14 +7,19 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "agent": {
+    "favorite_models": [],
+    "always_allow_tool_actions": true,
+    "model_parameters": []
+  },
   "icon_theme": "JetBrains New UI Icons (Dark)",
   "ui_font_size": 16,
   "buffer_font_size": 16,
-  "disable_ai": true,
+  "disable_ai": false,
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Zedokai Darker"
+    "dark": "Monokai Vibrant Rust"
     //"vim_mode": true
   },
   "vim_mode": true
