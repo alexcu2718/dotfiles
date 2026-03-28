@@ -1,4 +1,3 @@
-# Gruvbox Vibrant Theme (executables green, existing files purple, missing red)
 "comment" = "#928374"
 "string" = "#b8bb26"
 "constant.character.escape" = "#fe8019"
@@ -15,7 +14,8 @@
 "support.type" = "#83a598"
 "variable.other" = "#fabd2f"
 "punctuation.definition.variable" = "#fabd2f"
-"dynamic.callable" = { foreground = "#b8bb26" }
+"dynamic.callable" = { foreground = "#2dbb26" }
+"dynamic.callable.command.shell" = { foreground = "#26bbbb" }
 "dynamic.callable.missing" = { foreground = "#fb4934", bold = true }
 "dynamic.path" = { foreground = "#d3869b", underline = true }
 "dynamic.callable.missing.executable" = { foreground = "#fb4934", underline = true }
