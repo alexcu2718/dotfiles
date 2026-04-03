@@ -23,6 +23,71 @@ source_if_exists() {
 }
 
 
+str_replace() {
+    local input="$1"
+    local substring="$2"
+    local replacement="${3:-}"
+
+    echo "${input//$substring/$replacement}"
+}
+
+
+backup() {
+    local target="$1"
+
+    if [[ ! -e "$target" ]]; then
+        echo "Error: '$target' does not exist"
+        return 1
+    fi
+
+
+    if [[ -d "$target" ]]; then
+        if [[ ! -e "${target}.bak" ]]; then
+            cp -r "$target" "${target}.bak"
+            echo "Created directory backup: ${target}.bak"
+            return 0
+        fi
+
+        local counter=2
+        while [[ -d "${target}.bak${counter}" ]]; do
+            ((counter++))
+        done
+
+        cp -r "$target" "${target}.bak${counter}"
+        echo "Created directory backup: ${target}.bak${counter}"
+    else
+        if [[ ! -e "${target}.bak" ]]; then
+            cp "$target" "${target}.bak"
+            echo "Created backup: ${target}.bak"
+            return 0
+        fi
+
+        local counter=2
+        while [[ -e "${target}.bak${counter}" ]]; do
+            ((counter++))
+        done
+
+        cp "$target" "${target}.bak${counter}"
+        echo "Created backup: ${target}.bak${counter}"
+    fi
+}
+
+strip_slashes() {
+    sed 's:/*$::'
+}
+
+
+
+clone_if_not_exist() {
+  local filepath="$1" repo="$2"
+  local DIRNAME="$(dirname "$filepath")"
+  if [ ! -d "$DIRNAME" ]; then
+    git clone --depth 1 "$repo" "$DIRNAME" || echo "Clone failed: $repo" >&2
+  fi
+}
+
+
+
 export ENABLE_PATINA=1 # experimental faster syntax highlighter that increases shell startup by 50%
 export ENABLE_STARSHIP=1
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/.deno/bin
@@ -157,13 +222,7 @@ local AUTO_COMPLETE="$ZSH/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 local AUTO_ENV="$ZSH/plugins/autoenv/autoenv.plugin.zsh"
 ##i got fedup of recreating this everytime i wanted a shell to work on a new pc and too lazy for nix.
 
-clone_if_not_exist() {
-  local filepath="$1" repo="$2"
-  local DIRNAME="$(dirname "$filepath")"
-  if [ ! -d "$DIRNAME" ]; then
-    git clone --depth 1 "$repo" "$DIRNAME" || echo "Clone failed: $repo" >&2
-  fi
-}
+
 
 clone_if_not_exist "$AUTO_SUGGESTIONS" "https://github.com/zsh-users/zsh-autosuggestions.git"
 clone_if_not_exist "$FAST_SYNTAX" "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
@@ -199,17 +258,19 @@ fi
 
 
 
-source_if_exists "$AUTO_ENV_HOME/activate.sh"
-source_if_exists "$AUTO_ENV"
 source_if_exists "$HOME/.bindkeys"
-
 
 
 if [[ "$ENABLE_PATINA" == "1" ]]  && command -v cargo > /dev/null ; then
 
 
     if ! command -v zsh-patina > /dev/null ; then
+
+    if command -v paru > /dev/null ; then
+    paru -Syu zsh-patina
+    else
     cargo install --git https://github.com/michel-kraemer/zsh-patina
+    fi
     fi
 
 
@@ -246,6 +307,9 @@ fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 source_if_exists "$AUTO_SUGGESTIONS"
 
 
+if command -v zoxide >/dev/null ; then
+eval "$(zoxide init zsh)"
+fi
 
 if [[ "$OSTYPE" == linux* ]] then ;
 unalias open > /dev/null 2>&1
@@ -336,51 +400,9 @@ plugins=(gitfast   github   pip docker docker-compose
 
 
 
-
-backup() {
-    local target="$1"
-
-    if [[ ! -e "$target" ]]; then
-        echo "Error: '$target' does not exist"
-        return 1
-    fi
-
-
-    if [[ -d "$target" ]]; then
-        if [[ ! -e "${target}.bak" ]]; then
-            cp -r "$target" "${target}.bak"
-            echo "Created directory backup: ${target}.bak"
-            return 0
-        fi
-
-        local counter=2
-        while [[ -d "${target}.bak${counter}" ]]; do
-            ((counter++))
-        done
-
-        cp -r "$target" "${target}.bak${counter}"
-        echo "Created directory backup: ${target}.bak${counter}"
-    else
-        if [[ ! -e "${target}.bak" ]]; then
-            cp "$target" "${target}.bak"
-            echo "Created backup: ${target}.bak"
-            return 0
-        fi
-
-        local counter=2
-        while [[ -e "${target}.bak${counter}" ]]; do
-            ((counter++))
-        done
-
-        cp "$target" "${target}.bak${counter}"
-        echo "Created backup: ${target}.bak${counter}"
-    fi
-}
-
-strip_slashes() {
-    sed 's:/*$::'
-}
+if command -v helix > /dev/null ; then
 alias hx='helix'
+fi
 
 
 
@@ -397,4 +419,7 @@ curl -o "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfil
 eval "$(starship init zsh)"
 fi
 
+
+source_if_exists "$AUTO_ENV_HOME/activate.sh"
+source_if_exists "$AUTO_ENV"
 
