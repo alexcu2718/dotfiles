@@ -7,8 +7,6 @@
     "/usr/bin/ruff"
   ],
   "remote.SSH.useLocalServer": false,
-  "typescript.suggest.paths": false,
-  "javascript.suggest.paths": false,
   "ruff.lsp": true,
   "python.terminal.activateEnvironment": false,
   "editor.renderWhitespace": "selection",
@@ -340,5 +338,14 @@
   "clangd.path": "/home/alexc/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/21.1.8/clangd_21.1.8/bin/clangd",
   "remote.SSH.remotePlatform": {
     "localhost": "windows"
-  }
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "shellformat.flag": "-i 2 -ci -sr",
+  "files.associations": {
+    "*.zsh": "shellscript",
+    ".zshrc": "shellscript",
+    ".zshenv": "shellscript",
+  },
 }

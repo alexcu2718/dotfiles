@@ -14,10 +14,10 @@
 "support.type" = "#83a598"
 "variable.other" = "#fabd2f"
 "punctuation.definition.variable" = "#fabd2f"
-"dynamic.callable" = { foreground = "#2dbb26" }
+"dynamic.callable" = { foreground = "#12fb05" }
 "dynamic.callable.command.shell" = { foreground = "#26bbbb" }
 "dynamic.callable.missing" = { foreground = "#fb4934", bold = true }
-"dynamic.path" = { foreground = "#d3869b", underline = true }
+"dynamic.path" = { foreground = "#7274f2", underline = true }
 "dynamic.callable.missing.executable" = { foreground = "#fb4934", underline = true }
 [metadata]
 extends = "classic"
