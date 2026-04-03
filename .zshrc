@@ -321,6 +321,7 @@ source_if_exists "$AUTO_SUGGESTIONS"
 
 if command -v zoxide >/dev/null ; then
 eval "$(zoxide init zsh)"
+alias cd='z'
 fi
 
 if [[ "$OSTYPE" == linux* ]] then ;
