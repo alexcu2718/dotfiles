@@ -338,6 +338,9 @@ open() {
 fi
 
 
+
+alias ipython='\ipython --no-confirm-exit --no-banner --pprint'
+
 ### PYTHON BLOCK
 if command -v uv  >/dev/null 2>&1; then
 
@@ -436,3 +439,4 @@ fi
 source_if_exists "$AUTO_ENV_HOME/activate.sh"
 source_if_exists "$AUTO_ENV"
 
+alias VIEW_ASSEMBLY_OJECT="objdump  -d --disassembler-options intel" 
