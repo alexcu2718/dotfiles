@@ -216,14 +216,18 @@ setopt SHARE_HISTORY
 unset zle_bracketed_paste
 
 autoload -U compinit && compinit
-source_if_exists "$ZSH/oh-my-zsh.sh"
-zstyle ':omz:update' mode auto
-zstyle ':omz:update' frequency 14    # Check every 14 days
+
+
 DISABLE_MAGIC_FUNCTIONS="true"
 DISABLE_LS_COLORS="false"
 DISABLE_AUTO_TITLE="false"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
+
+source_if_exists "$ZSH/oh-my-zsh.sh"
+zstyle ':omz:update' mode auto
+zstyle ':omz:update' frequency 14    # Check every 14 days
+
 
 
 
@@ -304,7 +308,7 @@ if [[ "$ENABLE_PATINA" == "1" ]]  && command -v cargo > /dev/null ; then
 
 
     eval "$(zsh-patina activate)"
-
+    eval "$(zsh-patina completion)"
 
 else
 source_if_exists  "$FAST_SYNTAX"
@@ -324,14 +328,44 @@ eval "$(zoxide init zsh)"
 alias cd='z'
 fi
 
-if [[ "$OSTYPE" == linux* ]] then ;
+if [[ "$OSTYPE" == linux* ]]; then
 unalias open > /dev/null 2>&1
 open() {
+
+    if [[ -z "$1" ]]; then
+        echo "Usage: open <path-or-command> [args...]" >&2
+        return 1
+    fi
+
+    if [[ -d "$1" ]]; then
+        if command -v thunar > /dev/null; then
+            thunar "$1" "${@:2}" &> /dev/null &
+            disown
+            return 0
+        fi
+
+        if command -v dolphin > /dev/null; then
+            dolphin "$1" "${@:2}" &> /dev/null &
+            disown
+            return 0
+        fi
+
+        if command -v xdg-open > /dev/null; then
+            xdg-open "$1" &> /dev/null &
+            disown
+            return 0
+        fi
+
+        echo "Error: no file manager available for '$1'" >&2
+        return 1
+    fi
+
   ## this just allows you to open eg discord/firefox etc via terminal without cluttering it with lots of crap. fairly handy.
     if ! command -v "$1" &> /dev/null; then
         echo "Error: '$1' is not a valid command" >&2
         return 1
     fi
+
     command "$1" "${@:2}" &> /dev/null &
     disown
 }
@@ -436,7 +470,8 @@ eval "$(starship init zsh)"
 fi
 
 
-source_if_exists "$AUTO_ENV_HOME/activate.sh"
-source_if_exists "$AUTO_ENV"
+source_if_exists "$AUTO_ENV_HOME/activate.sh" # for shell use
+source_if_exists "$AUTO_ENV" ## FOR ZSH COMPLETIONS
 
-alias VIEW_ASSEMBLY_OJECT="objdump  -d --disassembler-options intel" 
+alias VIEW_ASSEMBLY_OJECT="objdump  -d --disassembler-options intel"
+export PATH=$PATH:/home/alexc/.craft/export PATH="$HOME/.craft/bin:$PATH"

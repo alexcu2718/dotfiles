@@ -78,3 +78,5 @@ alias hx='helix'
 
 source "$HOME/.local/share/blesh/ble.sh"
 
+export PATH="$HOME/.craft/bin:$PATH"
+export PATH="$HOME/.craft/bin:$PATH"

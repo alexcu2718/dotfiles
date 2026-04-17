@@ -246,7 +246,8 @@
   "vim.highlightedyank.enable": true,
   "python.defaultInterpreterPath": "/home/alexc/.venvs/py313",
   "C_Cpp.intelliSenseEngine": "disabled",
-  "clangd.checkUpdates": true,
+  "C_Cpp.default.cStandard": "c23",
+  "clangd.checkUpdates": false,
   "clangd.inactiveRegions.useBackgroundHighlight": true,
   "C_Cpp.codeAnalysis.clangTidy.enabled": true,
   "latex-workshop.latex.tools": [
@@ -335,7 +336,7 @@
   "latex-workshop.formatting.latex": "latexindent",
   "rust-analyzer.diagnostics.experimental.enable": true,
   "dataWrangler.experiments.autoDetectCsvDelimiter": true,
-  "clangd.path": "/home/alexc/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/21.1.8/clangd_21.1.8/bin/clangd",
+  "clangd.path": "/usr/bin/clangd",
   "remote.SSH.remotePlatform": {
     "localhost": "windows"
   },
@@ -348,4 +349,6 @@
     ".zshrc": "shellscript",
     ".zshenv": "shellscript",
   },
+  "terminal.integrated.cursorWidth": 0.5,
+  "terminal.integrated.fontSize": 10,
 }
