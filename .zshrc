@@ -23,6 +23,28 @@ source_if_exists() {
 }
 
 
+create_bash_file() {
+    local file_name="$1"
+
+    if [[ -z "$file_name" ]]; then
+        echo "Error: No filename specified" >&2
+        return 1
+    fi
+
+    if [[ -e "$file_name" ]]; then
+        echo "Error: File '$file_name' already exists" >&2
+        return 1
+    fi
+
+    printf '#!/usr/bin/env bash\n' > "$file_name" || {
+        echo "Error: Cannot write to '$file_name'" >&2
+        return 1
+    }
+
+    chmod +x "$file_name"
+}
+
+
 str_replace() {
     local input="$1"
     local substring="$2"
@@ -73,9 +95,14 @@ backup() {
 }
 
 strip_slashes() {
-    sed 's:/*$::'
+    if [ $# -gt 0 ]; then
+        for arg in "$@"; do
+            printf '%s\n' "$arg" | sed 's:/*$::'
+        done
+    else
+        sed 's:/*$::'
+    fi
 }
-
 
 
 clone_if_not_exist() {
@@ -160,6 +187,7 @@ if  [[ "$OSTYPE" == linux* ]]  && command -v cargo >/dev/null 2>&1; then
             cargo-asm --bpaf-complete-style-zsh > "$CARGO_ASM_COMPLETIONS"
         fi
     fi
+    alias cargo-asm='\cargo-asm -q'
 fi
 
 
@@ -473,5 +501,5 @@ fi
 source_if_exists "$AUTO_ENV_HOME/activate.sh" # for shell use
 source_if_exists "$AUTO_ENV" ## FOR ZSH COMPLETIONS
 
-alias VIEW_ASSEMBLY_OJECT="objdump  -d --disassembler-options intel"
+alias VIEW_ASSEMBLY_OBJECT="objdump  -d --disassembler-options intel"
 export PATH=$PATH:/home/alexc/.craft/export PATH="$HOME/.craft/bin:$PATH"
