@@ -3,6 +3,7 @@
 .config/kate
 .config/cosmic
 .config/xfce4
+.craft
 .ark
 .pulse-cookie
 .config/broot
