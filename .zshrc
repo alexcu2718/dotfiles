@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-
+zmodload zsh/zprof
 ## This shell is just a fast setup method for going on other shells
 ## I make no apology for its very tasteful design.
 ### Install nerd fonts
@@ -252,7 +252,7 @@ DISABLE_AUTO_TITLE="false"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
-source_if_exists "$ZSH/oh-my-zsh.sh"
+source "$ZSH/oh-my-zsh.sh"
 zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 14    # Check every 14 days
 
@@ -339,16 +339,17 @@ if [[ "$ENABLE_PATINA" == "1" ]]  && command -v cargo > /dev/null ; then
     eval "$(zsh-patina completion)"
 
 else
-source_if_exists  "$FAST_SYNTAX"
+source  "$FAST_SYNTAX"
 fi
 
-source_if_exists "$AUTO_COMPLETE"
+source "$AUTO_COMPLETE"
 
 fpath+=/usr/share/zsh/vendor-completions
 fpath+=~/.zsh/completions
 fpath+=~/.zfunc
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
-source_if_exists "$AUTO_SUGGESTIONS"
+export ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+source "$AUTO_SUGGESTIONS"
 
 
 if command -v zoxide >/dev/null ; then
@@ -498,8 +499,14 @@ eval "$(starship init zsh)"
 fi
 
 
-source_if_exists "$AUTO_ENV_HOME/activate.sh" # for shell use
-source_if_exists "$AUTO_ENV" ## FOR ZSH COMPLETIONS
+if command -v eza > /dev/null; then
+alias ls='eza --icons --color=always'
+fi
+
+
+source "$AUTO_ENV_HOME/activate.sh" # for shell use
+source "$AUTO_ENV" ## FOR ZSH COMPLETIONS
 
 alias VIEW_ASSEMBLY_OBJECT="objdump  -d --disassembler-options intel"
-export PATH=$PATH:/home/alexc/.craft/export PATH="$HOME/.craft/bin:$PATH"
+export PATH=$PATH:/home/alexc/.craft/
+alias COMPILE_COMMANDS="cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
