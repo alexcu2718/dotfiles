@@ -1,5 +1,10 @@
 .wifi_password.txt
 .nv
+.config/corectrl/
+.config/cpupower_gui/
+.config/pypoetry/
+.config/tlpui/
+.cookiecutter_replay/
 .config/kate
 .config/cosmic
 .config/xfce4
@@ -128,3 +133,7 @@ total_dot_files.txt
 .config/neofetch
 .config/virt-viewer
 .config/xdg-desktop-portal
+.idea
+vscode-shared
+.vscode-shared
+.deno

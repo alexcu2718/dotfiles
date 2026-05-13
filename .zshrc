@@ -5,13 +5,6 @@
 ### Install nerd fonts
 ## bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
 
-
-#curl -L https://aka.ms/gcm/linux-install-source.sh | sh
- #   git-credential-manager configure
-
-
-
-
 source_if_exists() {
     if [[ -f "$1" ]]; then
         source "$1"
@@ -306,19 +299,13 @@ source_if_exists "$HOME/.bindkeys"
 
 
 if [[ "$ENABLE_PATINA" == "1" ]]  && command -v cargo > /dev/null ; then
-
-
     if ! command -v zsh-patina > /dev/null ; then
-
     if command -v paru > /dev/null ; then
     paru -Syu zsh-patina
     else
     cargo install --git https://github.com/michel-kraemer/zsh-patina
     fi
     fi
-
-
-
 
     local PATINA_CFG="$HOME/.config/zsh-patina"
     mkdir -p "$PATINA_CFG"
@@ -386,6 +373,17 @@ open() {
         fi
 
         echo "Error: no file manager available for '$1'" >&2
+        return 1
+    fi
+
+    if [[ -f "$1" && "$1:l" == *.pdf ]]; then
+        if command -v xdg-open > /dev/null; then
+            xdg-open "$1" &> /dev/null &
+            disown
+            return 0
+        fi
+
+        echo "Error: xdg-open is not available for '$1'" >&2
         return 1
     fi
 
