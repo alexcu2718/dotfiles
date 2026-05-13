@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-zmodload zsh/zprof
+
 ## This shell is just a fast setup method for going on other shells
 ## I make no apology for its very tasteful design.
 ### Install nerd fonts
@@ -295,9 +295,9 @@ fi
 
 AUTOENV_ENABLE_LEAVE=yes
 if command -v bat > /dev/null ; then
-AUTOENV_VIEWER=cat
-else
 AUTOENV_VIEWER=bat
+else
+AUTOENV_VIEWER=cat
 fi
 
 
@@ -508,5 +508,4 @@ source "$AUTO_ENV_HOME/activate.sh" # for shell use
 source "$AUTO_ENV" ## FOR ZSH COMPLETIONS
 
 alias VIEW_ASSEMBLY_OBJECT="objdump  -d --disassembler-options intel"
-export PATH=$PATH:/home/alexc/.craft/
 alias COMPILE_COMMANDS="cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"

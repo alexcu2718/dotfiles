@@ -63,7 +63,6 @@
     "/usr/sbin/python2.7",
     "/usr/sbin/python3",
     "/sbin/python3.13",
-    "/usr/bin/python",
     "/usr/sbin/python",
     "~/.venvs/pyradian",
     "/bin/python2",
@@ -338,7 +337,9 @@
   "dataWrangler.experiments.autoDetectCsvDelimiter": true,
   "clangd.path": "/usr/bin/clangd",
   "remote.SSH.remotePlatform": {
-    "localhost": "windows"
+    "windows": "windows",
+    "macos": "macOS",
+    "localhost": "macOS"
   },
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
@@ -351,4 +352,6 @@
   },
   "terminal.integrated.cursorWidth": 0.5,
   "terminal.integrated.fontSize": 10,
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "remote.SSH.remoteServerListenOnSocket": true,
 }

@@ -79,7 +79,7 @@ ZIP () {
 
 alias ssh='TERM=xterm ssh'
 alias GITBRANCH='echo "$(git branch -r)"'
-alias GITLINK='git -C "$(git rev-parse --show-toplevel)" remote get-url origin'
+alias GITLINK='git config --get remote.origin.url'
 
 alias RUNFREEBSD='qemu-system-x86_64 \
   -enable-kvm \
@@ -126,8 +126,6 @@ alias RUNOSX='cd ~/OSX-KVM && ./OpenCore-Boot.sh'
 
 
 alias TEST_INTERNET="timeout 10 ping google.com"
-alias RESTART_INTERNET=" sudo systemctl restart NetworkManager.service"
-# I have a shoddy router that is increasingly annoying..................
 
 
 # shellcheck disable=SC2139
