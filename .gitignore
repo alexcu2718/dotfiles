@@ -137,3 +137,4 @@ total_dot_files.txt
 vscode-shared
 .vscode-shared
 .deno
+.config/cheat
