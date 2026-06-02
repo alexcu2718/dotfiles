@@ -105,6 +105,7 @@
   "notebook.formatOnCellExecution": true,
   "window.openFilesInNewWindow": "on",
   "window.openFoldersInNewWindow": "on",
+  "todo-tree.ripgrep.ripgrep": "/usr/bin/rg",
   "ty.experimental.completions.enable": true,
   "ty.trace.server": "messages",
   "workbench.colorTheme": "Monokai Vibrant (Rust)",
@@ -141,6 +142,9 @@
   "C_Cpp.inlayHints.parameterNames.enabled": true,
   "C_Cpp.inlayHints.parameterNames.hideLeadingUnderscores": false,
   "C_Cpp.inlayHints.autoDeclarationTypes.enabled": true,
+  "clangd.fallbackFlags": [
+    "-std=c++23"
+  ],
   "C_Cpp.inlayHints.autoDeclarationTypes.showOnLeft": false,
   "terminal.integrated.fontLigatures.fallbackLigatures": [
     "<--",
@@ -354,4 +358,11 @@
   "terminal.integrated.fontSize": 10,
   "workbench.secondarySideBar.defaultVisibility": "hidden",
   "remote.SSH.remoteServerListenOnSocket": true,
+  "extensions.ignoreRecommendations": true,
+  "chat.viewSessions.enabled": false,
+  "ty.path": [
+    "/usr/bin/ty"
+  ],
+  "julia.symbolCacheDownload": true,
+  "glsl-analyzer.path": "/home/alexc/.config/Code/User/globalStorage/nolanderc.glsl-analyzer/glsl_analyzer_install/bin/glsl_analyzer",
 }

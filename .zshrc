@@ -4,7 +4,7 @@
 ## I make no apology for its very tasteful design.
 ### Install nerd fonts
 ## bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
-
+ulimit -n 8192
 source_if_exists() {
 	if [[ -f "$1" ]]; then
 		source "$1"
@@ -13,6 +13,28 @@ source_if_exists() {
 		echo "File not found: $1" >&2
 		return 1
 	fi
+}
+
+gh-raw() {
+  if [[ $# -lt 1 ]]; then
+    echo "Usage: gh-raw <github-url> [curl-options]" >&2
+    return 1
+  fi
+
+  local URL="$1"
+  shift
+
+  if [[ "$URL" != *"github.com/"*"/blob/"* ]]; then
+    echo "Error: Could not parse GitHub URL. Expected format:" >&2
+    echo "  https://github.com/<user>/<repo>/blob/<branch>/<path>" >&2
+    return 1
+  fi
+
+  local RAW_URL="${URL/github.com/raw.githubusercontent.com}"
+  RAW_URL="${RAW_URL/blob/refs/heads}"
+
+  echo "Fetching: $RAW_URL" >&2
+  curl -fsSL "$@" "$RAW_URL"
 }
 
 create_bash_file() {
@@ -254,7 +276,7 @@ if [ "$(whoami)" = "alexc" ] && [[ "$OSTYPE" == linux* ]]; then
 
 	source_if_exists ~/.shell_functions
 	#https://www.google.com/url?sa=t&source=web&rct=j&url=https%3A%2F%2Fwww.threads.com%2F%40beatrizmarianophotography%2Fpost%2FDE8IVn4iPW3&ved=0CBYQjRxqFwoTCLCb2q3ux5IDFQAAAAAdAAAAABA6&opi=89978449
-	alias xdg-open="xdg-open 2&>/dev/null"
+
 fi
 
 
@@ -429,4 +451,5 @@ source "$AUTO_ENV"                  ## FOR ZSH COMPLETIONS
 
 alias VIEW_ASSEMBLY_OBJECT="objdump  -d --disassembler-options intel"
 alias COMPILE_COMMANDS="cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
-ulimit -n 8192
+
+

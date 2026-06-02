@@ -138,3 +138,4 @@ vscode-shared
 .vscode-shared
 .deno
 .config/cheat
+.config/simplex
