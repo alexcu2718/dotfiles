@@ -125,7 +125,10 @@ clone_if_not_exist() {
 
 export ENABLE_PATINA=1 # experimental faster syntax highlighter
 export ENABLE_STARSHIP=1
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/.deno/bin/$HOME
+export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/.deno/bin
+
+
+
 
 if command -v go >/dev/null; then
 	local GOBIN="$(go env GOBIN)"
@@ -253,7 +256,9 @@ COMPLETION_WAITING_DOTS="true"
 
 source "$ZSH/oh-my-zsh.sh"
 zstyle ':omz:update' mode auto
-zstyle ':omz:update' frequency 14 # Check every 14 days
+zstyle ':omz:update' frequency 14
+zstyle ':autocomplete:*' async off  ######## RECURRING STUPID SEGFAULT CRASH WORK AROUND,
+
 
 local AUTO_SUGGESTIONS="$ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 local FAST_SYNTAX="$ZSH/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
