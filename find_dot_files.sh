@@ -58,7 +58,15 @@ fi
 
 rm total_dot_files.txt
 
+
+
+
 cp ~/.config/Code/User/settings.json ./vscode-settings.json
+
+if command -v paru >/dev/null  && grep -q "^ID=arch" /etc/os-release ; then
+    cp /etc/paru.conf ./paru.conf
+    paru -Qeq > ./pkg_list.txt
+fi
 
 cp ~/.config/Code/User/keybindings.json ./keybindings.json
 
