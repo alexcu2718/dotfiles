@@ -126,7 +126,7 @@ clone_if_not_exist() {
 export ENABLE_PATINA=1 # experimental faster syntax highlighter
 export ENABLE_STARSHIP=1
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/.deno/bin
-
+export HEAPTRACK_ENABLE_DEBUGINFOD=1
 
 
 
@@ -180,19 +180,19 @@ if command -v sccache >/dev/null; then
 fi
 
 if command -v bat >/dev/null; then
-	alias cat="bat --paging=never"
+	alias cat="bat --paging=never --style=full"
 	AUTOENV_VIEWER=bat
 else
 	AUTOENV_VIEWER=cat
 fi
 
 if [[ "$OSTYPE" == linux* ]] && command -v cargo >/dev/null; then
-	if ! command -v cargo-asm >/dev/null 2>&1; then
+	if ! command -v cargo-asm >/dev/null ; then
 
 		cargo install cargo-show-asm ###the most recent version
 	fi
 
-	if command -v cargo-asm >/dev/null 2>&1; then
+	if command -v cargo-asm >/dev/null; then
 		local CARGO_ASM_COMPLETIONS="$HOME/.zfunc/_cargoasm"
 		if [ ! -f "$CARGO_ASM_COMPLETIONS" ]; then
 			mkdir -p "$HOME/.zfunc"
@@ -216,7 +216,7 @@ mkdir -p ~/.cache/zsh
 
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.cache/zsh
-zstyle ':completion:*' list-lines 12
+zstyle ':completion:*' list-lines 10
 zstyle ':completion:*' menu select
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
@@ -232,7 +232,6 @@ zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 zstyle ':completion:*' completer _complete _ignored
 
 setopt appendhistory
-
 setopt sharehistory
 setopt incappendhistory
 setopt AUTO_CD
@@ -427,7 +426,7 @@ if command -v go-gitmoji-cli  > /dev/null; then
 fi
 
 plugins=(gitfast github pip docker docker-compose
-	gh systemd sudo zsh-interactive-cd
+	gh systemd sudo
 	uv ufw vscode rust python
 )
 
@@ -458,3 +457,4 @@ alias VIEW_ASSEMBLY_OBJECT="objdump  -d --disassembler-options intel"
 alias COMPILE_COMMANDS="cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 
 
+alias gcl='git clone'

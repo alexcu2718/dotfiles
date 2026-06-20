@@ -64,7 +64,6 @@ alias rg='rg --no-messages'
 
 
 
-alias cat='bat --paging=never --style=plain'
 alias CLIPBOARD='xclip -sel clip'
 
 alias CLIPPY='cargo clippy --all -- -W clippy::all -W clippy::pedantic -W clippy::restriction -W clippy::nursery -D warnings'
