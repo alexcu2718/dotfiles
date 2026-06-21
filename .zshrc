@@ -19,11 +19,9 @@ export ENABLE_STARSHIP=1
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/.deno/bin
 export HEAPTRACK_ENABLE_DEBUGINFOD=1
 
-
-
 if command -v go >/dev/null; then
 	local GOBIN="$(go env GOBIN)"
-	if [[ -z "$GOBIN" ]]; then
+	if [[ -z $GOBIN ]]; then
 		local GOPATH="$(go env GOPATH)"
 		export PATH="$PATH:$GOPATH/bin"
 	else
@@ -41,7 +39,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 export LANG=en_US.UTF-8
 export LC_CTYPE="en_US.UTF-8"
 export ARCHFLAGS="-arch $(uname -m)"
-if ! [[ "$OSTYPE" == linux* ]]; then
+if ! [[ $OSTYPE == linux* ]]; then
 
 	export TERM=xterm
 fi
@@ -60,8 +58,6 @@ local ZSH_PLUGIN_HOME="$HOME/.zsh/plugins"
 ZSH_COMPLETIONS="$ZSH_PLUGIN_HOME/zsh-completions"
 clone_if_not_exist "$ZSH_COMPLETIONS" https://github.com/zsh-users/zsh-completions.git "$ZSH_COMPLETIONS"
 
-
-
 if command -v sccache >/dev/null; then
 	export RUSTC_WRAPPER="$(which sccache)"
 fi
@@ -73,8 +69,8 @@ else
 	AUTOENV_VIEWER=cat
 fi
 
-if [[ "$OSTYPE" == linux* ]] && command -v cargo >/dev/null; then
-	if ! command -v cargo-asm >/dev/null ; then
+if [[ $OSTYPE == linux* ]] && command -v cargo >/dev/null; then
+	if ! command -v cargo-asm >/dev/null; then
 
 		cargo install cargo-show-asm ###the most recent version
 	fi
@@ -88,9 +84,6 @@ if [[ "$OSTYPE" == linux* ]] && command -v cargo >/dev/null; then
 	fi
 	alias cargo-asm='\cargo-asm -q'
 fi
-
-
-
 
 mkdir -p ~/.cache/zsh
 
@@ -135,13 +128,12 @@ unset zle_bracketed_paste
 
 autoload -Uz compinit
 if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-	compinit;
+	compinit
 else
-	compinit -C;
-fi;
+	compinit -C
+fi
 
 zstyle ':autocomplete:*' async on
-
 
 local AUTO_SUGGESTIONS="$ZSH_PLUGIN_HOME/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 local FAST_SYNTAX="$ZSH_PLUGIN_HOME/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
@@ -156,8 +148,7 @@ clone_if_not_exist "$HOME/.autoenv" "https://github.com/hyperupcall/autoenv"
 
 AUTOENV_ENABLE_LEAVE=yes
 
-
-if [ "$(whoami)" = "alexc" ] && [[ "$OSTYPE" == linux* ]]; then
+if [ "$(whoami)" = "alexc" ] && [[ $OSTYPE == linux* ]]; then
 
 	local SHELL_FUNCTIONS="$HOME/.shell_functions"
 	if [ ! -f "$SHELL_FUNCTIONS" ]; then
@@ -169,18 +160,14 @@ if [ "$(whoami)" = "alexc" ] && [[ "$OSTYPE" == linux* ]]; then
 
 fi
 
-
 local BINDKEYS="$HOME/.bindkeys"
 if [ ! -f "$BINDKEYS" ]; then
 	curl -o "$BINDKEYS" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.bindkeys
 fi
 
+source "$HOME/.bindkeys"
 
-source  "$HOME/.bindkeys"
-
-
-
-if [[ "$ENABLE_PATINA" == "1" ]] && command -v cargo >/dev/null; then
+if [[ $ENABLE_PATINA == "1" ]] && command -v cargo >/dev/null; then
 	if ! command -v zsh-patina >/dev/null; then
 		if command -v paru >/dev/null; then
 			paru -Syu zsh-patina
@@ -223,21 +210,20 @@ if command -v zoxide >/dev/null; then
 	alias cd='z'
 fi
 
-
 alias ipython='\ipython --no-confirm-exit --no-banner --pprint'
 
 ### PYTHON BLOCK
-if command -v uv >/dev/null ; then
+if command -v uv >/dev/null; then
 
-	if ! command -v pipx >/dev/null ; then
+	if ! command -v pipx >/dev/null; then
 		uv tool install pipx
 	fi
 
-	if ! command -v register-python-argcomplete >/dev/null ; then
+	if ! command -v register-python-argcomplete >/dev/null; then
 		pipx install argcomplete
 	fi
 
-	if ! command -v tldr > /dev/null ; then
+	if ! command -v tldr >/dev/null; then
 		pipx install tldr
 	fi
 
@@ -246,7 +232,7 @@ if command -v uv >/dev/null ; then
 	eval "$(register-python-argcomplete pipx)"
 
 	for pkg in pre-commit ruff ty; do
-		if ! command -v "$pkg" > /dev/null ; then
+		if ! command -v "$pkg" >/dev/null; then
 			uv tool install "$pkg"
 		fi
 
@@ -269,16 +255,16 @@ if command -v fzf >/dev/null; then
 
 fi
 
-if command -v go-gitmoji-cli  > /dev/null; then
+if command -v go-gitmoji-cli >/dev/null; then
 	eval "$(go-gitmoji-cli completion zsh)"
 	alias gitmoji="go-gitmoji-cli"
 fi
 
-if command -v helix > /dev/null; then
+if command -v helix >/dev/null; then
 	alias hx='helix'
 fi
 
-if [[ "$ENABLE_STARSHIP" == "1" ]] && command -v starship > /dev/null; then
+if [[ $ENABLE_STARSHIP == "1" ]] && command -v starship >/dev/null; then
 
 	local STARSHIP_LOCATION="$HOME/.config/starship.toml"
 
@@ -290,12 +276,12 @@ if [[ "$ENABLE_STARSHIP" == "1" ]] && command -v starship > /dev/null; then
 	eval "$(starship init zsh)"
 fi
 
-if command -v eza > /dev/null; then
+if command -v eza >/dev/null; then
 	alias ls='eza --icons --color=always'
 fi
 
-if command -v mise > /dev/null ; then
-eval "$( mise activate zsh )"
+if command -v mise >/dev/null; then
+	eval "$(mise activate zsh)"
 fi
 
 # These cause my shell time to double, i still like them though..
@@ -304,6 +290,5 @@ fi
 
 alias VIEW_ASSEMBLY_OBJECT="objdump  -d --disassembler-options intel"
 alias COMPILE_COMMANDS="cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
-
 
 alias gcl='git clone'
