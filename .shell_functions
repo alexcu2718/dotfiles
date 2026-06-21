@@ -16,6 +16,117 @@ REFRESH() {
 }
 
 
+source_if_exists() {
+	if [[ -f "$1" ]]; then
+		source "$1"
+		return 0
+	else
+		echo "File not found: $1" >&2
+		return 1
+	fi
+}
+
+gh-raw() {
+  if [[ $# -lt 1 ]]; then
+    echo "Usage: gh-raw <github-url> [curl-options]" >&2
+    return 1
+  fi
+
+  local URL="$1"
+  shift
+
+  if [[ "$URL" != *"github.com/"*"/blob/"* ]]; then
+    echo "Error: Could not parse GitHub URL. Expected format:" >&2
+    echo "  https://github.com/<user>/<repo>/blob/<branch>/<path>" >&2
+    return 1
+  fi
+
+  local RAW_URL="${URL/github.com/raw.githubusercontent.com}"
+  RAW_URL="${RAW_URL/blob/refs/heads}"
+
+  echo "Fetching: $RAW_URL" >&2
+  curl -fsSL "$@" "$RAW_URL"
+}
+
+create_bash_file() {
+	local file_name="$1"
+
+	if [[ -z "$file_name" ]]; then
+		echo "Error: No filename specified" >&2
+		return 1
+	fi
+
+	if [[ -e "$file_name" ]]; then
+		echo "Error: File '$file_name' already exists" >&2
+		return 1
+	fi
+
+	printf '#!/usr/bin/env bash\n' >"$file_name" || {
+		echo "Error: Cannot write to '$file_name'" >&2
+		return 1
+	}
+
+	chmod +x "$file_name"
+}
+
+str_replace() {
+	local input="$1"
+	local substring="$2"
+	local replacement="${3:-}"
+
+	echo "${input//$substring/$replacement}"
+}
+
+backup() {
+	local target="$1"
+
+	if [[ ! -e "$target" ]]; then
+		echo "Error: '$target' does not exist"
+		return 1
+	fi
+
+	if [[ -d "$target" ]]; then
+		if [[ ! -e "${target}.bak" ]]; then
+			cp -r "$target" "${target}.bak"
+			echo "Created directory backup: ${target}.bak"
+			return 0
+		fi
+
+		local counter=2
+		while [[ -d "${target}.bak${counter}" ]]; do
+			((counter++))
+		done
+
+		cp -r "$target" "${target}.bak${counter}"
+		echo "Created directory backup: ${target}.bak${counter}"
+	else
+		if [[ ! -e "${target}.bak" ]]; then
+			cp "$target" "${target}.bak"
+			echo "Created backup: ${target}.bak"
+			return 0
+		fi
+
+		local counter=2
+		while [[ -e "${target}.bak${counter}" ]]; do
+			((counter++))
+		done
+
+		cp "$target" "${target}.bak${counter}"
+		echo "Created backup: ${target}.bak${counter}"
+	fi
+}
+
+strip_slashes() {
+	if [ $# -gt 0 ]; then
+		for arg in "$@"; do
+			printf '%s\n' "$arg" | sed 's:/*$::'
+		done
+	else
+		sed 's:/*$::'
+	fi
+}
+
+
 
 
 unalias exportpath > /dev/null 2>&1
@@ -203,3 +314,50 @@ alias GITHELP="echo 'git checkout HEAD~2 -- EXAMPLE.FILENAME'"
 alias GITRESETFILE="git checkout HEAD --"
 
 alias REFRESHKEYS='sudo pacman-key --refresh-keys'
+
+
+if [[ "$OSTYPE" == linux* ]]; then
+	open() {
+
+		if [[ -z "$1" ]]; then
+			echo "Usage: open <path-or-command> [args...]" >&2
+			return 1
+		fi
+
+		if [[ -d "$1" ]]; then
+			if command -v thunar >/dev/null; then
+				thunar "$1" "${@:2}" >/dev/null &
+				disown
+				return 0
+			fi
+
+			if command -v dolphin >/dev/null; then
+				dolphin "$1" "${@:2}" >/dev/null &
+				disown
+				return 0
+			fi
+
+			if command -v xdg-open >/dev/null; then
+				xdg-open "$1" >/dev/null &
+				disown
+				return 0
+			fi
+
+			echo "Error: no file manager available for '$1'" >&2
+			return 1
+		fi
+
+		if command -v xdg-open > /dev/null && xdg-open "$1" > /dev/null; then
+			return 0
+		fi
+
+		## this just allows you to open eg discord/firefox etc via terminal without cluttering it with lots of crap. fairly handy.
+		if ! command -v "$1" > /dev/null; then
+			echo "Error: '$1' is not a valid command" >&2
+			return 1
+		fi
+
+		command "$1" "${@:2}" &>/dev/null &
+		disown
+	}
+fi

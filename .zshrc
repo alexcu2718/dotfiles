@@ -5,115 +5,6 @@
 ### Install nerd fonts
 ## bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
 ulimit -n 8192
-source_if_exists() {
-	if [[ -f "$1" ]]; then
-		source "$1"
-		return 0
-	else
-		echo "File not found: $1" >&2
-		return 1
-	fi
-}
-
-gh-raw() {
-  if [[ $# -lt 1 ]]; then
-    echo "Usage: gh-raw <github-url> [curl-options]" >&2
-    return 1
-  fi
-
-  local URL="$1"
-  shift
-
-  if [[ "$URL" != *"github.com/"*"/blob/"* ]]; then
-    echo "Error: Could not parse GitHub URL. Expected format:" >&2
-    echo "  https://github.com/<user>/<repo>/blob/<branch>/<path>" >&2
-    return 1
-  fi
-
-  local RAW_URL="${URL/github.com/raw.githubusercontent.com}"
-  RAW_URL="${RAW_URL/blob/refs/heads}"
-
-  echo "Fetching: $RAW_URL" >&2
-  curl -fsSL "$@" "$RAW_URL"
-}
-
-create_bash_file() {
-	local file_name="$1"
-
-	if [[ -z "$file_name" ]]; then
-		echo "Error: No filename specified" >&2
-		return 1
-	fi
-
-	if [[ -e "$file_name" ]]; then
-		echo "Error: File '$file_name' already exists" >&2
-		return 1
-	fi
-
-	printf '#!/usr/bin/env bash\n' >"$file_name" || {
-		echo "Error: Cannot write to '$file_name'" >&2
-		return 1
-	}
-
-	chmod +x "$file_name"
-}
-
-str_replace() {
-	local input="$1"
-	local substring="$2"
-	local replacement="${3:-}"
-
-	echo "${input//$substring/$replacement}"
-}
-
-backup() {
-	local target="$1"
-
-	if [[ ! -e "$target" ]]; then
-		echo "Error: '$target' does not exist"
-		return 1
-	fi
-
-	if [[ -d "$target" ]]; then
-		if [[ ! -e "${target}.bak" ]]; then
-			cp -r "$target" "${target}.bak"
-			echo "Created directory backup: ${target}.bak"
-			return 0
-		fi
-
-		local counter=2
-		while [[ -d "${target}.bak${counter}" ]]; do
-			((counter++))
-		done
-
-		cp -r "$target" "${target}.bak${counter}"
-		echo "Created directory backup: ${target}.bak${counter}"
-	else
-		if [[ ! -e "${target}.bak" ]]; then
-			cp "$target" "${target}.bak"
-			echo "Created backup: ${target}.bak"
-			return 0
-		fi
-
-		local counter=2
-		while [[ -e "${target}.bak${counter}" ]]; do
-			((counter++))
-		done
-
-		cp "$target" "${target}.bak${counter}"
-		echo "Created backup: ${target}.bak${counter}"
-	fi
-}
-
-strip_slashes() {
-	if [ $# -gt 0 ]; then
-		for arg in "$@"; do
-			printf '%s\n' "$arg" | sed 's:/*$::'
-		done
-	else
-		sed 's:/*$::'
-	fi
-}
 
 clone_if_not_exist() {
 	local filepath="$1" repo="$2"
@@ -167,9 +58,9 @@ fi
 
 local ZSH_PLUGIN_HOME="$HOME/.zsh/plugins"
 ZSH_COMPLETIONS="$ZSH_PLUGIN_HOME/zsh-completions"
-if [ ! -d "$ZSH_COMPLETIONS" ]; then
-	git clone --depth 1 https://github.com/zsh-users/zsh-completions.git "$ZSH_COMPLETIONS"
-fi
+clone_if_not_exist "$ZSH_COMPLETIONS" https://github.com/zsh-users/zsh-completions.git "$ZSH_COMPLETIONS"
+
+
 
 if command -v sccache >/dev/null; then
 	export RUSTC_WRAPPER="$(which sccache)"
@@ -198,15 +89,8 @@ if [[ "$OSTYPE" == linux* ]] && command -v cargo >/dev/null; then
 	alias cargo-asm='\cargo-asm -q'
 fi
 
-local BINDKEYS="$HOME/.bindkeys"
-if [ ! -f "$BINDKEYS" ]; then
-	curl -o "$BINDKEYS" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.bindkeys
-fi
 
-local SHELL_FUNCTIONS="$HOME/.shell_functions"
-if [ ! -f "$SHELL_FUNCTIONS" ]; then
-	curl -o "$SHELL_FUNCTIONS" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.shell_functions
-fi
+
 
 mkdir -p ~/.cache/zsh
 
@@ -264,27 +148,35 @@ local FAST_SYNTAX="$ZSH_PLUGIN_HOME/fast-syntax-highlighting/fast-syntax-highlig
 local AUTO_COMPLETE="$ZSH_PLUGIN_HOME/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 local AUTO_ENV="$ZSH_PLUGIN_HOME/autoenv/autoenv.plugin.zsh"
 ##i got fedup of recreating this everytime i wanted a shell to work on a new pc and too lazy for nix.
-
 clone_if_not_exist "$AUTO_SUGGESTIONS" "https://github.com/zsh-users/zsh-autosuggestions.git"
 clone_if_not_exist "$FAST_SYNTAX" "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
 clone_if_not_exist "$AUTO_COMPLETE" "https://github.com/marlonrichert/zsh-autocomplete.git"
 clone_if_not_exist "$AUTO_ENV" "https://github.com/hyperupcall/autoenv"
+clone_if_not_exist "$HOME/.autoenv" "https://github.com/hyperupcall/autoenv"
 
-local AUTO_ENV_HOME="$HOME/.autoenv"
 AUTOENV_ENABLE_LEAVE=yes
-if [ ! -d "$AUTO_ENV_HOME" ]; then
-	git clone --depth 1 "https://github.com/hyperupcall/autoenv" "$AUTO_ENV_HOME"
-fi
+
 
 if [ "$(whoami)" = "alexc" ] && [[ "$OSTYPE" == linux* ]]; then
 
-	source_if_exists ~/.shell_functions
+	local SHELL_FUNCTIONS="$HOME/.shell_functions"
+	if [ ! -f "$SHELL_FUNCTIONS" ]; then
+		curl -o "$SHELL_FUNCTIONS" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.shell_functions
+	fi
+
+	source ~/.shell_functions
 	#https://www.google.com/url?sa=t&source=web&rct=j&url=https%3A%2F%2Fwww.threads.com%2F%40beatrizmarianophotography%2Fpost%2FDE8IVn4iPW3&ved=0CBYQjRxqFwoTCLCb2q3ux5IDFQAAAAAdAAAAABA6&opi=89978449
 
 fi
 
 
-source_if_exists "$HOME/.bindkeys"
+local BINDKEYS="$HOME/.bindkeys"
+if [ ! -f "$BINDKEYS" ]; then
+	curl -o "$BINDKEYS" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.bindkeys
+fi
+
+
+source  "$HOME/.bindkeys"
 
 
 
@@ -331,51 +223,6 @@ if command -v zoxide >/dev/null; then
 	alias cd='z'
 fi
 
-if [[ "$OSTYPE" == linux* ]]; then
-	open() {
-
-		if [[ -z "$1" ]]; then
-			echo "Usage: open <path-or-command> [args...]" >&2
-			return 1
-		fi
-
-		if [[ -d "$1" ]]; then
-			if command -v thunar >/dev/null; then
-				thunar "$1" "${@:2}" >/dev/null &
-				disown
-				return 0
-			fi
-
-			if command -v dolphin >/dev/null; then
-				dolphin "$1" "${@:2}" >/dev/null &
-				disown
-				return 0
-			fi
-
-			if command -v xdg-open >/dev/null; then
-				xdg-open "$1" >/dev/null &
-				disown
-				return 0
-			fi
-
-			echo "Error: no file manager available for '$1'" >&2
-			return 1
-		fi
-
-		if command -v xdg-open > /dev/null && xdg-open "$1" > /dev/null; then
-			return 0
-		fi
-
-		## this just allows you to open eg discord/firefox etc via terminal without cluttering it with lots of crap. fairly handy.
-		if ! command -v "$1" > /dev/null; then
-			echo "Error: '$1' is not a valid command" >&2
-			return 1
-		fi
-
-		command "$1" "${@:2}" &>/dev/null &
-		disown
-	}
-fi
 
 alias ipython='\ipython --no-confirm-exit --no-banner --pprint'
 
