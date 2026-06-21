@@ -145,7 +145,6 @@ if command -v go >/dev/null; then
 
 fi
 
-export ZSH="$HOME/.oh-my-zsh"
 export GCM_CREDENTIAL_STORE=secretservice
 export MANPATH="/usr/local/man:$MANPATH"
 export LANG=en_US.UTF-8
@@ -166,11 +165,8 @@ else
 	fi
 fi
 
-if [ ! -d "$ZSH" ]; then
-	git clone --depth 1 "https://github.com/ohmyzsh/ohmyzsh" "$ZSH"
-fi
-
-ZSH_COMPLETIONS="${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions"
+local ZSH_PLUGIN_HOME="$HOME/.zsh/plugins"
+ZSH_COMPLETIONS="$ZSH_PLUGIN_HOME/zsh-completions"
 if [ ! -d "$ZSH_COMPLETIONS" ]; then
 	git clone --depth 1 https://github.com/zsh-users/zsh-completions.git "$ZSH_COMPLETIONS"
 fi
@@ -234,6 +230,14 @@ zstyle ':completion:*' completer _complete _ignored
 setopt appendhistory
 setopt sharehistory
 setopt incappendhistory
+HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+DISABLE_MAGIC_FUNCTIONS="true"
+DISABLE_LS_COLORS="false"
+DISABLE_AUTO_TITLE="false"
+ENABLE_CORRECTION="true"
+COMPLETION_WAITING_DOTS="true"
 setopt AUTO_CD
 setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
@@ -245,24 +249,20 @@ setopt HIST_REDUCE_BLANKS
 setopt SHARE_HISTORY
 unset zle_bracketed_paste
 
-autoload -U compinit && compinit
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+	compinit;
+else
+	compinit -C;
+fi;
 
-DISABLE_MAGIC_FUNCTIONS="true"
-DISABLE_LS_COLORS="false"
-DISABLE_AUTO_TITLE="false"
-ENABLE_CORRECTION="true"
-COMPLETION_WAITING_DOTS="true"
-
-source "$ZSH/oh-my-zsh.sh"
-zstyle ':omz:update' mode auto
-zstyle ':omz:update' frequency 14
-zstyle ':autocomplete:*' async off  ######## RECURRING STUPID SEGFAULT CRASH WORK AROUND,
+zstyle ':autocomplete:*' async on
 
 
-local AUTO_SUGGESTIONS="$ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
-local FAST_SYNTAX="$ZSH/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-local AUTO_COMPLETE="$ZSH/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
-local AUTO_ENV="$ZSH/plugins/autoenv/autoenv.plugin.zsh"
+local AUTO_SUGGESTIONS="$ZSH_PLUGIN_HOME/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
+local FAST_SYNTAX="$ZSH_PLUGIN_HOME/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+local AUTO_COMPLETE="$ZSH_PLUGIN_HOME/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+local AUTO_ENV="$ZSH_PLUGIN_HOME/autoenv/autoenv.plugin.zsh"
 ##i got fedup of recreating this everytime i wanted a shell to work on a new pc and too lazy for nix.
 
 clone_if_not_exist "$AUTO_SUGGESTIONS" "https://github.com/zsh-users/zsh-autosuggestions.git"
@@ -285,6 +285,8 @@ fi
 
 
 source_if_exists "$HOME/.bindkeys"
+
+
 
 if [[ "$ENABLE_PATINA" == "1" ]] && command -v cargo >/dev/null; then
 	if ! command -v zsh-patina >/dev/null; then
@@ -322,7 +324,7 @@ source "$AUTO_COMPLETE"
 fpath+=/usr/share/zsh/vendor-completions
 fpath+=~/.zsh/completions
 fpath+=~/.zfunc
-fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+fpath+="$ZSH_COMPLETIONS/src"
 
 if command -v zoxide >/dev/null; then
 	eval "$(zoxide init zsh)"
@@ -425,11 +427,6 @@ if command -v go-gitmoji-cli  > /dev/null; then
 	alias gitmoji="go-gitmoji-cli"
 fi
 
-plugins=(gitfast github pip docker docker-compose
-	gh systemd sudo
-	uv ufw vscode rust python
-)
-
 if command -v helix > /dev/null; then
 	alias hx='helix'
 fi
@@ -446,12 +443,17 @@ if [[ "$ENABLE_STARSHIP" == "1" ]] && command -v starship > /dev/null; then
 	eval "$(starship init zsh)"
 fi
 
-if command -v eza >/dev/null; then
+if command -v eza > /dev/null; then
 	alias ls='eza --icons --color=always'
 fi
 
-source "$AUTO_ENV_HOME/activate.sh" # for shell use
-source "$AUTO_ENV"                  ## FOR ZSH COMPLETIONS
+if command -v mise > /dev/null ; then
+eval "$( mise activate zsh )"
+fi
+
+# These cause my shell time to double, i still like them though..
+# source "$AUTO_ENV_HOME/activate.sh" # for shell use
+# source "$AUTO_ENV"                  ## FOR ZSH COMPLETIONS
 
 alias VIEW_ASSEMBLY_OBJECT="objdump  -d --disassembler-options intel"
 alias COMPILE_COMMANDS="cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"

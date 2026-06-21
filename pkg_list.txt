@@ -69,6 +69,7 @@ decibels
 devtools
 directx-headers-cmake
 directx-shader-compiler
+direnv
 discord
 dkms
 dmenu
@@ -198,6 +199,7 @@ matrix-appservice-irc
 mdformat
 mediainfo
 memcached
+mise
 mk-git
 msr-tools
 nano
@@ -358,6 +360,7 @@ ueberzug
 ufw
 unrar
 unuran
+usage
 uv
 valgrind
 valkey
