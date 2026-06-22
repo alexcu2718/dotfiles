@@ -87,6 +87,7 @@ elinks
 epiphany
 expect
 eza
+fasd
 fd
 ffmpegthumbnailer
 firefox
@@ -214,6 +215,7 @@ ninja
 nm-connection-editor
 noto-fonts-cjk
 noto-fonts-extra
+nvm
 nvtop
 nyaa-tui
 obsidian

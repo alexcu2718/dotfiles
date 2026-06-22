@@ -129,21 +129,6 @@ setopt HIST_REDUCE_BLANKS
 setopt SHARE_HISTORY
 unset zle_bracketed_paste
 
-#https://scottspence.com/posts/speeding-up-my-zsh-shell
-## you dont need this with the plugins
-# autoload -Uz compinit
-# if [ "$(date +'%j')" != "$(stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)" ]; then
-#     compinit
-# else
-#     compinit -C
-# fi
-
-# {
-#   if [[ -s "$HOME/.zcompdump" && (! -s "$HOME/.zcompdump.zwc" || "$HOME/.zcompdump" -nt "$HOME/.zcompdump.zwc") ]]; then
-#     zcompile "$HOME/.zcompdump"
-#   fi
-# } &!
-
 zstyle ':autocomplete:*' async on
 
 local AUTO_SUGGESTIONS="$ZSH_PLUGIN_HOME/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
@@ -172,7 +157,21 @@ if [ ! -f "$BINDKEYS" ]; then
 	curl -o "$BINDKEYS" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.bindkeys
 fi
 
+
+
 source "$HOME/.bindkeys"
+
+local PYTHON_AND_GO=~/.python_and_go_stuff.zsh
+
+
+if [ ! -f "$PYTHON_AND_GO" ] ; then
+
+curl -o "$PYTHON_AND_GO" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.python_stuff.zsh
+
+fi
+
+source "$PYTHON_AND_GO"
+
 
 if [[ "$ENABLE_PATINA" == "1" ]] && command -v cargo >/dev/null; then
 	if ! command -v zsh-patina >/dev/null; then
@@ -217,74 +216,10 @@ if command -v zoxide >/dev/null; then
 	alias cd='z'
 fi
 
-alias ipython='\ipython --no-confirm-exit --no-banner --pprint'
+source ~/.python_and_go_stuff.zsh
 
-### PYTHON BLOCK
-if command -v uv >/dev/null; then
 
-	if ! command -v pipx >/dev/null; then
-		uv tool install pipx
-	fi
 
-	if ! command -v register-python-argcomplete >/dev/null; then
-		pipx install argcomplete
-	fi
-
-	if ! command -v tldr >/dev/null; then
-		pipx install tldr
-	fi
-
-	for pkg in pre-commit ruff ty; do
-		if ! command -v "$pkg" >/dev/null; then
-			uv tool install "$pkg"
-		fi
-
-		local RUFF_COMPLETIONS="$HOME/.zfunc/_ruff"
-		if [ ! -f "$RUFF_COMPLETIONS" ]; then
-			mkdir -p "$HOME/.zfunc"
-			ruff generate-shell-completion zsh >"$RUFF_COMPLETIONS"
-		fi
-
-	done
-	lazy_load_completion_on_first_use "pipx" "register-python-argcomplete pipx"
-	lazy_load_completion_on_first_use "tldr" "tldr --print-completion zsh"
-	lazy_load_completion_on_first_use "uv" "uv generate-shell-completion zsh"
-	lazy_load_completion_on_first_use "uvx" "uvx --generate-shell-completion zsh"
-fi
-## END PYTHON BLOCK
-
-### GO SECTION
-if command -v go >/dev/null; then
-	local GOBIN="$(go env GOBIN)"
-	if [[ -z "$GOBIN" ]]; then
-		local GOPATH="$(go env GOPATH)"
-		export PATH="$PATH:$GOPATH/bin"
-	else
-		export PATH="$PATH:$GOBIN"
-	fi
-
-	if ! command -v shfmt >/dev/null; then
-		go install mvdan.cc/sh/v3/cmd/shfmt@latest
-	fi
-
-fi
-
-### END GO SECTION
-
-if command -v fzf >/dev/null; then
-
-	source <(fzf --zsh)
-
-fi
-
-if command -v go-gitmoji-cli >/dev/null; then
-	lazy_load_completion_on_first_use "go-gitmoji-cli" "go-gitmoji-cli completion zsh"
-	alias gitmoji="go-gitmoji-cli"
-fi
-
-if command -v helix >/dev/null; then
-	alias hx='helix'
-fi
 
 if [[ "$ENABLE_STARSHIP" == "1" ]] && command -v starship >/dev/null; then
 
@@ -302,16 +237,21 @@ if command -v eza >/dev/null; then
 	alias ls='eza --icons --color=always'
 fi
 
-#### THESE UNBELIEVABLY F******* SLOW DO NOT USE THEM HOLY SHIT.
-# clone_if_not_exist "$AUTO_ENV" "https://github.com/hyperupcall/autoenv"
-
-# if [ ! -d "$HOME/.autoenv" ] ; then
-#  cp -r "$(dirname "$AUTO_ENV")" "$HOME/.autoenv"
-# fi
-
-#AUTOENV_ENABLE_LEAVE=yes
-#source "$HOME/.autoenv/activate.sh" # for shell use
-# source "$AUTO_ENV"                  ## FOR ZSH COMPLETIONS
+# lazy load auto env
+_autoenv_loaded=0
+_autoenv_lazy_chpwd() {
+	if (( !_autoenv_loaded )) && [[ -f ".env" ]]; then
+		_autoenv_loaded=1
+		local _ae_dir="$HOME/.zsh/plugins/autoenv"
+		local _ae_plugin="$_ae_dir/autoenv.plugin.zsh"
+		clone_if_not_exist "$_ae_plugin" "https://github.com/hyperupcall/autoenv"
+		[[ ! -d "$HOME/.autoenv" ]] && cp -r "$_ae_dir" "$HOME/.autoenv"
+		AUTOENV_ENABLE_LEAVE=yes
+		source "$_ae_plugin"
+	fi
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd _autoenv_lazy_chpwd
 
 alias VIEW_ASSEMBLY_OBJECT="objdump  -d --disassembler-options intel"
 alias COMPILE_COMMANDS="cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
