@@ -166,7 +166,7 @@ local PYTHON_AND_GO=~/.python_and_go_stuff.zsh
 
 if [ ! -f "$PYTHON_AND_GO" ] ; then
 
-curl -o "$PYTHON_AND_GO" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.python_stuff.zsh
+curl -o "$PYTHON_AND_GO" https://raw.githubusercontent.com/alexcu2718/dotfiles/refs/heads/main/.python_and_go_stuff
 
 fi
 
