@@ -149,9 +149,6 @@ exportpath () {
 }
 
 
-if command -v juliaup >/dev/null 2>&1; then
-eval "$(juliaup completions "$(mysh)")"
-fi
 
 # shellcheck disable=SC2139
 alias SWITCH_KEYBOARD="$HOME/.toggle_keyboard_layout.sh"
@@ -280,9 +277,6 @@ alias hgrep='history |grep -Ei'
 
 alias SLEEPOFF_ONE_HOUR='systemd-inhibit --what=sleep:idle --mode=block sleep "3600"'
 
-if command -v fdf >/dev/null 2>&1; then
-    eval "$(fdf --generate "$(mysh)")" >/dev/null 2>&1
-fi
 
 
 

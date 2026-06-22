@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
 
-
 #zmodload zsh/zprof
 ## This shell is just a fast setup method for going on other shells
 ## I make no apology for its very tasteful design.
@@ -16,31 +15,33 @@ clone_if_not_exist() {
 	fi
 }
 
+lazy_load_completion_on_first_use() {
+	local cmd="$1"
+	local completion_cmd="$2"
+
+	if ! command -v "$cmd" >/dev/null; then
+		return
+	fi
+
+	eval "
+function $cmd() {
+	unfunction $cmd 2>/dev/null
+	eval \"\$($completion_cmd 2>/dev/null)\"
+	command $cmd \"\$@\"
+}
+"
+}
+
 export ENABLE_PATINA=1 # experimental faster syntax highlighter
 export ENABLE_STARSHIP=1
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/.deno/bin
 export HEAPTRACK_ENABLE_DEBUGINFOD=1
-
-if command -v go >/dev/null; then
-	local GOBIN="$(go env GOBIN)"
-	if [[ -z "$GOBIN" ]]; then
-		local GOPATH="$(go env GOPATH)"
-		export PATH="$PATH:$GOPATH/bin"
-	else
-		export PATH="$PATH:$GOBIN"
-	fi
-
-	if ! command -v shfmt >/dev/null; then
-		go install mvdan.cc/sh/v3/cmd/shfmt@latest
-	fi
-
-fi
-
 export GCM_CREDENTIAL_STORE=secretservice
 export MANPATH="/usr/local/man:$MANPATH"
 export LANG=en_US.UTF-8
 export LC_CTYPE="en_US.UTF-8"
 export ARCHFLAGS="-arch $(uname -m)"
+
 if ! [[ "$OSTYPE" == linux* ]]; then
 
 	export TERM=xterm
@@ -77,13 +78,12 @@ if [[ "$OSTYPE" == linux* ]] && command -v cargo >/dev/null; then
 		cargo install cargo-show-asm ###the most recent version
 	fi
 
-	if command -v cargo-asm >/dev/null; then
-		local CARGO_ASM_COMPLETIONS="$HOME/.zfunc/_cargoasm"
-		if [ ! -f "$CARGO_ASM_COMPLETIONS" ]; then
-			mkdir -p "$HOME/.zfunc"
-			cargo-asm --bpaf-complete-style-zsh >"$CARGO_ASM_COMPLETIONS"
-		fi
+	local CARGO_ASM_COMPLETIONS="$HOME/.zfunc/_cargoasm"
+	if [ ! -f "$CARGO_ASM_COMPLETIONS" ]; then
+		mkdir -p "$HOME/.zfunc"
+		cargo-asm --bpaf-complete-style-zsh >"$CARGO_ASM_COMPLETIONS"
 	fi
+
 	alias cargo-asm='\cargo-asm -q'
 fi
 
@@ -107,7 +107,6 @@ zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
 zstyle ':completion:*:warnings' format '%F{red}no matches for:%f %d'
 zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 zstyle ':completion:*' completer _complete _ignored
-
 setopt appendhistory
 setopt sharehistory
 setopt incappendhistory
@@ -156,7 +155,6 @@ clone_if_not_exist "$AUTO_SUGGESTIONS" "https://github.com/zsh-users/zsh-autosug
 clone_if_not_exist "$FAST_SYNTAX" "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
 clone_if_not_exist "$AUTO_COMPLETE" "https://github.com/marlonrichert/zsh-autocomplete.git"
 
-
 if [ "$(whoami)" = "alexc" ] && [[ "$OSTYPE" == linux* ]]; then
 
 	local SHELL_FUNCTIONS="$HOME/.shell_functions"
@@ -178,7 +176,7 @@ source "$HOME/.bindkeys"
 
 if [[ "$ENABLE_PATINA" == "1" ]] && command -v cargo >/dev/null; then
 	if ! command -v zsh-patina >/dev/null; then
-		if command -v paru > /dev/null; then
+		if command -v paru >/dev/null; then
 			paru -Syu zsh-patina
 		else
 			cargo install --git https://github.com/michel-kraemer/zsh-patina
@@ -199,7 +197,7 @@ if [[ "$ENABLE_PATINA" == "1" ]] && command -v cargo >/dev/null; then
 	fi
 
 	eval "$(zsh-patina activate)"
-	eval "$(zsh-patina completion)"
+	lazy_load_completion_on_first_use "zsh-patina" "zsh-patina completion"
 else
 	source "$FAST_SYNTAX" ## BE VERY CAREFUL WITH THE ORDERING OF THIS AND THE FOLLOWING
 ### THERE IS SOME VERY ESOTERIC BEHAVIOUR CAUSING ERRORS IN SHELL PROMPTS, IE cutting off the last 3 lines of the terminal so cutting off the visual display from Y/n commands
@@ -236,10 +234,6 @@ if command -v uv >/dev/null; then
 		pipx install tldr
 	fi
 
-	eval "$(tldr --print-completion zsh)"
-
-	eval "$(register-python-argcomplete pipx)"
-
 	for pkg in pre-commit ruff ty; do
 		if ! command -v "$pkg" >/dev/null; then
 			uv tool install "$pkg"
@@ -252,11 +246,30 @@ if command -v uv >/dev/null; then
 		fi
 
 	done
-
-	eval "$(uv generate-shell-completion zsh)"
-	eval "$(uvx --generate-shell-completion zsh)"
+	lazy_load_completion_on_first_use "pipx" "register-python-argcomplete pipx"
+	lazy_load_completion_on_first_use "tldr" "tldr --print-completion zsh"
+	lazy_load_completion_on_first_use "uv" "uv generate-shell-completion zsh"
+	lazy_load_completion_on_first_use "uvx" "uvx --generate-shell-completion zsh"
 fi
 ## END PYTHON BLOCK
+
+### GO SECTION
+if command -v go >/dev/null; then
+	local GOBIN="$(go env GOBIN)"
+	if [[ -z "$GOBIN" ]]; then
+		local GOPATH="$(go env GOPATH)"
+		export PATH="$PATH:$GOPATH/bin"
+	else
+		export PATH="$PATH:$GOBIN"
+	fi
+
+	if ! command -v shfmt >/dev/null; then
+		go install mvdan.cc/sh/v3/cmd/shfmt@latest
+	fi
+
+fi
+
+### END GO SECTION
 
 if command -v fzf >/dev/null; then
 
@@ -265,7 +278,7 @@ if command -v fzf >/dev/null; then
 fi
 
 if command -v go-gitmoji-cli >/dev/null; then
-	eval "$(go-gitmoji-cli completion zsh)"
+	lazy_load_completion_on_first_use "go-gitmoji-cli" "go-gitmoji-cli completion zsh"
 	alias gitmoji="go-gitmoji-cli"
 fi
 
@@ -289,24 +302,26 @@ if command -v eza >/dev/null; then
 	alias ls='eza --icons --color=always'
 fi
 
-# if command -v mise >/dev/null; then
-# 	eval "$(mise activate zsh)"
-# fi
-
-# These cause my shell time to double, i still like them though..
+#### THESE UNBELIEVABLY F******* SLOW DO NOT USE THEM HOLY SHIT.
 # clone_if_not_exist "$AUTO_ENV" "https://github.com/hyperupcall/autoenv"
 
 # if [ ! -d "$HOME/.autoenv" ] ; then
 #  cp -r "$(dirname "$AUTO_ENV")" "$HOME/.autoenv"
 # fi
 
-# AUTOENV_ENABLE_LEAVE=yes
-# source "$HOME/.autoenv/activate.sh" # for shell use
+#AUTOENV_ENABLE_LEAVE=yes
+#source "$HOME/.autoenv/activate.sh" # for shell use
 # source "$AUTO_ENV"                  ## FOR ZSH COMPLETIONS
 
 alias VIEW_ASSEMBLY_OBJECT="objdump  -d --disassembler-options intel"
 alias COMPILE_COMMANDS="cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 
 alias gcl='git clone'
+
+lazy_load_completion_on_first_use "mise" "mise activate zsh"
+
+lazy_load_completion_on_first_use "juliaup" "juliaup completions zsh"
+
+lazy_load_completion_on_first_use "fdf" "fdf --generate zsh"
 
 #zprof
