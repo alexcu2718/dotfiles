@@ -416,4 +416,5 @@ zig
 zoxide
 zram-generator
 zsh
-zsh-patina-git
+zsh-completions
+zsh-patina-bin

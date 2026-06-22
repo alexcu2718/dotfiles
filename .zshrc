@@ -61,7 +61,7 @@ fi
 
 local ZSH_PLUGIN_HOME="$HOME/.zsh/plugins"
 ZSH_COMPLETIONS="$ZSH_PLUGIN_HOME/zsh-completions"
-clone_if_not_exist "$ZSH_COMPLETIONS" https://github.com/zsh-users/zsh-completions.git "$ZSH_COMPLETIONS"
+clone_if_not_exist "$ZSH_COMPLETIONS" https://github.com/zsh-users/zsh-completions.git
 
 if command -v sccache >/dev/null; then
 	export RUSTC_WRAPPER="$(which sccache)"
