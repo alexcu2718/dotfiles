@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+
+#zmodload zsh/zprof
 ## This shell is just a fast setup method for going on other shells
 ## I make no apology for its very tasteful design.
 ### Install nerd fonts
@@ -21,7 +23,7 @@ export HEAPTRACK_ENABLE_DEBUGINFOD=1
 
 if command -v go >/dev/null; then
 	local GOBIN="$(go env GOBIN)"
-	if [[ -z $GOBIN ]]; then
+	if [[ -z "$GOBIN" ]]; then
 		local GOPATH="$(go env GOPATH)"
 		export PATH="$PATH:$GOPATH/bin"
 	else
@@ -39,7 +41,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 export LANG=en_US.UTF-8
 export LC_CTYPE="en_US.UTF-8"
 export ARCHFLAGS="-arch $(uname -m)"
-if ! [[ $OSTYPE == linux* ]]; then
+if ! [[ "$OSTYPE" == linux* ]]; then
 
 	export TERM=xterm
 fi
@@ -69,7 +71,7 @@ else
 	AUTOENV_VIEWER=cat
 fi
 
-if [[ $OSTYPE == linux* ]] && command -v cargo >/dev/null; then
+if [[ "$OSTYPE" == linux* ]] && command -v cargo >/dev/null; then
 	if ! command -v cargo-asm >/dev/null; then
 
 		cargo install cargo-show-asm ###the most recent version
@@ -93,6 +95,8 @@ zstyle ':completion:*' list-lines 10
 zstyle ':completion:*' menu select
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
+zstyle ':autocomplete:*' delay 0.15
+zstyle ':autocomplete:*' ignored-input 'paru*'
 zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*' matcher-list \
 	'' \
@@ -126,12 +130,20 @@ setopt HIST_REDUCE_BLANKS
 setopt SHARE_HISTORY
 unset zle_bracketed_paste
 
-autoload -Uz compinit
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-	compinit
-else
-	compinit -C
-fi
+#https://scottspence.com/posts/speeding-up-my-zsh-shell
+## you dont need this with the plugins
+# autoload -Uz compinit
+# if [ "$(date +'%j')" != "$(stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null)" ]; then
+#     compinit
+# else
+#     compinit -C
+# fi
+
+# {
+#   if [[ -s "$HOME/.zcompdump" && (! -s "$HOME/.zcompdump.zwc" || "$HOME/.zcompdump" -nt "$HOME/.zcompdump.zwc") ]]; then
+#     zcompile "$HOME/.zcompdump"
+#   fi
+# } &!
 
 zstyle ':autocomplete:*' async on
 
@@ -143,12 +155,9 @@ local AUTO_ENV="$ZSH_PLUGIN_HOME/autoenv/autoenv.plugin.zsh"
 clone_if_not_exist "$AUTO_SUGGESTIONS" "https://github.com/zsh-users/zsh-autosuggestions.git"
 clone_if_not_exist "$FAST_SYNTAX" "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
 clone_if_not_exist "$AUTO_COMPLETE" "https://github.com/marlonrichert/zsh-autocomplete.git"
-clone_if_not_exist "$AUTO_ENV" "https://github.com/hyperupcall/autoenv"
-clone_if_not_exist "$HOME/.autoenv" "https://github.com/hyperupcall/autoenv"
 
-AUTOENV_ENABLE_LEAVE=yes
 
-if [ "$(whoami)" = "alexc" ] && [[ $OSTYPE == linux* ]]; then
+if [ "$(whoami)" = "alexc" ] && [[ "$OSTYPE" == linux* ]]; then
 
 	local SHELL_FUNCTIONS="$HOME/.shell_functions"
 	if [ ! -f "$SHELL_FUNCTIONS" ]; then
@@ -167,9 +176,9 @@ fi
 
 source "$HOME/.bindkeys"
 
-if [[ $ENABLE_PATINA == "1" ]] && command -v cargo >/dev/null; then
+if [[ "$ENABLE_PATINA" == "1" ]] && command -v cargo >/dev/null; then
 	if ! command -v zsh-patina >/dev/null; then
-		if command -v paru >/dev/null; then
+		if command -v paru > /dev/null; then
 			paru -Syu zsh-patina
 		else
 			cargo install --git https://github.com/michel-kraemer/zsh-patina
@@ -264,7 +273,7 @@ if command -v helix >/dev/null; then
 	alias hx='helix'
 fi
 
-if [[ $ENABLE_STARSHIP == "1" ]] && command -v starship >/dev/null; then
+if [[ "$ENABLE_STARSHIP" == "1" ]] && command -v starship >/dev/null; then
 
 	local STARSHIP_LOCATION="$HOME/.config/starship.toml"
 
@@ -280,15 +289,24 @@ if command -v eza >/dev/null; then
 	alias ls='eza --icons --color=always'
 fi
 
-if command -v mise >/dev/null; then
-	eval "$(mise activate zsh)"
-fi
+# if command -v mise >/dev/null; then
+# 	eval "$(mise activate zsh)"
+# fi
 
 # These cause my shell time to double, i still like them though..
-# source "$AUTO_ENV_HOME/activate.sh" # for shell use
+# clone_if_not_exist "$AUTO_ENV" "https://github.com/hyperupcall/autoenv"
+
+# if [ ! -d "$HOME/.autoenv" ] ; then
+#  cp -r "$(dirname "$AUTO_ENV")" "$HOME/.autoenv"
+# fi
+
+# AUTOENV_ENABLE_LEAVE=yes
+# source "$HOME/.autoenv/activate.sh" # for shell use
 # source "$AUTO_ENV"                  ## FOR ZSH COMPLETIONS
 
 alias VIEW_ASSEMBLY_OBJECT="objdump  -d --disassembler-options intel"
 alias COMPILE_COMMANDS="cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 
 alias gcl='git clone'
+
+#zprof
