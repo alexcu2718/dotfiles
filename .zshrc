@@ -49,7 +49,6 @@ export LANG=en_US.UTF-8
 export LC_CTYPE="en_US.UTF-8"
 export ARCHFLAGS="-arch $(uname -m)"
 
-
 if [[ -n $SSH_CONNECTION ]]; then
 	export EDITOR='vim'
 else
@@ -228,6 +227,7 @@ _autoenv_lazy_chpwd() {
 }
 autoload -Uz add-zsh-hook
 add-zsh-hook chpwd _autoenv_lazy_chpwd
+_autoenv_lazy_chpwd
 
 alias VIEW_ASSEMBLY_OBJECT="objdump  -d --disassembler-options intel"
 alias COMPILE_COMMANDS="cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
