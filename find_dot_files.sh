@@ -53,7 +53,7 @@ rm ./nano -rf && cp  -r ~/.nano ./nano
 
 if [ "$(whoami)" = "alexc" ]; then
 
-rm -rf .oh-my-zsh .expo .e-log* .config/rio .config/thunar .config/kalk .config/vlc .config/htop .config/vlc .config/micro .config/htop  .vscode-R .bash_profile .config/go  .config/fish .fontlist .tcshrc .xonsh* .masterpdf* .vmware .var .pki  .*backup .conda .hyper* .*quake* .python_* .fltk .bash_history .gnupg .elvish .dotnet .conan2 .azure .zcompdump*  .spacemacs* .bash_* .histfile .osh-up* .radian* .wget-* .r .ssh .quake .profile .zsh_history .python-history .steam .parall* .hyper .tex* .w3m .subversion
+rm -rf .oh-my-zsh .expo .e-log* .config/rio .config/thunar .config/kalk .config/vlc .config/htop .config/vlc .config/micro .config/htop  .vscode-R .bash_profile .config/go  .config/fish .fontlist .tcshrc .xonsh* .masterpdf* .vmware .var .pki  .*backup .conda .hyper* .*quake*  fltk .bash_history .gnupg .elvish .dotnet .conan2 .azure .zcompdump*  .spacemacs* .bash_* .histfile .osh-up* .radian* .wget-* .r .ssh .quake .profile .zsh_history .python-history .steam .parall* .hyper .tex* .w3m .subversion
 fi
 
 rm total_dot_files.txt

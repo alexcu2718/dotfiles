@@ -15,6 +15,13 @@ clone_if_not_exist() {
 	fi
 }
 
+curl_if_missing() {
+	local destination="$1" url="$2"
+	if [[ ! -f "$destination" ]]; then
+		curl --create-dirs -o "$destination" "$url"
+	fi
+}
+
 lazy_load_completion_on_first_use() {
 	local cmd="$1"
 	local completion_cmd="$2"
@@ -42,10 +49,6 @@ export LANG=en_US.UTF-8
 export LC_CTYPE="en_US.UTF-8"
 export ARCHFLAGS="-arch $(uname -m)"
 
-if ! [[ "$OSTYPE" == linux* ]]; then
-
-	export TERM=xterm
-fi
 
 if [[ -n $SSH_CONNECTION ]]; then
 	export EDITOR='vim'
@@ -140,60 +143,39 @@ clone_if_not_exist "$AUTO_SUGGESTIONS" "https://github.com/zsh-users/zsh-autosug
 clone_if_not_exist "$FAST_SYNTAX" "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
 clone_if_not_exist "$AUTO_COMPLETE" "https://github.com/marlonrichert/zsh-autocomplete.git"
 
-if [ "$(whoami)" = "alexc" ] && [[ "$OSTYPE" == linux* ]]; then
+local SHELL_FUNCTIONS="$HOME/.shell_functions"
+curl_if_missing "$SHELL_FUNCTIONS" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.shell_functions
 
-	local SHELL_FUNCTIONS="$HOME/.shell_functions"
-	if [ ! -f "$SHELL_FUNCTIONS" ]; then
-		curl -o "$SHELL_FUNCTIONS" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.shell_functions
-	fi
-
-	source ~/.shell_functions
-	#https://www.google.com/url?sa=t&source=web&rct=j&url=https%3A%2F%2Fwww.threads.com%2F%40beatrizmarianophotography%2Fpost%2FDE8IVn4iPW3&ved=0CBYQjRxqFwoTCLCb2q3ux5IDFQAAAAAdAAAAABA6&opi=89978449
-
-fi
+source ~/.shell_functions
+#https://www.google.com/url?sa=t&source=web&rct=j&url=https%3A%2F%2Fwww.threads.com%2F%40beatrizmarianophotography%2Fpost%2FDE8IVn4iPW3&ved=0CBYQjRxqFwoTCLCb2q3ux5IDFQAAAAAdAAAAABA6&opi=89978449
 
 local BINDKEYS="$HOME/.bindkeys"
-if [ ! -f "$BINDKEYS" ]; then
-	curl -o "$BINDKEYS" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.bindkeys
-fi
-
-
+curl_if_missing "$BINDKEYS" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.bindkeys
 
 source "$HOME/.bindkeys"
 
 local PYTHON_AND_GO=~/.python_and_go_stuff.zsh
 
-
-if [ ! -f "$PYTHON_AND_GO" ] ; then
-
-curl -o "$PYTHON_AND_GO" https://raw.githubusercontent.com/alexcu2718/dotfiles/refs/heads/main/.python_and_go_stuff
-
-fi
+curl_if_missing "$PYTHON_AND_GO" https://raw.githubusercontent.com/alexcu2718/dotfiles/refs/heads/main/.python_and_go_stuff
 
 source "$PYTHON_AND_GO"
-
 
 if [[ "$ENABLE_PATINA" == "1" ]] && command -v cargo >/dev/null; then
 	if ! command -v zsh-patina >/dev/null; then
 		if command -v paru >/dev/null; then
 			paru -Syu zsh-patina
 		else
-			cargo install --git https://github.com/michel-kraemer/zsh-patina
+			cargo install zsh-patina
 		fi
 	fi
 
 	local PATINA_CFG="$HOME/.config/zsh-patina"
-	mkdir -p "$PATINA_CFG"
 
-	if [[ ! -f "$PATINA_CFG/config.toml" ]]; then
-		curl -o "$PATINA_CFG/config.toml" \
-			https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/zsh-patina/config.toml
-	fi
+	curl_if_missing "$PATINA_CFG/config.toml" \
+		https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/zsh-patina/config.toml
 
-	if [[ ! -f "$PATINA_CFG/custom-theme.toml" ]]; then
-		curl -o "$PATINA_CFG/custom-theme.toml" \
-			https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/zsh-patina/custom-theme.toml
-	fi
+	curl_if_missing "$PATINA_CFG/custom-theme.toml" \
+		https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/zsh-patina/custom-theme.toml
 
 	eval "$(zsh-patina activate)"
 	lazy_load_completion_on_first_use "zsh-patina" "zsh-patina completion"
@@ -218,17 +200,11 @@ fi
 
 source ~/.python_and_go_stuff.zsh
 
-
-
-
 if [[ "$ENABLE_STARSHIP" == "1" ]] && command -v starship >/dev/null; then
 
 	local STARSHIP_LOCATION="$HOME/.config/starship.toml"
 
-	if [ ! -f "$STARSHIP_LOCATION" ]; then
-		mkdir -p "$HOME/.config"
-		curl -o "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
-	fi
+	curl_if_missing "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
 
 	eval "$(starship init zsh)"
 fi
@@ -240,7 +216,7 @@ fi
 # lazy load auto env
 _autoenv_loaded=0
 _autoenv_lazy_chpwd() {
-	if (( !_autoenv_loaded )) && [[ -f ".env" ]]; then
+	if ((!_autoenv_loaded)) && [[ -f ".env" ]]; then
 		_autoenv_loaded=1
 		local _ae_dir="$HOME/.zsh/plugins/autoenv"
 		local _ae_plugin="$_ae_dir/autoenv.plugin.zsh"
