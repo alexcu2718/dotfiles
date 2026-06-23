@@ -197,7 +197,6 @@ if command -v zoxide >/dev/null; then
 	alias cd='z'
 fi
 
-source ~/.python_and_go_stuff.zsh
 
 if [[ "$ENABLE_STARSHIP" == "1" ]] && command -v starship >/dev/null; then
 
