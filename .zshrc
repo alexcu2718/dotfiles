@@ -155,7 +155,7 @@ source "$HOME/.bindkeys"
 
 local PYTHON_AND_GO=~/.python_and_go_stuff.zsh
 
-curl_if_missing "$PYTHON_AND_GO" https://raw.githubusercontent.com/alexcu2718/dotfiles/refs/heads/main/.python_and_go_stuff
+curl_if_missing "$PYTHON_AND_GO" https://raw.githubusercontent.com/alexcu2718/dotfiles/refs/heads/main/.python_and_go_stuff.zsh
 
 source "$PYTHON_AND_GO"
 
