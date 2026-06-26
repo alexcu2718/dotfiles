@@ -144,8 +144,7 @@
   },
   {
     "key": "ctrl+shift+t",
-    "command": "workbench.action.terminal.new",
-    "when": "terminalProcessSupported || terminalWebExtensionContributedProfile"
+    "command": "workbench.action.terminal.toggleTerminal"
   },
   {
     "key": "ctrl+shift+`",
@@ -166,11 +165,6 @@
     "command": "workbench.action.terminal.focusPreviousPane",
     "when": "terminalFocus"
   },
-  // Focus Explorer
-  //{"key": "ctrl+e","command": "workbench.view.explorer","when": "editorFocus"},
-  // Return to Editor
-  //{"key": "ctrl+e","command": "workbench.action.focusActiveEditorGroup","when": "explorerViewletFocus"},
-  //{"key": "ctrl+e","command": "workbench.action.focusActiveEditorGroup","when": "terminalFocus"},
   {
     "key": "ctrl+-",
     "command": "jupyter.insertCellAbove",

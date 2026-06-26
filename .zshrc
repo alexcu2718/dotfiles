@@ -240,3 +240,4 @@ lazy_load_completion_on_first_use "juliaup" "juliaup completions zsh"
 lazy_load_completion_on_first_use "fdf" "fdf --generate zsh"
 
 #zprof
+export TMOUT=0
