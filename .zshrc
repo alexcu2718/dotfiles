@@ -263,4 +263,21 @@ export TMOUT=0
 
 alias SSHPHONE='ssh -p 8022 u0_a359@192.168.1.248' # too lazy to setup aliases since switcing phone soon
 ##  ssh-copy-id -p 8022 u0_a359@192.168.1.248
+
+
+if [[ "$OSTYPE" == darwin* ]] && command -v brew >/dev/null ; then
+	if ! brew list --formula coreutils >/dev/null ; then
+		brew install coreutils
+	fi
+
+	if ! brew list --formula bash >/dev/null ; then ### get the modern bash instead of one from 2007....
+		brew install bash
+	fi
+
+
+
+
+	export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+fi
+
 #zprof
