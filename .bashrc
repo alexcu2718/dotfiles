@@ -12,18 +12,6 @@ PS1='[\u@\h \W]\$ '
 
 
 
-BLESH_LOCATION="$HOME/.local/share/blesh/ble.sh"
-
-
-
-if [ ! -f "$BLESH_LOCATION" ]; then
-    TMP_DIR=$(mktemp -d)
-    cd "$TMP_DIR" || exit
-    git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
-    make -C ble.sh install PREFIX=~/.local
-    cd - || exit
-    rm -rf "$TMP_DIR"
-fi
 
 
 if  command -v starship >/dev/null &&  [[ "$OSTYPE" == linux* ]] ; then
@@ -76,7 +64,21 @@ strip_slashes() {
 alias hx='helix'
 
 
-source "$HOME/.local/share/blesh/ble.sh"
+# BLESH_LOCATION="$HOME/.local/share/blesh/ble.sh"
 
-export PATH="$HOME/.craft/bin:$PATH"
-export PATH="$HOME/.craft/bin:$PATH"
+
+
+# if [ ! -f "$BLESH_LOCATION" ]; then
+#     TMP_DIR=$(mktemp -d)
+#     cd "$TMP_DIR" || exit
+#     git clone --recursive --depth 1 --shallow-submodules https://github.com/akinomyoga/ble.sh.git
+#     make -C ble.sh install PREFIX=~/.local
+#     cd - || exit
+#     rm -rf "$TMP_DIR"
+# fi
+
+#source "$HOME/.local/share/blesh/ble.sh"
+
+
+# Flyline - enhanced Bash experience
+enable -f /home/alexc/.local/lib/libflyline.so flyline

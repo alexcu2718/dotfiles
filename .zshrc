@@ -7,7 +7,7 @@
 ## bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
 ulimit -n 8192
 
-clone_if_not_exist() {
+function clone_if_not_exist() {
 	local filepath="$1" repo="$2"
 	local DIRNAME="$(dirname "$filepath")"
 	if [ ! -d "$DIRNAME" ]; then
@@ -15,14 +15,14 @@ clone_if_not_exist() {
 	fi
 }
 
-curl_if_missing() {
+function curl_if_missing() {
 	local destination="$1" url="$2"
 	if [[ ! -f "$destination" ]]; then
 		curl --create-dirs -o "$destination" "$url"
 	fi
 }
 
-lazy_load_completion_on_first_use() {
+function lazy_load_completion_on_first_use() {
 	local cmd="$1"
 	local completion_cmd="$2"
 
@@ -40,6 +40,7 @@ function $cmd() {
 }
 
 export ENABLE_PATINA=1 # experimental faster syntax highlighter
+# export ENABLE_DEJA=1
 export ENABLE_STARSHIP=1
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/.deno/bin
 export HEAPTRACK_ENABLE_DEBUGINFOD=1
@@ -62,6 +63,10 @@ fi
 local ZSH_PLUGIN_HOME="$HOME/.zsh/plugins"
 ZSH_COMPLETIONS="$ZSH_PLUGIN_HOME/zsh-completions"
 clone_if_not_exist "$ZSH_COMPLETIONS" https://github.com/zsh-users/zsh-completions.git
+
+
+
+
 
 if command -v sccache >/dev/null; then
 	export RUSTC_WRAPPER="$(which sccache)"
@@ -109,12 +114,13 @@ zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
 zstyle ':completion:*:warnings' format '%F{red}no matches for:%f %d'
 zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 zstyle ':completion:*' completer _complete _ignored
+zstyle ':completion::complete:*' gain-privileges 1
 setopt appendhistory
 setopt sharehistory
 setopt incappendhistory
-HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=5000
+SAVEHIST=5000
 DISABLE_MAGIC_FUNCTIONS="true"
 DISABLE_LS_COLORS="false"
 DISABLE_AUTO_TITLE="false"
@@ -184,17 +190,30 @@ else
 
 #(read: Alex cannot be bothered to read into esoteric zsh tutorials written on raw html and a dream of 3d graphics)
 fi
-source "$AUTO_SUGGESTIONS"
-source "$AUTO_COMPLETE"
+
+
+# if [[ "$ENABLE_DEJA"  == "1" ]]  && command -v deja > /dev/null ; then
+# local DEJA_PLUGIN="${ZSH_PLUGIN_HOME}/plugins/deja/deja.plugin.zsh"
+# curl_if_missing "$DEJA_PLUGIN" https://raw.githubusercontent.com/Giammarco-Ferranti/deja/main/deja.plugin.zsh
+# source "$DEJA_PLUGIN"
+# else
+#source "$AUTO_SUGGESTIONS"
+# fi
+
 
 fpath+=/usr/share/zsh/vendor-completions
 fpath+=~/.zsh/completions
 fpath+=~/.zfunc
 fpath+="$ZSH_COMPLETIONS/src"
 
+
+source "$AUTO_COMPLETE"
+source "$AUTO_SUGGESTIONS"
+
 if command -v zoxide >/dev/null; then
-	eval "$(zoxide init zsh)"
-	alias cd='z'
+	# eval "$(zoxide init zsh)"
+	# alias cd='z'
+	eval "$(zoxide init --cmd cd zsh)"
 fi
 
 
@@ -211,7 +230,6 @@ if command -v eza >/dev/null; then
 	alias ls='eza --icons --color=always'
 fi
 
-# lazy load auto env
 _autoenv_loaded=0
 _autoenv_lazy_chpwd() {
 	if ((!_autoenv_loaded)) && [[ -f ".env" ]]; then
@@ -239,5 +257,10 @@ lazy_load_completion_on_first_use "juliaup" "juliaup completions zsh"
 
 lazy_load_completion_on_first_use "fdf" "fdf --generate zsh"
 
-#zprof
+export DEBUGINFOD_URLS="https://debuginfod.archlinux.org"
+
 export TMOUT=0
+
+alias SSHPHONE='ssh -p 8022 u0_a359@192.168.1.248' # too lazy to setup aliases since switcing phone soon
+##  ssh-copy-id -p 8022 u0_a359@192.168.1.248
+#zprof

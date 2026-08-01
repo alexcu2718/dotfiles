@@ -4,6 +4,13 @@ theme = "onedark"
 line-number = "relative"
 mouse = false
 
+[keys.normal]
+C-p = "file_picker"
+
+[keys.normal.space]
+f = "file_picker"
+g = "global_search"
+
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"

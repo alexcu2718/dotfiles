@@ -24,4 +24,16 @@
       "ctrl-shift-t": "terminal_panel::ToggleFocus",
     },
   },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-k": "editor::DeleteLine"
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "ctrl-shift-k": "editor::DeleteLine"
+    }
+  }
 ]

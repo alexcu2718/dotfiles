@@ -6,7 +6,7 @@
   "ruff.path": [
     "/usr/bin/ruff"
   ],
-  "remote.SSH.useLocalServer": false,
+  "remote.SSH.useLocalServer": true,
   "ruff.lsp": true,
   "python.terminal.activateEnvironment": false,
   "editor.renderWhitespace": "selection",
@@ -16,7 +16,7 @@
   "files.autoGuessEncoding": true,
   "ruff.trace.server": "messages",
   "files.autoSave": "afterDelay",
-  "remote.SSH.remoteServerListenOnSocket": false,
+  "remote.SSH.remoteServerListenOnSocket": true,
   "terminal.integrated.commandsToSkipShell": [
     "language-julia.interrupt"
   ],
@@ -35,7 +35,7 @@
   "python.analysis.languageServerMode": "full",
   "remote.SSH.showLoginTerminal": true,
   "python.analysis.typeCheckingMode": "strict",
-  "remote.SSH.useExecServer": false,
+  "remote.SSH.useExecServer": true,
   "security.workspace.trust.untrustedFiles": "open",
   "notebook.lineNumbers": "on",
   "rust-analyzer.inlayHints.genericParameterHints.lifetime.enable": true,
@@ -342,9 +342,12 @@
   "rust-analyzer.diagnostics.experimental.enable": true,
   "dataWrangler.experiments.autoDetectCsvDelimiter": true,
   "clangd.path": "/usr/bin/clangd",
-  "remote.SSH.remotePlatform": {
-    "localhost": "windows"
-  },
+ "remote.SSH.remotePlatform": {
+  "windows": "windows",
+  "mac": "macOS",
+  "linux": "linux",
+  "macos": "macOS"
+},
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
@@ -381,4 +384,15 @@
   "terminal.integrated.sendKeybindingsToShell": true,
   "terminal.integrated.focusAfterRun": "terminal",
   "explorer.openEditors.visible": 1,
+  "chat.agent.thinking.terminalTools": false,
+  "terminal.integrated.shellIntegration.quickFixEnabled": false,
+  "terminal.integrated.allowInUntrustedWorkspace": true,
+  "yaml.disableSchemaDetection": [
+    "**/.github/workflows/*.yml",
+    "**/.github/workflows/*.yaml",
+    "**/.gitea/workflows/*.yml",
+    "**/.gitea/workflows/*.yaml",
+    "**/.forgejo/workflows/*.yml",
+    "**/.forgejo/workflows/*.yaml"
+  ],
 }
