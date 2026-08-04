@@ -266,11 +266,20 @@ alias SSHPHONE='ssh -p 8022 u0_a359@192.168.1.248' # too lazy to setup aliases s
 
 
 if [[ "$OSTYPE" == darwin* ]] && command -v brew >/dev/null ; then
-	if ! brew list --formula coreutils >/dev/null ; then
-		brew install coreutils
+
+
+
+	# if ! brew list --formula coreutils >/dev/null ; then
+	# 	brew install coreutils
+	# fi
+
+	if  ! command -v grm > /dev/null; then ### check for gnu coreutils  via grm instead of invoking brew, this isn't perfect
+		brew install coreutils ## we can't check paths because homebrew installs in different places for everyone, yay.
+		### TODO! ADD A HOMEBREW INSTALL TO THE TOP OF THIS SCRIPT FOR MAC
 	fi
 
-	if ! brew list --formula bash >/dev/null ; then ### get the modern bash instead of one from 2007....
+
+	if  ! bash -c '(( BASH_VERSINFO[0] >=5  ))' ; then ### get the modern bash instead of one from 2007....
 		brew install bash
 	fi
 

@@ -41,7 +41,6 @@ chafa
 chaotic-keyring
 chaotic-mirrorlist
 cheat
-chromium
 clang
 clang-build-analyzer-git
 clang20
@@ -218,6 +217,7 @@ matrix-appservice-irc
 mdformat
 mediainfo
 memcached
+microsoft-edge-stable-bin
 mise
 mk-git
 modprobed-db

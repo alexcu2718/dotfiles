@@ -34,7 +34,7 @@
   "git.openRepositoryInParentFolders": "never",
   "python.analysis.languageServerMode": "full",
   "remote.SSH.showLoginTerminal": true,
-  "python.analysis.typeCheckingMode": "strict",
+  "python.analysis.typeCheckingMode": "basic",
   "remote.SSH.useExecServer": true,
   "security.workspace.trust.untrustedFiles": "open",
   "notebook.lineNumbers": "on",
@@ -342,12 +342,12 @@
   "rust-analyzer.diagnostics.experimental.enable": true,
   "dataWrangler.experiments.autoDetectCsvDelimiter": true,
   "clangd.path": "/usr/bin/clangd",
- "remote.SSH.remotePlatform": {
-  "windows": "windows",
-  "mac": "macOS",
-  "linux": "linux",
-  "macos": "macOS"
-},
+  "remote.SSH.remotePlatform": {
+    "windows": "windows",
+    "mac": "macOS",
+    "linux": "linux",
+    "macos": "macOS"
+  },
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
@@ -356,6 +356,8 @@
     "*.zsh": "shellscript",
     ".zshrc": "shellscript",
     ".zshenv": "shellscript",
+    "*.c": "c",
+    "*.h": "c"
   },
   "terminal.integrated.cursorWidth": 0.5,
   "terminal.integrated.fontSize": 10,
