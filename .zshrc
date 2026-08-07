@@ -118,6 +118,7 @@ zstyle ':completion::complete:*' gain-privileges 1
 setopt appendhistory
 setopt sharehistory
 setopt incappendhistory
+bindkey -e
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=5000
 SAVEHIST=5000
