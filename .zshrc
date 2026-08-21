@@ -5,6 +5,11 @@
 ## I make no apology for its very tasteful design.
 ### Install nerd fonts
 ## bash -c  "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
+
+## termux font patch
+# mkdir -p ~/.termux &&  curl -fLo ~/.termux/font.ttf \
+# 'https://github.com/romkatv/dotfiles-public/raw/master/.local/share/fonts/NerdFonts/MesloLGS%20NF%20Regular.ttf' && \
+# termux-reload-settings
 ulimit -n 8192
 
 function clone_if_not_exist() {
@@ -262,8 +267,10 @@ export DEBUGINFOD_URLS="https://debuginfod.archlinux.org"
 
 export TMOUT=0
 
-alias SSHPHONE='ssh -p 8022 u0_a359@192.168.1.248' # too lazy to setup aliases since switcing phone soon
-##  ssh-copy-id -p 8022 u0_a359@192.168.1.248
+
+PHONE_ADDR='u0_a370@192.168.1.117'
+alias SSHPHONE="ssh -p 8022 $PHONE_ADDR" # too lazy to setup aliases since switcing phone soon
+##  ssh-copy-id -p 8022 $PHONE_ADDR
 
 
 if [[ "$OSTYPE" == darwin* ]] && command -v brew >/dev/null ; then
@@ -277,7 +284,7 @@ if [[ "$OSTYPE" == darwin* ]] && command -v brew >/dev/null ; then
 	if  ! command -v grm > /dev/null; then ### check for gnu coreutils  via grm instead of invoking brew, this isn't perfect
 		brew install coreutils ## we can't check paths because homebrew installs in different places for everyone, yay.
 		### TODO! ADD A HOMEBREW INSTALL TO THE TOP OF THIS SCRIPT FOR MAC
-	fi
+	fi ### I don't like BSD coreutils because of the argument parsing...
 
 
 	if  ! bash -c '(( BASH_VERSINFO[0] >=5  ))' ; then ### get the modern bash instead of one from 2007....

@@ -21,10 +21,8 @@ blesh
 bluez
 bluez-utils
 broot
-browsh
-btop
+/.btop
 caffeine
-carbonyl-bin
 cargo-feature
 cargo-flamegraph
 cargo-fuzz
@@ -55,9 +53,6 @@ cmake-extras
 cmake-language-server
 contractor
 corectrl
-cosmic-session
-cosmic-store
-cosmic-wallpapers
 cowsay
 cpio
 cppcheck
@@ -101,6 +96,7 @@ ffmpegthumbnailer
 file-roller
 firefox
 firefox-dark-reader
+flameshot
 flix-cli
 fzf
 garcon
@@ -149,6 +145,7 @@ go-gitmoji-cli-bin
 godot
 gotorrent-bin
 grilo-plugins
+grim
 gst-libav
 gvfs-afc
 gvfs-dnssd
@@ -164,6 +161,7 @@ heaptrack
 helix
 heroic-games-launcher-bin
 highlight
+hollywood
 htop
 hwinfo
 hyperfine
@@ -179,7 +177,6 @@ ispell
 iwd
 java-rhino
 jujutsu
-juliaup-bin
 jupyter-metakernel
 just
 kafka
@@ -194,13 +191,13 @@ konsole
 kwayland5
 lazygit
 libappindicator
+libc++
 libdbusmenu-glib
 libgit2-glib-docs
 libreoffice-fresh
 libva-nvidia-driver
 libvirt
 linux
-linux-cachyos
 linux-firmware
 linux-headers
 lldb
@@ -217,7 +214,6 @@ matrix-appservice-irc
 mdformat
 mediainfo
 memcached
-microsoft-edge-stable-bin
 mise
 mk-git
 modprobed-db
@@ -232,6 +228,7 @@ net-tools
 nim
 ninja
 nm-connection-editor
+normcap
 noto-fonts-cjk
 noto-fonts-extra
 nvtop
@@ -302,7 +299,6 @@ qemu-system-s390x
 qemu-system-x86
 qemu-tools
 qsv
-quarto-cli-bin
 r
 radare2
 radian
@@ -343,6 +339,7 @@ sudo
 swtpm
 tcsh
 tecla
+tesseract-data-eng
 texlive-basic
 texlive-bibtexextra
 texlive-binextra
@@ -394,7 +391,7 @@ unrar
 unuran
 usage
 uv
-valgrind
+valgrind-git
 valkey
 vc
 vim
@@ -430,12 +427,6 @@ xdg-user-dirs-gtk
 xdg-utils
 xdotool
 xf86-video-vesa
-xfce4-appfinder
-xfce4-notifyd
-xfce4-panel-compiz
-xfce4-power-manager
-xfce4-settings
-xfce4-terminal
 xfdesktop
 xfwm4
 xorg-bdftopcf

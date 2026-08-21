@@ -1,5 +1,14 @@
 .wifi_password.txt
+adb*
+org.kde*
+.config/byo*
+**/*.service* 
+**/*.log
+**/*.lldb
+**/*.devvit
+.config/normcap
 .nv
+.config/qt*ct
 .config/corectrl/
 .config/cpupower_gui/
 .config/pypoetry/
