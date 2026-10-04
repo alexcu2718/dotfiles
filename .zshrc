@@ -10,7 +10,9 @@
 # mkdir -p ~/.termux &&  curl -fLo ~/.termux/font.ttf \
 # 'https://github.com/romkatv/dotfiles-public/raw/master/.local/share/fonts/NerdFonts/MesloLGS%20NF%20Regular.ttf' && \
 # termux-reload-settings
+if [[ $OSTYPE == linux* ]] ; then
 ulimit -n 8192
+fi
 
 function clone_if_not_exist() {
 	local filepath="$1" repo="$2"
@@ -103,12 +105,12 @@ mkdir -p ~/.cache/zsh
 
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.cache/zsh
-zstyle ':completion:*' list-lines 10
+zstyle ':completion:*' list-lines 5
 zstyle ':completion:*' menu select
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
 zstyle ':autocomplete:*' delay 0.15
-zstyle ':autocomplete:*' ignored-input 'paru*'
+zstyle ':autocomplete:*' ignored-input 'paru*' ## cant get this to work for some....reason.
 zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*' matcher-list \
 	'' \
@@ -123,11 +125,11 @@ zstyle ':completion::complete:*' gain-privileges 1
 setopt appendhistory
 setopt sharehistory
 setopt incappendhistory
-bindkey -e
+bindkey -e #evil mode
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=5000
 SAVEHIST=5000
-DISABLE_MAGIC_FUNCTIONS="true"
+DISABLE_MAGIC_FUNCTIONS="true" ## dont think this dose anything without oh my zsh, harmless, gonna leave it lol, i dont care.
 DISABLE_LS_COLORS="false"
 DISABLE_AUTO_TITLE="false"
 ENABLE_CORRECTION="true"
@@ -213,8 +215,8 @@ fpath+=~/.zfunc
 fpath+="$ZSH_COMPLETIONS/src"
 
 
-source "$AUTO_COMPLETE"
 source "$AUTO_SUGGESTIONS"
+source "$AUTO_COMPLETE"
 
 if command -v zoxide >/dev/null; then
 	# eval "$(zoxide init zsh)"
@@ -265,11 +267,14 @@ lazy_load_completion_on_first_use "fdf" "fdf --generate zsh"
 
 export DEBUGINFOD_URLS="https://debuginfod.archlinux.org"
 
-export TMOUT=0
+
+alias SSHTOASTER='ssh -p 22 alexc@192.168.0.115' # my potato media laptop, should make it an alias but its barely alive and may explode on me anytime soon, free heating in winter i guess.
+
+export TMOUT=0 # can cause issues on bash..
 
 
 PHONE_ADDR='u0_a370@192.168.1.117'
-alias SSHPHONE="ssh -p 8022 $PHONE_ADDR" # too lazy to setup aliases since switcing phone soon
+alias SSHPHONE="ssh -p 8022 $PHONE_ADDR" # too lazy to setup aliases since switcing phone soony
 ##  ssh-copy-id -p 8022 $PHONE_ADDR
 
 
@@ -290,6 +295,7 @@ if [[ "$OSTYPE" == darwin* ]] && command -v brew >/dev/null ; then
 	if  ! bash -c '(( BASH_VERSINFO[0] >=5  ))' ; then ### get the modern bash instead of one from 2007....
 		brew install bash
 	fi
+	## not sufficiently tested, may cause infinite loops on a messed up PATH, oh well, worked for me.
 
 
 
@@ -297,4 +303,5 @@ if [[ "$OSTYPE" == darwin* ]] && command -v brew >/dev/null ; then
 	export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 fi
 
+#export RUSTFLAGS="-C target-cpu=native"
 #zprof

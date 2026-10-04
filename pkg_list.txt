@@ -9,6 +9,7 @@ asciiquarium
 ast-grep
 atool
 awesome-terminal-fonts
+balena-etcher
 baobab
 base
 base-devel
@@ -21,7 +22,7 @@ blesh
 bluez
 bluez-utils
 broot
-/.btop
+btop
 caffeine
 cargo-feature
 cargo-flamegraph
@@ -42,11 +43,6 @@ cheat
 clang
 clang-build-analyzer-git
 clang20
-clion
-clion-cmake
-clion-gdb
-clion-jre
-clion-lldb
 cloc
 cmake
 cmake-extras
@@ -70,7 +66,7 @@ devtools
 directx-headers-cmake
 directx-shader-compiler
 direnv
-discord
+discord-ptb
 dkms
 dmenu
 dmg2img
@@ -80,6 +76,7 @@ dolphin
 dosbox
 doxygen
 dua-cli
+duckdb
 dunesh
 dust
 ee-bin
@@ -98,6 +95,7 @@ firefox
 firefox-dark-reader
 flameshot
 flix-cli
+fluxcast-git
 fzf
 garcon
 gcc-fortran
@@ -128,7 +126,6 @@ gnome-logs
 gnome-maps
 gnome-menus
 gnome-music
-gnome-network-displays-bin
 gnome-remote-desktop
 gnome-session
 gnome-settings-daemon
@@ -147,6 +144,7 @@ gotorrent-bin
 grilo-plugins
 grim
 gst-libav
+gst-plugin-wpe2
 gvfs-afc
 gvfs-dnssd
 gvfs-goa
@@ -182,12 +180,14 @@ just
 kafka
 kaizen-bin
 kate
+kcast
 kde-system-meta
 kdeconnect
 kdialog
-kimi-cli-bin
+keditbookmarks
 kitty
 konsole
+krdc
 kwayland5
 lazygit
 libappindicator
@@ -214,6 +214,8 @@ matrix-appservice-irc
 mdformat
 mediainfo
 memcached
+minidlna
+miraclecast-git
 mise
 mk-git
 modprobed-db
@@ -228,6 +230,7 @@ net-tools
 nim
 ninja
 nm-connection-editor
+nmap
 normcap
 noto-fonts-cjk
 noto-fonts-extra
@@ -255,9 +258,11 @@ perl-x11-protocol
 perl-yaml-tiny
 pigz
 pipewire-alsa
+pipewire-pulse
 pkgstats
 plasma-meta
 plasma-workspace
+plasma-x11-session
 plymouth
 popcorntime
 power-profiles-daemon
@@ -284,9 +289,11 @@ python-pip
 python-polars
 python-pyarrow
 python-pyflakes
+python-pystray
 python-scipy
 python-tokenize-rt
 python-unidecode
+python-upnpclient
 qbittorrent
 qemu-desktop
 qemu-docs
@@ -305,6 +312,7 @@ radian
 ragel
 ranger
 raw-thumbnailer
+realvnc-vnc-server
 reflector
 resvg
 rofi
@@ -324,6 +332,7 @@ shellcheck-bin-doc
 showtime
 simple-scan
 sl
+slurp
 smartmontools
 snapshot
 sof-firmware
@@ -414,6 +423,7 @@ vulkan-validation-layers
 vulkan-virtio
 wasmtime
 webp-pixbuf-loader
+wf-recorder
 wget
 wireless-regdb
 wireless_tools
