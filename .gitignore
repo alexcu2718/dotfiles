@@ -1,6 +1,7 @@
 .wifi_password.txt
 adb*
 org.kde*
+**/*.conf
 **/*_history
 .config/litecli
 .config/byo*

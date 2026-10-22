@@ -66,4 +66,4 @@ alias hx='helix'
 
 
 # Flyline - enhanced Bash experience
-enable -f /home/alexc/.local/lib/libflyline.so flyline
+#enable -f /home/alexc/.local/lib/libflyline.so flyline

@@ -74,6 +74,7 @@ docker
 docker-buildx
 dolphin
 dosbox
+dosfstools
 doxygen
 dua-cli
 duckdb
@@ -155,6 +156,9 @@ gvfs-onedrive
 gvfs-smb
 gvfs-wsdd
 hakuneko-desktop-bin
+harlequin
+harlequin-odbc
+harlequin-postgres
 heaptrack
 helix
 heroic-games-launcher-bin
@@ -262,10 +266,10 @@ pipewire-pulse
 pkgstats
 plasma-meta
 plasma-workspace
-plasma-x11-session
 plymouth
 popcorntime
 power-profiles-daemon
+prek
 prismlauncher
 psutils
 pyright
@@ -278,6 +282,7 @@ python-cryptography
 python-fsspec
 python-lz4
 python-matplotlib
+python-npx
 python-numba
 python-numpy
 python-openpyxl
@@ -308,7 +313,6 @@ qemu-tools
 qsv
 r
 radare2
-radian
 ragel
 ranger
 raw-thumbnailer
@@ -317,6 +321,7 @@ reflector
 resvg
 rofi
 root
+rpi-imager
 ruby-stdlib
 ruff
 runelite
@@ -335,6 +340,7 @@ sl
 slurp
 smartmontools
 snapshot
+snowflake-client
 sof-firmware
 speedtest-cli
 sshfs
@@ -346,6 +352,7 @@ stress
 stress-ng
 sudo
 swtpm
+syncplay
 tcsh
 tecla
 tesseract-data-eng
@@ -400,7 +407,7 @@ unrar
 unuran
 usage
 uv
-valgrind-git
+valgrind
 valkey
 vc
 vim
@@ -495,5 +502,6 @@ zoxide
 zram-generator
 zsh
 zsh-completions
+zsh-doc
 zsh-patina-bin
 zshdb

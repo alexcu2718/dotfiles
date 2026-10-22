@@ -10,8 +10,8 @@
 # mkdir -p ~/.termux &&  curl -fLo ~/.termux/font.ttf \
 # 'https://github.com/romkatv/dotfiles-public/raw/master/.local/share/fonts/NerdFonts/MesloLGS%20NF%20Regular.ttf' && \
 # termux-reload-settings
-if [[ $OSTYPE == linux* ]] ; then
-ulimit -n 8192
+if [[ $OSTYPE == linux* ]]; then
+	ulimit -n 8192
 fi
 
 function clone_if_not_exist() {
@@ -46,7 +46,7 @@ function $cmd() {
 "
 }
 
-export ENABLE_PATINA=1 # experimental faster syntax highlighter
+export ENABLE_PATINA=1# experimental faster syntax highlighter
 # export ENABLE_DEJA=1
 export ENABLE_STARSHIP=1
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/.deno/bin
@@ -70,10 +70,6 @@ fi
 local ZSH_PLUGIN_HOME="$HOME/.zsh/plugins"
 ZSH_COMPLETIONS="$ZSH_PLUGIN_HOME/zsh-completions"
 clone_if_not_exist "$ZSH_COMPLETIONS" https://github.com/zsh-users/zsh-completions.git
-
-
-
-
 
 if command -v sccache >/dev/null; then
 	export RUSTC_WRAPPER="$(which sccache)"
@@ -150,7 +146,7 @@ zstyle ':autocomplete:*' async on
 local AUTO_SUGGESTIONS="$ZSH_PLUGIN_HOME/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
 local FAST_SYNTAX="$ZSH_PLUGIN_HOME/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 local AUTO_COMPLETE="$ZSH_PLUGIN_HOME/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
-local AUTO_ENV="$ZSH_PLUGIN_HOME/autoenv/autoenv.plugin.zsh"
+#local AUTO_ENV="$ZSH_PLUGIN_HOME/autoenv/autoenv.plugin.zsh"
 ##i got fedup of recreating this everytime i wanted a shell to work on a new pc and too lazy for nix.
 clone_if_not_exist "$AUTO_SUGGESTIONS" "https://github.com/zsh-users/zsh-autosuggestions.git"
 clone_if_not_exist "$FAST_SYNTAX" "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
@@ -199,7 +195,6 @@ else
 #(read: Alex cannot be bothered to read into esoteric zsh tutorials written on raw html and a dream of 3d graphics)
 fi
 
-
 # if [[ "$ENABLE_DEJA"  == "1" ]]  && command -v deja > /dev/null ; then
 # local DEJA_PLUGIN="${ZSH_PLUGIN_HOME}/plugins/deja/deja.plugin.zsh"
 # curl_if_missing "$DEJA_PLUGIN" https://raw.githubusercontent.com/Giammarco-Ferranti/deja/main/deja.plugin.zsh
@@ -208,22 +203,21 @@ fi
 #source "$AUTO_SUGGESTIONS"
 # fi
 
-
 fpath+=/usr/share/zsh/vendor-completions
 fpath+=~/.zsh/completions
 fpath+=~/.zfunc
 fpath+="$ZSH_COMPLETIONS/src"
 
-
 source "$AUTO_SUGGESTIONS"
 source "$AUTO_COMPLETE"
+# HACK ALERT zsh-autocomplete's own lazy zasync autoload silently fails, so load it explicitly
+[[ -f ~/.cache/zsh/zasync/zasync ]] && autoload -Uz +X ~/.cache/zsh/zasync/zasync
 
 if command -v zoxide >/dev/null; then
 	# eval "$(zoxide init zsh)"
 	# alias cd='z'
 	eval "$(zoxide init --cmd cd zsh)"
 fi
-
 
 if [[ "$ENABLE_STARSHIP" == "1" ]] && command -v starship >/dev/null; then
 
@@ -238,21 +232,21 @@ if command -v eza >/dev/null; then
 	alias ls='eza --icons --color=always'
 fi
 
-_autoenv_loaded=0
-_autoenv_lazy_chpwd() {
-	if ((!_autoenv_loaded)) && [[ -f ".env" ]]; then
-		_autoenv_loaded=1
-		local _ae_dir="$HOME/.zsh/plugins/autoenv"
-		local _ae_plugin="$_ae_dir/autoenv.plugin.zsh"
-		clone_if_not_exist "$_ae_plugin" "https://github.com/hyperupcall/autoenv"
-		[[ ! -d "$HOME/.autoenv" ]] && cp -r "$_ae_dir" "$HOME/.autoenv"
-		AUTOENV_ENABLE_LEAVE=yes
-		source "$_ae_plugin"
-	fi
-}
-autoload -Uz add-zsh-hook
-add-zsh-hook chpwd _autoenv_lazy_chpwd
-_autoenv_lazy_chpwd
+# _autoenv_loaded=0
+# _autoenv_lazy_chpwd() {
+# 	if ((!_autoenv_loaded)) && [[ -f ".env" ]]; then
+# 		_autoenv_loaded=1
+# 		local _ae_dir="$HOME/.zsh/plugins/autoenv"
+# 		local _ae_plugin="$_ae_dir/autoenv.plugin.zsh"
+# 		clone_if_not_exist "$_ae_plugin" "https://github.com/hyperupcall/autoenv"
+# 		[[ ! -d "$HOME/.autoenv" ]] && cp -r "$_ae_dir" "$HOME/.autoenv"
+# 		AUTOENV_ENABLE_LEAVE=yes
+# 		source "$_ae_plugin"
+# 	fi
+# }
+# autoload -Uz add-zsh-hook
+# add-zsh-hook chpwd _autoenv_lazy_chpwd
+# _autoenv_lazy_chpwd
 
 alias VIEW_ASSEMBLY_OBJECT="objdump  -d --disassembler-options intel"
 alias COMPILE_COMMANDS="cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
@@ -267,38 +261,31 @@ lazy_load_completion_on_first_use "fdf" "fdf --generate zsh"
 
 export DEBUGINFOD_URLS="https://debuginfod.archlinux.org"
 
-
 alias SSHTOASTER='ssh -p 22 alexc@192.168.0.115' # my potato media laptop, should make it an alias but its barely alive and may explode on me anytime soon, free heating in winter i guess.
 
 export TMOUT=0 # can cause issues on bash..
 
-
 PHONE_ADDR='u0_a370@192.168.1.117'
 alias SSHPHONE="ssh -p 8022 $PHONE_ADDR" # too lazy to setup aliases since switcing phone soony
+
+alias RASPBERRY_PI_SSH='ssh -p 22 alexc@192.168.0.15'
 ##  ssh-copy-id -p 8022 $PHONE_ADDR
 
-
-if [[ "$OSTYPE" == darwin* ]] && command -v brew >/dev/null ; then
-
-
+if [[ "$OSTYPE" == darwin* ]] && command -v brew >/dev/null; then
 
 	# if ! brew list --formula coreutils >/dev/null ; then
 	# 	brew install coreutils
 	# fi
 
-	if  ! command -v grm > /dev/null; then ### check for gnu coreutils  via grm instead of invoking brew, this isn't perfect
-		brew install coreutils ## we can't check paths because homebrew installs in different places for everyone, yay.
+	if ! command -v grm >/dev/null; then ### check for gnu coreutils  via grm instead of invoking brew, this isn't perfect
+		brew install coreutils              ## we can't check paths because homebrew installs in different places for everyone, yay.
 		### TODO! ADD A HOMEBREW INSTALL TO THE TOP OF THIS SCRIPT FOR MAC
 	fi ### I don't like BSD coreutils because of the argument parsing...
 
-
-	if  ! bash -c '(( BASH_VERSINFO[0] >=5  ))' ; then ### get the modern bash instead of one from 2007....
+	if ! bash -c '(( BASH_VERSINFO[0] >=5  ))'; then ### get the modern bash instead of one from 2007....
 		brew install bash
 	fi
 	## not sufficiently tested, may cause infinite loops on a messed up PATH, oh well, worked for me.
-
-
-
 
 	export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 fi

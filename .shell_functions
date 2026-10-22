@@ -1,42 +1,39 @@
-
 ## MEANT to be used on only bash/zsh
 
 #shellcheck disable=2148
 mysh() {
-    ps -p $$ -o comm= | awk -F/ '{print $NF}' | sed 's/^-//'
+	ps -p $$ -o comm= | awk -F/ '{print $NF}' | sed 's/^-//'
 }
 
 CFG() {
-    "$EDITOR" "$HOME/.$(mysh)rc"
+	"$EDITOR" "$HOME/.$(mysh)rc"
 }
 
 REFRESH() {
-    # shellcheck disable=SC1090
-  source "$HOME/.$(mysh)rc"
+	# shellcheck disable=SC1090
+	source "$HOME/.$(mysh)rc"
 }
 
-
-
 gh-raw() {
-  if [[ $# -lt 1 ]]; then
-    echo "Usage: gh-raw <github-url> [curl-options]" >&2
-    return 1
-  fi
+	if [[ $# -lt 1 ]]; then
+		echo "Usage: gh-raw <github-url> [curl-options]" >&2
+		return 1
+	fi
 
-  local URL="$1"
-  shift
+	local URL="$1"
+	shift
 
-  if [[ "$URL" != *"github.com/"*"/blob/"* ]]; then
-    echo "Error: Could not parse GitHub URL. Expected format:" >&2
-    echo "  https://github.com/<user>/<repo>/blob/<branch>/<path>" >&2
-    return 1
-  fi
+	if [[ "$URL" != *"github.com/"*"/blob/"* ]]; then
+		echo "Error: Could not parse GitHub URL. Expected format:" >&2
+		echo "  https://github.com/<user>/<repo>/blob/<branch>/<path>" >&2
+		return 1
+	fi
 
-  local RAW_URL="${URL/github.com/raw.githubusercontent.com}"
-  RAW_URL="${RAW_URL/blob/refs/heads}"
+	local RAW_URL="${URL/github.com/raw.githubusercontent.com}"
+	RAW_URL="${RAW_URL/blob/refs/heads}"
 
-  echo "Fetching: $RAW_URL" >&2
-  curl -fsSL "$@" "$RAW_URL"
+	echo "Fetching: $RAW_URL" >&2
+	curl -fsSL "$@" "$RAW_URL"
 }
 
 create_bash_file() {
@@ -117,37 +114,30 @@ strip_slashes() {
 	fi
 }
 
-
-
-
-unalias exportpath > /dev/null 2>&1
- # shellcheck disable=SC2139
+unalias exportpath >/dev/null 2>&1
+# shellcheck disable=SC2139
 alias SSH="ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 2222 $USER@localhost"
 
-unalias SSHCOPY > /dev/null 2>&1
+unalias SSHCOPY >/dev/null 2>&1
 
 SSHCOPY() {
- scp -r -P 2222 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$1" alexc@localhost:"$2"
+	scp -r -P 2222 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$1" alexc@localhost:"$2"
 }
 
-unalias RSYNC > /dev/null 2>&1
-RSYNC(){
-  rsync -avz -e 'ssh -p 2222' "$1" alexc@localhost:"$2"
+unalias RSYNC >/dev/null 2>&1
+RSYNC() {
+	rsync -avz -e 'ssh -p 2222' "$1" alexc@localhost:"$2"
 }
 
-exportpath () {
-  echo "export PATH=\$PATH:$1" >> ~/.shell_functions
+exportpath() {
+	echo "export PATH=\$PATH:$1" >>~/.shell_functions
 }
-
-
 
 # shellcheck disable=SC2139
 alias SWITCH_KEYBOARD="$HOME/.toggle_keyboard_layout.sh"
 alias R='R -q --interactive --no-restore --no-save'
 
-
 alias radian='radian -q'
-
 
 # Compilation flags
 # shellcheck disable=SC2155
@@ -159,19 +149,25 @@ alias rg='rg --no-messages'
 # export VSCODE_GIT_ASKPASS_MAIN=/opt/visual-studio-code/resources/app/extensions/git/dist/askpass-main.js
 # export VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-038080b684.sock
 
-
-
-
-
 alias CLIPBOARD='xclip -sel clip'
 
 alias CLIPPY='cargo clippy --all -- -W clippy::all -W clippy::pedantic -W clippy::restriction -W clippy::nursery -D warnings'
 # shellcheck disable=SC2139
 alias SHELLFUNCTIONS="$EDITOR ~/.shell_functions"
-KILL() { [ $# -eq 0 ] && { echo "Usage: KILL <process_name>"; return 1; }; pgrep "$1" >/dev/null || { echo "No process: $1"; return 1; }; pkill -9 "$1"; }
+KILL() {
+	[ $# -eq 0 ] && {
+		echo "Usage: KILL <process_name>"
+		return 1
+	}
+	pgrep "$1" >/dev/null || {
+		echo "No process: $1"
+		return 1
+	}
+	pkill -9 "$1"
+}
 #unalias ZIP >  /dev/null/
 
-ZIP () {
+ZIP() {
 	zip -r "$1.zip" "$1"
 }
 
@@ -190,7 +186,6 @@ alias RUNFREEBSD='qemu-system-x86_64 \
   -device virtio-balloon \
   -vga std \
   -display gtk'
-
 
 #qemu-system-i386 -m 2048 -enable-kvm -drive file=$HOME/Downloads/lmde_vm.img,format=qcow2 -cdrom ~/Downloads/lmde-6-cinnamon-32bit.iso -boot order=d
 
@@ -216,15 +211,11 @@ alias RUNBSD_NOGRAPHIC='qemu-system-x86_64 \
   -device virtio-balloon \
    -nographic'
 
-
-
 alias RUNOSX='cd ~/OSX-KVM && ./OpenCore-Boot.sh'
 
 #alias RUNOSX_UI='cd ~/OSX-KVM && ./OpenCore-Boot-windowed.sh'
 
-
 alias TEST_INTERNET="timeout 10 ping google.com"
-
 
 # shellcheck disable=SC2139
 alias RUNBIGENDIAN="qemu-system-ppc64 \
@@ -238,6 +229,8 @@ alias RUNBIGENDIAN="qemu-system-ppc64 \
   -device virtio-net-pci,netdev=net0 \
   -device virtio-balloon \
   -nographic -serial mon:stdio -monitor none"
+
+alias RUNBIGENDIAN='qemu-system-ppc64 -cpu POWER9 -accel tcg,thread=multi -M pseries,cap-cfpc=broken,cap-sbbc=broken,cap-ibs=broken -m 12G,slots=4,maxmem=16G -smp 8,cores=4,threads=2 -drive file="$HOME/BE_vm/debian-ppc64.img",format=raw,if=virtio,aio=native,cache=directsync,discard=unmap -netdev user,id=net0,hostfwd=tcp::2222-:22 -device virtio-net-pci,netdev=net0 -device virtio-balloon -nographic -serial mon:stdio -monitor none'
 
 # shellcheck disable=SC2139
 alias RUNWINDOWS='qemu-system-x86_64 \
@@ -253,8 +246,6 @@ alias RUNWINDOWS='qemu-system-x86_64 \
   -device e1000,netdev=net0 \
   -monitor stdio'
 
-
-
 #i dont want to use the shitty js one, no npm!
 alias gitmoji="go-gitmoji-cli"
 alias GITRENEW='git fetch origin && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)'
@@ -268,24 +259,17 @@ alias hgrep='history |grep -Ei'
 
 alias SLEEPOFF_ONE_HOUR='systemd-inhibit --what=sleep:idle --mode=block sleep "3600"'
 
-
-
-
 thunar() {
-    command thunar "$@" &> /dev/null &
-    disown
+	command thunar "$@" &>/dev/null &
+	disown
 }
 
-
 dolphin() {
-    command dolphin "$@" &> /dev/null &
-    disown
+	command dolphin "$@" &>/dev/null &
+	disown
 }
 
 alias zed='zeditor'
-
-
-
 
 alias code="\code --ozone-platform=wayland"
 alias yay="\yay --noconfirm"
@@ -299,7 +283,6 @@ alias GITHELP="echo 'git checkout HEAD~2 -- EXAMPLE.FILENAME'"
 alias GITRESETFILE="git checkout HEAD --"
 
 alias REFRESHKEYS='sudo pacman-key --refresh-keys'
-
 
 if [[ "$OSTYPE" == linux* ]]; then
 	open() {
@@ -332,12 +315,12 @@ if [[ "$OSTYPE" == linux* ]]; then
 			return 1
 		fi
 
-		if command -v xdg-open > /dev/null && xdg-open "$1" > /dev/null; then
+		if command -v xdg-open >/dev/null && xdg-open "$1" >/dev/null; then
 			return 0
 		fi
 
 		## this just allows you to open eg discord/firefox etc via terminal without cluttering it with lots of crap. fairly handy.
-		if ! command -v "$1" > /dev/null; then
+		if ! command -v "$1" >/dev/null; then
 			echo "Error: '$1' is not a valid command" >&2
 			return 1
 		fi
