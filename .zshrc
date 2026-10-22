@@ -119,6 +119,7 @@ zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 zstyle ':completion:*' completer _complete _ignored
 zstyle ':completion::complete:*' gain-privileges 1
 setopt appendhistory
+setopt interactive_comments
 setopt sharehistory
 setopt incappendhistory
 bindkey -e #evil mode
@@ -210,7 +211,7 @@ fpath+="$ZSH_COMPLETIONS/src"
 
 source "$AUTO_SUGGESTIONS"
 source "$AUTO_COMPLETE"
-# HACK ALERT zsh-autocomplete's own lazy zasync autoload silently fails, so load it explicitly
+# zsh-autocomplete's own lazy zasync autoload silently fails, so load it explicitly
 [[ -f ~/.cache/zsh/zasync/zasync ]] && autoload -Uz +X ~/.cache/zsh/zasync/zasync
 
 if command -v zoxide >/dev/null; then

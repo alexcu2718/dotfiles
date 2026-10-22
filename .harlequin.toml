@@ -1,0 +1,7 @@
+default_profile = "alexc"
+
+[profiles.alexc]
+adapter = "duckdb"
+theme = "atom-one-dark"
+viewer_max_rows = 100000
+keymap_name = ["vscode"]
