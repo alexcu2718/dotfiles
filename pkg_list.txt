@@ -37,8 +37,6 @@ cern-vdt
 cfitsio
 cgasm
 chafa
-chaotic-keyring
-chaotic-mirrorlist
 cheat
 clang
 clang-build-analyzer-git
@@ -97,6 +95,7 @@ firefox-dark-reader
 flameshot
 flix-cli
 fluxcast-git
+fmt-docs
 fzf
 garcon
 gcc-fortran
@@ -178,6 +177,9 @@ ipython
 ispell
 iwd
 java-rhino
+jellyfin-ffmpeg
+jellyfin-server
+jellyfin-web
 jujutsu
 jupyter-metakernel
 just
@@ -267,6 +269,7 @@ pkgstats
 plasma-meta
 plasma-workspace
 plymouth
+polars-cli-bin
 popcorntime
 power-profiles-daemon
 prek
@@ -346,7 +349,6 @@ speedtest-cli
 sshfs
 starship
 steam
-stockfish
 strace
 stress
 stress-ng
@@ -396,6 +398,7 @@ ttf-adobe-source-code-pro-fonts
 ttf-jetbrains-mono
 ttf-meslo-nerd
 ttf-nerd-fonts-symbols
+ttt-bin
 tumbler
 tumbler-extra-thumbnailers
 ty
@@ -453,12 +456,12 @@ xorg-fonts-100dpi
 xorg-fonts-75dpi
 xorg-mkfontscale
 xorg-server
-xorg-server-common-git
-xorg-server-devel-git
+xorg-server-common
+xorg-server-devel
 xorg-server-src
-xorg-server-xephyr-git
-xorg-server-xnest-git
-xorg-server-xvfb-git
+xorg-server-xephyr
+xorg-server-xnest
+xorg-server-xvfb
 xorg-sessreg
 xorg-smproxy
 xorg-x11perf
@@ -484,6 +487,7 @@ xorg-xvinfo
 xorg-xwd
 xorg-xwininfo
 xorg-xwud
+xorgproto
 xproperty
 xrootd
 xsel

@@ -257,7 +257,13 @@ alias grep='grep  --color=auto'
 alias grepn='grep -n --color=auto'
 alias hgrep='history |grep -Ei'
 
-alias SLEEPOFF_ONE_HOUR='systemd-inhibit --what=sleep:idle --mode=block sleep "3600"'
+SLEEP_OFF() {
+  local dur="${1:-1h}"
+  [[ "$dur" =~ ^[0-9]+$ ]] && dur="${dur}h"
+  echo "Inhibiting sleep/idle for $dur..."
+  systemd-inhibit --what=sleep:idle --mode=block --why="SLEEP_OFF ($dur)" sleep "$dur"
+}
+
 
 thunar() {
 	command thunar "$@" &>/dev/null &
