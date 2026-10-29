@@ -220,6 +220,11 @@ if command -v zoxide >/dev/null; then
 	eval "$(zoxide init --cmd cd zsh)"
 fi
 
+
+
+#starship 1.27.0
+#^ this is the version of starship i use, when i try it on older distros(or...god forbid windows) or windows it gives fucking annoying errors
+## not debugging that yet, too lazy.
 if [[ "$ENABLE_STARSHIP" == "1" ]] && command -v starship >/dev/null; then
 
 	local STARSHIP_LOCATION="$HOME/.config/starship.toml"
@@ -269,7 +274,19 @@ export TMOUT=0 # can cause issues on bash..
 PHONE_ADDR='u0_a370@192.168.1.117'
 alias SSHPHONE="ssh -p 8022 $PHONE_ADDR" # too lazy to setup aliases since switcing phone soony
 
-alias RASPBERRY_PI_SSH='ssh -p 22 alexc@192.168.0.15'
+
+PI_ADDR='192.168.1.107'
+PI_USER='alexc'
+
+alias RASPBERRY_PI_SSH="ssh -p 22 $PI_USER@$PI_ADDR"
+
+picopy() {
+  if [[ $# -eq 0 ]]; then
+    echo "usage: picopy file [file...]"
+    return 1
+  fi
+  scp "$@" "$PI_USER@$PI_ADDR:movies_tv/"
+}
 ##  ssh-copy-id -p 8022 $PHONE_ADDR
 
 if [[ "$OSTYPE" == darwin* ]] && command -v brew >/dev/null; then
@@ -286,10 +303,48 @@ if [[ "$OSTYPE" == darwin* ]] && command -v brew >/dev/null; then
 	if ! bash -c '(( BASH_VERSINFO[0] >=5  ))'; then ### get the modern bash instead of one from 2007....
 		brew install bash
 	fi
-	## not sufficiently tested, may cause infinite loops on a messed up PATH, oh well, worked for me.
+	## not sufficiently tested, *may* cause infinite loops on a messed up PATH, oh well, worked for me.
+
 
 	export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 fi
+
+
+## hook for activating venvs automatically, 5ms overhead, it's fine.
+local UV_ENV="$ZSH_PLUGIN_HOME/zsh-uv-env/zsh-uv-env.plugin.zsh"
+clone_if_not_exist "$UV_ENV" https://github.com/matthiasha/zsh-uv-env.git && source "$UV_ENV"
+
+function _prek_auto_install() {
+	[[ -d .git && -f .pre-commit-config.yaml ]] || return 0
+
+	local tool
+	if command -v prek >/dev/null; then
+		tool=prek
+	elif command -v pre-commit >/dev/null; then
+		tool=pre-commit
+	else
+		echo "prek or pre-commit not installed, you probably want it" >&2
+		return 0
+	fi
+
+	# already installed by this tool? skip
+	if [[ -f .git/hooks/pre-commit ]] && grep -q "$tool" .git/hooks/pre-commit 2>/dev/null; then
+		return 0
+	fi
+
+	"$tool" install -f --hook-type pre-commit >/dev/null 2>&1
+	return 0
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd _prek_auto_install
+_prek_auto_install # also handle the directory the shell starts in
+
+
+
+
+
+
+
 
 #export RUSTFLAGS="-C target-cpu=native"
 #zprof

@@ -241,7 +241,6 @@ normcap
 noto-fonts-cjk
 noto-fonts-extra
 nvtop
-nyaa-tui
 obsidian
 odt2txt
 openmp
@@ -503,7 +502,6 @@ zed
 zellij
 zig
 zoxide
-zram-generator
 zsh
 zsh-completions
 zsh-doc
