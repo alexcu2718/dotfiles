@@ -46,7 +46,7 @@ function $cmd() {
 "
 }
 
-export ENABLE_PATINA=1# experimental faster syntax highlighter
+export ENABLE_PATINA=1 # experimental faster syntax highlighter
 # export ENABLE_DEJA=1
 export ENABLE_STARSHIP=1
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/.deno/bin
