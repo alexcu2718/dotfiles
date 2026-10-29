@@ -22,10 +22,13 @@ function clone_if_not_exist() {
 	fi
 }
 
+
+
 function curl_if_missing() {
 	local destination="$1" url="$2"
 	if [[ ! -f "$destination" ]]; then
-		curl --create-dirs -o "$destination" "$url"
+		curl -fsSL --create-dirs -o "$destination" "$url" \
+			|| { echo "Download failed: $url" >&2; rm -f "$destination"; return 1; }
 	fi
 }
 
@@ -68,8 +71,10 @@ else
 fi
 
 local ZSH_PLUGIN_HOME="$HOME/.zsh/plugins"
-ZSH_COMPLETIONS="$ZSH_PLUGIN_HOME/zsh-completions"
-clone_if_not_exist "$ZSH_COMPLETIONS" https://github.com/zsh-users/zsh-completions.git
+local ZSH_COMPLETIONS="$ZSH_PLUGIN_HOME/zsh-completions"
+
+clone_if_not_exist "$ZSH_COMPLETIONS/zsh-completions.plugin.zsh" \
+    https://github.com/zsh-users/zsh-completions.git
 
 if command -v sccache >/dev/null; then
 	export RUSTC_WRAPPER="$(which sccache)"
@@ -204,11 +209,13 @@ fi
 #source "$AUTO_SUGGESTIONS"
 # fi
 
-fpath+=/usr/share/zsh/vendor-completions
-fpath+=~/.zsh/completions
-fpath+=~/.zfunc
-fpath+="$ZSH_COMPLETIONS/src"
-
+typeset -U fpath
+for d in /usr/share/zsh/vendor-completions; do
+	[[ -d $d ]] && fpath=($fpath "$d")
+done
+for d in "$ZSH_COMPLETIONS/src" ~/.zfunc ~/.zsh/completions; do
+	[[ -d $d ]] && fpath=("$d" $fpath)
+done
 source "$AUTO_SUGGESTIONS"
 source "$AUTO_COMPLETE"
 # zsh-autocomplete's own lazy zasync autoload silently fails, so load it explicitly
@@ -237,6 +244,11 @@ fi
 if command -v eza >/dev/null; then
 	alias ls='eza --icons --color=always'
 fi
+
+
+# commented out because interferes with zoxide
+# i cant quite figure out an elegant fix. eh.
+
 
 # _autoenv_loaded=0
 # _autoenv_lazy_chpwd() {
