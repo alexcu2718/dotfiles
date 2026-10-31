@@ -351,6 +351,7 @@ steam
 strace
 stress
 stress-ng
+subliminal
 sudo
 swtpm
 syncplay

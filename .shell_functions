@@ -137,17 +137,13 @@ exportpath() {
 alias SWITCH_KEYBOARD="$HOME/.toggle_keyboard_layout.sh"
 alias R='R -q --interactive --no-restore --no-save'
 
-alias radian='radian -q'
-
-# Compilation flags
 # shellcheck disable=SC2155
 
 alias rg='rg --no-messages'
+if [[ $OSTYPE = linux* ]]; then
+export VSCODE_GIT_ASKPASS_NODE=/opt/visual-studio-code/code
+fi
 
-# export VSCODE_GIT_ASKPASS_NODE=/opt/visual-studio-code/code
-# export VSCODE_GIT_ASKPASS_EXTRA_ARGS=""
-# export VSCODE_GIT_ASKPASS_MAIN=/opt/visual-studio-code/resources/app/extensions/git/dist/askpass-main.js
-# export VSCODE_GIT_IPC_HANDLE=/run/user/1000/vscode-git-038080b684.sock
 
 alias CLIPBOARD='xclip -sel clip'
 
@@ -217,18 +213,6 @@ alias RUNOSX='cd ~/OSX-KVM && ./OpenCore-Boot.sh'
 
 alias TEST_INTERNET="timeout 10 ping google.com"
 
-# shellcheck disable=SC2139
-alias RUNBIGENDIAN="qemu-system-ppc64 \
-  -cpu POWER9 \
-  -accel tcg,thread=multi \
-  -M pseries,cap-cfpc=broken,cap-sbbc=broken,cap-ibs=broken \
-  -m 12G,slots=4,maxmem=16G \
-  -smp 8,cores=4,threads=2 \
-  -drive file=\"$HOME/Downloads/debian-ppc64.img\",format=raw,if=virtio,aio=native,cache=directsync,discard=unmap \
-  -netdev user,id=net0,hostfwd=tcp::2222-:22 \
-  -device virtio-net-pci,netdev=net0 \
-  -device virtio-balloon \
-  -nographic -serial mon:stdio -monitor none"
 
 alias RUNBIGENDIAN='qemu-system-ppc64 -cpu POWER9 -accel tcg,thread=multi -M pseries,cap-cfpc=broken,cap-sbbc=broken,cap-ibs=broken -m 12G,slots=4,maxmem=16G -smp 8,cores=4,threads=2 -drive file="$HOME/BE_vm/debian-ppc64.img",format=raw,if=virtio,aio=native,cache=directsync,discard=unmap -netdev user,id=net0,hostfwd=tcp::2222-:22 -device virtio-net-pci,netdev=net0 -device virtio-balloon -nographic -serial mon:stdio -monitor none'
 
@@ -252,7 +236,9 @@ alias GITRENEW='git fetch origin && git reset --hard origin/$(git rev-parse --ab
 
 alias INSTALLED_PACKAGES='paru -Qe'
 alias CLEAR_PACKAGE_CACHE='paru -Sc'
-alias sort='sort --parallel=$(nproc)'
+if [[ $OSTYPE = linux* ]]; then
+alias sort='sort --parallel=$(nproc)' ## onlGNU
+fi
 alias grep='grep  --color=auto'
 alias grepn='grep -n --color=auto'
 alias hgrep='history |grep -Ei'
