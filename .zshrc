@@ -10,16 +10,30 @@
 # mkdir -p ~/.termux &&  curl -fLo ~/.termux/font.ttf \
 # 'https://github.com/romkatv/dotfiles-public/raw/master/.local/share/fonts/NerdFonts/MesloLGS%20NF%20Regular.ttf' && \
 # termux-reload-settings
+
+
+
+## for debugging
+typeset -gi _ZSH_DEBUG=${ZSH_DEBUG:-0}
+
+if (( _ZSH_DEBUG )); then
+  zmodload zsh/zprof
+fi
+
+
+
+# termux-reload-settings
 if [[ $OSTYPE == linux* ]]; then
 	ulimit -n 8192
 fi
 
+
+[[ $TERM == (vt220|vt100|dumb) ]] && export TERM=xterm-256color
+
 function clone_if_not_exist() {
-	local filepath="$1" repo="$2"
-	local DIRNAME="$(dirname "$filepath")"
-	if [ ! -d "$DIRNAME" ]; then
-		git clone --depth 1 "$repo" "$DIRNAME" || echo "Clone failed: $repo" >&2
-	fi
+  local dir="${1:h}" repo="$2"
+  [[ -d $dir ]] && return 0
+  git clone --depth 1 "$repo" "$dir" || echo "Clone failed: $repo" >&2
 }
 
 
@@ -303,28 +317,43 @@ picopy() {
 
 if [[ "$OSTYPE" == darwin* ]] && command -v brew >/dev/null; then
 
-	# if ! brew list --formula coreutils >/dev/null ; then
-	# 	brew install coreutils
-	# fi
-
 	if ! command -v grm >/dev/null; then ### check for gnu coreutils  via grm instead of invoking brew, this isn't perfect
 		brew install coreutils              ## we can't check paths because homebrew installs in different places for everyone, yay.
 		### TODO! ADD A HOMEBREW INSTALL TO THE TOP OF THIS SCRIPT FOR MAC
 	fi ### I don't like BSD coreutils because of the argument parsing...
-
+	export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+	## core utils should instore modern bash and preprend it to path, not checked tho lol.
 	if ! bash -c '(( BASH_VERSINFO[0] >=5  ))'; then ### get the modern bash instead of one from 2007....
 		brew install bash
 	fi
 	## not sufficiently tested, *may* cause infinite loops on a messed up PATH, oh well, worked for me.
 
 
-	export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 fi
 
 
-## hook for activating venvs automatically, 5ms overhead, it's fine.
 local UV_ENV="$ZSH_PLUGIN_HOME/zsh-uv-env/zsh-uv-env.plugin.zsh"
-clone_if_not_exist "$UV_ENV" https://github.com/matthiasha/zsh-uv-env.git && source "$UV_ENV"
+local _uv_env_loaded=0
+
+function _uv_env_lazy_load() {
+	# check if already loaded
+	[[ $_uv_env_loaded -eq 1 ]] && return 0
+
+	# load if .venv exists in current directory
+	if [[ -d "$PWD/.venv" ]]; then # use buitins over functions
+		clone_if_not_exist "$UV_ENV" https://github.com/matthiasha/zsh-uv-env.git && source "$UV_ENV"
+		_uv_env_loaded=1
+		# REMOVE the hook after load to avoid repeated checks
+		add-zsh-hook -d chpwd _uv_env_lazy_load 2>/dev/null
+	fi
+}
+
+#  add-zsh-hook is available before registering
+autoload -Uz add-zsh-hook
+# lock the lazy load hook
+add-zsh-hook chpwd _uv_env_lazy_load
+#  check on initial shell load (dont forget!!)
+_uv_env_lazy_load
 
 function _prek_auto_install() {
 	[[ -d .git && -f .pre-commit-config.yaml ]] || return 0
@@ -347,7 +376,7 @@ function _prek_auto_install() {
 	"$tool" install -f --hook-type pre-commit >/dev/null 2>&1
 	return 0
 }
-autoload -Uz add-zsh-hook
+
 add-zsh-hook chpwd _prek_auto_install
 _prek_auto_install # also handle the directory the shell starts in
 
@@ -359,4 +388,6 @@ _prek_auto_install # also handle the directory the shell starts in
 
 
 #export RUSTFLAGS="-C target-cpu=native"
-#zprof
+if (( _ZSH_DEBUG )); then
+  zprof
+fi
