@@ -41,7 +41,6 @@ cheat
 clang
 clang-build-analyzer-git
 clang20
-cloc
 cmake
 cmake-extras
 cmake-language-server
@@ -94,7 +93,6 @@ firefox
 firefox-dark-reader
 flameshot
 flix-cli
-fluxcast-git
 fmt-docs
 fzf
 garcon
@@ -109,7 +107,6 @@ github-cli
 gitui
 glfw
 glsl_analyzer-bin
-gnome-backgrounds
 gnome-calculator
 gnome-calendar
 gnome-characters
@@ -155,9 +152,6 @@ gvfs-onedrive
 gvfs-smb
 gvfs-wsdd
 hakuneko-desktop-bin
-harlequin
-harlequin-odbc
-harlequin-postgres
 heaptrack
 helix
 heroic-games-launcher-bin
@@ -221,7 +215,6 @@ mdformat
 mediainfo
 memcached
 minidlna
-miraclecast-git
 mise
 mk-git
 modprobed-db
@@ -313,7 +306,6 @@ qemu-system-s390x
 qemu-system-x86
 qemu-tools
 qsv
-r
 radare2
 ragel
 ranger

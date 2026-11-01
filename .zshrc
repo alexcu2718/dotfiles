@@ -14,6 +14,7 @@
 
 
 ## for debugging
+alias zprofile='ZSH_DEBUG=1 zsh -i -c exit'
 typeset -gi _ZSH_DEBUG=${ZSH_DEBUG:-0}
 
 if (( _ZSH_DEBUG )); then
