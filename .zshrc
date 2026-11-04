@@ -11,40 +11,40 @@
 # 'https://github.com/romkatv/dotfiles-public/raw/master/.local/share/fonts/NerdFonts/MesloLGS%20NF%20Regular.ttf' && \
 # termux-reload-settings
 
-
+[[ "$USER" == "alexc" ]] && export ENABLE_PATINA=1 || export ENABLE_PATINA=0
+[[ "$USER" == "alexc" ]] && export ENABLE_STARSHIP=1 || export ENABLE_STARSHIP=0
 
 ## for debugging
 alias zprofile='ZSH_DEBUG=1 zsh -i -c exit'
 alias zbenchmark='hyperfine --warmup 3 -N "zsh -i -c exit"'
 typeset -gi _ZSH_DEBUG=${ZSH_DEBUG:-0}
 
-if (( _ZSH_DEBUG )); then
-  zmodload zsh/zprof
+if ((_ZSH_DEBUG)); then
+	zmodload zsh/zprof
 fi
 
-
-
-# termux-reload-settings
-if [[ $OSTYPE == linux* ]]; then
-	ulimit -n 8192
-fi
-
+# # termux-reload-settings
+# if [[ $OSTYPE == linux* ]]; then
+# 	ulimit -n 8192
+# fi
 
 [[ $TERM == (vt220|vt100|dumb) ]] && export TERM=xterm-256color
 
 function clone_if_not_exist() {
-  local dir="${1:h}" repo="$2"
-  [[ -d $dir ]] && return 0
-  git clone --depth 1 "$repo" "$dir" || echo "Clone failed: $repo" >&2
+	local dir="${1:h}" repo="$2"
+	[[ -d $dir ]] && return 0
+	git clone --depth 1 "$repo" "$dir" || echo "Clone failed: $repo" >&2
 }
-
-
 
 function curl_if_missing() {
 	local destination="$1" url="$2"
 	if [[ ! -f "$destination" ]]; then
-		curl -fsSL --create-dirs -o "$destination" "$url" \
-			|| { echo "Download failed: $url" >&2; rm -f "$destination"; return 1; }
+		curl -fsSL --create-dirs -o "$destination" "$url" ||
+			{
+				echo "Download failed: $url" >&2
+				rm -f "$destination"
+				return 1
+			}
 	fi
 }
 
@@ -53,7 +53,7 @@ function lazy_load_completion_on_first_use() {
 	local completion_cmd="$2"
 
 	if ! command -v "$cmd" >/dev/null; then
-		return
+		return 0
 	fi
 
 	eval "
@@ -65,16 +65,13 @@ function $cmd() {
 "
 }
 
-export ENABLE_PATINA=1 # experimental faster syntax highlighter
-# export ENABLE_DEJA=1
-export ENABLE_STARSHIP=1
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH:$HOME/.cargo/bin:$HOME/.deno/bin
 export HEAPTRACK_ENABLE_DEBUGINFOD=1
 export GCM_CREDENTIAL_STORE=secretservice
 export MANPATH="/usr/local/man:$MANPATH"
-export LANG=en_US.UTF-8
-export LC_CTYPE="en_US.UTF-8"
-export ARCHFLAGS="-arch $(uname -m)"
+export LANG="${LANG:-en_US.UTF-8}"
+export LC_CTYPE="${LC_CTYPE:-en_US.UTF-8}"
+export ARCHFLAGS="-arch $CPUTYPE"
 
 if [[ -n $SSH_CONNECTION ]]; then
 	export EDITOR='vim'
@@ -90,27 +87,19 @@ local ZSH_PLUGIN_HOME="$HOME/.zsh/plugins"
 local ZSH_COMPLETIONS="$ZSH_PLUGIN_HOME/zsh-completions"
 
 clone_if_not_exist "$ZSH_COMPLETIONS/zsh-completions.plugin.zsh" \
-    https://github.com/zsh-users/zsh-completions.git
+	https://github.com/zsh-users/zsh-completions.git
 
-if command -v sccache >/dev/null; then
-	export RUSTC_WRAPPER="$(which sccache)"
-fi
-
-if command -v bat >/dev/null; then
-	alias cat="bat --paging=never --style=full"
-	AUTOENV_VIEWER=bat
-else
-	AUTOENV_VIEWER=cat
-fi
-
-if [[ "$OSTYPE" == linux* ]] && command -v cargo >/dev/null; then
+command -v sccache >/dev/null && export RUSTC_WRAPPER="$(command -v sccache)"
+command -v bat >/dev/null && alias cat="bat --paging=never --style=full"
+## can delete
+if [[ "$USER" == "alexc" && "$OSTYPE" == linux* ]] && command -v cargo >/dev/null; then
 	if ! command -v cargo-asm >/dev/null; then
-
-		cargo install cargo-show-asm ###the most recent version
+		# Installs the latest published version (cargo-show-asm provides the cargo-asm binary)
+		cargo install cargo-show-asm --locked
 	fi
 
-	local CARGO_ASM_COMPLETIONS="$HOME/.zfunc/_cargoasm"
-	if [ ! -f "$CARGO_ASM_COMPLETIONS" ]; then
+	CARGO_ASM_COMPLETIONS="$HOME/.zfunc/_cargoasm"
+	if [[ ! -f "$CARGO_ASM_COMPLETIONS" ]]; then
 		mkdir -p "$HOME/.zfunc"
 		cargo-asm --bpaf-complete-style-zsh >"$CARGO_ASM_COMPLETIONS"
 	fi
@@ -145,11 +134,8 @@ setopt sharehistory
 setopt incappendhistory
 bindkey -e #evil mode
 HISTFILE="$HOME/.zsh_history"
-HISTSIZE=5000
-SAVEHIST=5000
-DISABLE_MAGIC_FUNCTIONS="true" ## dont think this dose anything without oh my zsh, harmless, gonna leave it lol, i dont care.
-DISABLE_LS_COLORS="false"
-DISABLE_AUTO_TITLE="false"
+HISTSIZE=50000
+SAVEHIST=50000
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 setopt AUTO_CD
@@ -238,33 +224,51 @@ source "$AUTO_COMPLETE"
 [[ -f ~/.cache/zsh/zasync/zasync ]] && autoload -Uz +X ~/.cache/zsh/zasync/zasync
 
 if command -v zoxide >/dev/null; then
-	# eval "$(zoxide init zsh)"
-	# alias cd='z'
-	eval "$(zoxide init --cmd cd zsh)"
+	__zoxide_lazy_init() {
+		unfunction cd cdi 2>/dev/null
+		unfunction __zoxide_lazy_init
+		eval "$(zoxide init --cmd cd zsh)"
+	}
+	cd() {
+		__zoxide_lazy_init
+		cd "$@"
+	}
+	cdi() {
+		__zoxide_lazy_init
+		cdi "$@"
+	}
 fi
-
-
-
 #starship 1.27.0
 #^ this is the version of starship i use, when i try it on older distros(or...god forbid windows) or windows it gives fucking annoying errors
 ## not debugging that yet, too lazy.
-if [[ "$ENABLE_STARSHIP" == "1" ]] && command -v starship >/dev/null; then
+if [[ "$ENABLE_STARSHIP" == "1" ]]; then
+	if ! command -v starship >/dev/null; then
+		case "$(uname -s)" in
+		Darwin) brew install starship ;;
+		Linux)
+			echo "starship not found. This will run the remote install script (may use sudo)."
+			echo "To disable, set ENABLE_STARSHIP=0 in your .zshrc."
+			if read -q "REPLY?Install now? [y/N] "; then
+				echo
+				curl -sS https://starship.rs/install.sh | sh -s -- -y
+			else
+				echo
+			fi
+			;;
+		esac
+	fi
 
-	local STARSHIP_LOCATION="$HOME/.config/starship.toml"
-
-	curl_if_missing "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
-
-	eval "$(starship init zsh)"
+	if command -v starship >/dev/null; then
+		local STARSHIP_LOCATION="$HOME/.config/starship.toml"
+		curl_if_missing "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
+		eval "$(starship init zsh)"
+	fi
 fi
 
-if command -v eza >/dev/null; then
-	alias ls='eza --icons --color=always'
-fi
-
+command -v eza >/dev/null && alias ls='eza --icons --color=always'
 
 # commented out because interferes with zoxide
 # i cant quite figure out an elegant fix. eh.
-
 
 # _autoenv_loaded=0
 # _autoenv_lazy_chpwd() {
@@ -302,18 +306,17 @@ export TMOUT=0 # can cause issues on bash..
 PHONE_ADDR='u0_a370@192.168.1.117'
 alias SSHPHONE="ssh -p 8022 $PHONE_ADDR" # too lazy to setup aliases since switcing phone soony
 
-
 PI_ADDR='192.168.1.107'
 PI_USER='alexc'
 
 alias RASPBERRY_PI_SSH="ssh -p 22 $PI_USER@$PI_ADDR"
 
 picopy() {
-  if [[ $# -eq 0 ]]; then
-    echo "usage: picopy file [file...]"
-    return 1
-  fi
-  scp "$@" "$PI_USER@$PI_ADDR:movies_tv/"
+	if [[ $# -eq 0 ]]; then
+		echo "usage: picopy file [file...]"
+		return 1
+	fi
+	scp "$@" "$PI_USER@$PI_ADDR:movies_tv/"
 }
 ##  ssh-copy-id -p 8022 $PHONE_ADDR
 
@@ -330,9 +333,7 @@ if [[ "$OSTYPE" == darwin* ]] && command -v brew >/dev/null; then
 	fi
 	## not sufficiently tested, *may* cause infinite loops on a messed up PATH, oh well, worked for me.
 
-
 fi
-
 
 local UV_ENV="$ZSH_PLUGIN_HOME/zsh-uv-env/zsh-uv-env.plugin.zsh"
 local _uv_env_loaded=0
@@ -382,14 +383,7 @@ function _prek_auto_install() {
 add-zsh-hook chpwd _prek_auto_install
 _prek_auto_install # also handle the directory the shell starts in
 
-
-
-
-
-
-
-
 #export RUSTFLAGS="-C target-cpu=native"
-if (( _ZSH_DEBUG )); then
-  zprof
+if ((_ZSH_DEBUG)); then
+	zprof
 fi

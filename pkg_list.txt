@@ -338,7 +338,6 @@ snowflake-client
 sof-firmware
 speedtest-cli
 sshfs
-starship
 steam
 strace
 stress
