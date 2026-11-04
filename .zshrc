@@ -241,10 +241,14 @@ fi
 #starship 1.27.0
 #^ this is the version of starship i use, when i try it on older distros(or...god forbid windows) or windows it gives fucking annoying errors
 ## not debugging that yet, too lazy.
-if [[ "$ENABLE_STARSHIP" == "1" ]]; then
-	if ! command -v starship >/dev/null; then
+setup_starship() {
+	[[ "$ENABLE_STARSHIP" == "1" ]] || return 0
+
+	if ! command -v starship >/dev/null 2>&1; then
 		case "$(uname -s)" in
-		Darwin) brew install starship ;;
+		Darwin)
+			brew install starship
+			;;
 		Linux)
 			echo "starship not found. This will run the remote install script (may use sudo)."
 			echo "To disable, set ENABLE_STARSHIP=0 in your .zshrc."
@@ -252,17 +256,20 @@ if [[ "$ENABLE_STARSHIP" == "1" ]]; then
 				echo
 				curl -sS https://starship.rs/install.sh | sh -s -- -y
 			else
-				echo
+				return 0
 			fi
 			;;
 		esac
 	fi
 
-	local STARSHIP_LOCATION="$HOME/.config/starship.toml"
-	curl_if_missing "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
+	local config_path="$HOME/.config/starship.toml"
+	curl_if_missing "$config_path" \
+		https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
 	eval "$(starship init zsh)"
-fi
+}
 
+setup_starship
+unfunction setup_starship
 command -v eza >/dev/null && alias ls='eza --icons --color=always'
 
 alias CPUINFO='cpupower  frequency-info'
