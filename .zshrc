@@ -17,7 +17,7 @@
 ## for debugging
 alias zprofile='ZSH_DEBUG=1 zsh -i -c exit'
 alias zbenchmark='hyperfine --warmup 3 -N "zsh -i -c exit"'
-typeset -gi _ZSH_DEBUG=${ZSH_DEBUG:-0}
+declare -gi _ZSH_DEBUG=${ZSH_DEBUG:-0}
 
 if ((_ZSH_DEBUG)); then
 	zmodload zsh/zprof
@@ -107,7 +107,7 @@ if [[ "$USER" == "alexc" && "$OSTYPE" == linux* ]] && command -v cargo >/dev/nul
 	alias cargo-asm='\cargo-asm -q'
 fi
 
-mkdir -p ~/.cache/zsh
+[[ -d ~/.cache/zsh ]] || mkdir -p ~/.cache/zsh
 
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.cache/zsh
@@ -258,14 +258,14 @@ if [[ "$ENABLE_STARSHIP" == "1" ]]; then
 		esac
 	fi
 
-	if command -v starship >/dev/null; then
-		local STARSHIP_LOCATION="$HOME/.config/starship.toml"
-		curl_if_missing "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
-		eval "$(starship init zsh)"
-	fi
+	local STARSHIP_LOCATION="$HOME/.config/starship.toml"
+	curl_if_missing "$STARSHIP_LOCATION" https://raw.githubusercontent.com/alexcu2718/dotfiles/main/.config/starship.toml
+	eval "$(starship init zsh)"
 fi
 
 command -v eza >/dev/null && alias ls='eza --icons --color=always'
+
+alias CPUINFO='cpupower  frequency-info'
 
 # commented out because interferes with zoxide
 # i cant quite figure out an elegant fix. eh.
