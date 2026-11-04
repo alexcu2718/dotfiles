@@ -32,7 +32,7 @@ fi
 
 function clone_if_not_exist() {
 	local dir="${1:h}" repo="$2"
-	[[ -d $dir ]] && return 0
+	[[ -d "$dir" ]] && return 0
 	git clone --depth 1 "$repo" "$dir" || echo "Clone failed: $repo" >&2
 }
 
@@ -107,7 +107,7 @@ if [[ "$USER" == "alexc" && "$OSTYPE" == linux* ]] && command -v cargo >/dev/nul
 	alias cargo-asm='\cargo-asm -q'
 fi
 
-[[ -d ~/.cache/zsh ]] || mkdir -p ~/.cache/zsh
+[[ -d "$HOME/.cache/zsh" ]] || mkdir -p "$HOME/.cache/zsh"
 
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.cache/zsh
