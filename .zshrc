@@ -11,9 +11,8 @@
 # 'https://github.com/romkatv/dotfiles-public/raw/master/.local/share/fonts/NerdFonts/MesloLGS%20NF%20Regular.ttf' && \
 # termux-reload-settings
 
-[[ "$USER" == "alexc" ]] && export ENABLE_PATINA=1 || export ENABLE_PATINA=0
-[[ "$USER" == "alexc" ]] && export ENABLE_STARSHIP=1 || export ENABLE_STARSHIP=0
-
+[[ $USER == alexc ]]
+declare -gi ENABLE_PATINA=$((!$?)) ENABLE_STARSHIP=$((!$?))
 ## for debugging
 alias zprofile='ZSH_DEBUG=1 zsh -i -c exit'
 alias zbenchmark='hyperfine --warmup 3 -N "zsh -i -c exit"'
@@ -22,11 +21,6 @@ declare -gi _ZSH_DEBUG=${ZSH_DEBUG:-0}
 if ((_ZSH_DEBUG)); then
 	zmodload zsh/zprof
 fi
-
-# # termux-reload-settings
-# if [[ $OSTYPE == linux* ]]; then
-# 	ulimit -n 8192
-# fi
 
 [[ $TERM == (vt220|vt100|dumb) ]] && export TERM=xterm-256color
 
@@ -177,7 +171,7 @@ curl_if_missing "$PYTHON_AND_GO" https://raw.githubusercontent.com/alexcu2718/do
 
 source "$PYTHON_AND_GO"
 
-if [[ "$ENABLE_PATINA" == "1" ]] && command -v cargo >/dev/null; then
+if (($ENABLE_PATINA)) && command -v cargo >/dev/null; then
 	if ! command -v zsh-patina >/dev/null; then
 		if command -v paru >/dev/null; then
 			paru -Syu zsh-patina
@@ -242,7 +236,7 @@ fi
 #^ this is the version of starship i use, when i try it on older distros(or...god forbid windows) or windows it gives fucking annoying errors
 ## not debugging that yet, too lazy.
 setup_starship() {
-	[[ "$ENABLE_STARSHIP" == "1" ]] || return 0
+	(($ENABLE_STARSHIP)) || return 0
 
 	if ! command -v starship >/dev/null 2>&1; then
 		case "$(uname -s)" in
@@ -390,6 +384,10 @@ function _prek_auto_install() {
 add-zsh-hook chpwd _prek_auto_install
 _prek_auto_install # also handle the directory the shell starts in
 
+command -v shfmt >/dev/null && alias shellfmt='shfmt --write ~/.zshrc'
+# for faster toy compilations
+
+[[ $USER == alexc ]] && alias g++='g++ $(pkg-config --cflags --libs fmt)' || 0
 #export RUSTFLAGS="-C target-cpu=native"
 if ((_ZSH_DEBUG)); then
 	zprof
